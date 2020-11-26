@@ -292,5 +292,8 @@ bool Register::bge(const std::string& rs1, const std::string& rs2) const {
 * @return 输出流对象
 */
 std::ostream& operator<<(std::ostream& out, const Register& reg) {
-
+	for (const auto& a_reg : reg.m_register) {
+		out << std::hex << a_reg << " ";
+	}
+	return out;
 }
