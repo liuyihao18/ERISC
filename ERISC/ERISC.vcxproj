@@ -142,8 +142,8 @@
     <ClInclude Include="computer.h" />
     <ClInclude Include="input.h" />
     <ClInclude Include="memory.h" />
-    <ClInclude Include="Register.h" />
-    <ClInclude Include="Stack.h" />
+    <ClInclude Include="register.h" />
+    <ClInclude Include="stack.h" />
     <ClInclude Include="status.h" />
   </ItemGroup>
   <ItemGroup>

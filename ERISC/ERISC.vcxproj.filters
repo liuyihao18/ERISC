@@ -21,16 +21,16 @@
     <ClInclude Include="memory.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="Stack.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="Register.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="input.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="status.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="register.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="stack.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

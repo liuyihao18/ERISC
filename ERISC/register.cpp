@@ -81,7 +81,7 @@ static int32_t str2num(const std::string& str) {
 * @param ¼Ä´æÆ÷µÄÃû×Ö
 * @return ¼Ä´æÆ÷µÄË÷Òı
 */
-int Register::lookup(const std::string& name) {
+int Register::lookup(const std::string& name) const {
 	for (int i = 0; i < 64; i++) {
 		if (name == names[i]) {
 			return i >> 1;
@@ -252,7 +252,7 @@ void Register::OR(const std::string& rd, const std::string& rs1, const std::stri
 * @return ÅĞ¶Ï½á¹û
 */
 bool Register::beq(const std::string& rs1, const std::string& rs2) const {
-
+	return m_register[lookup(rs1)] == m_register[lookup(rs2)];
 }
 
 /**

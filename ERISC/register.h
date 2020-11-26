@@ -20,7 +20,7 @@ private:
 	* @param ¼Ä´æÆ÷µÄÃû×Ö
 	* @return ¼Ä´æÆ÷µÄË÷Òı
 	*/
-	int lookup(const std::string& name);
+	int lookup(const std::string& name) const;
 
 public:
 
