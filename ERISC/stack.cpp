@@ -1,10 +1,11 @@
 #include "stack.h"
+#include <iostream>
 
 /**
 * @brief ÖØÖÃ×´Ì¬
 */
 void Stack::reset() {
-
+	m_status = NO_OPERATE;
 }
 
 /**
@@ -12,7 +13,7 @@ void Stack::reset() {
 * @return Õ»µÄ×´Ì¬
 */
 Status Stack::getStatus() const {
-
+	return m_status;
 }
 
 /**
@@ -20,15 +21,23 @@ Status Stack::getStatus() const {
 * @param rs: ¼Ä´æÆ÷µÄµØÖ·
 */
 void Stack::push(int32_t* rs) {
-
+	if (m_ptr <= 0) {
+		std::cerr << "Stack Overflow!" << std::endl;
+		exit(-1);
+	}
+	std::memcpy(m_stack + (--m_ptr), rs, sizeof(int32_t));
+	m_status = STACK_OPERATE;
 }
-
-
 
 /**
 * @brief °ÑÕ»¶¥µÄÖµ´æÈërd¼Ä´æÆ÷ÖĞ
 * @param rd: ¼Ä´æÆ÷µÄµØÖ·
 */
 void Stack::pop(int32_t* rd) {
-
+	if (m_ptr >= STACK_SIZE) {
+		std::cerr << "¿ÕÕ»³öÕ»£¡" << std::endl;
+		exit(-1);
+	}
+	std::memcpy(rd, m_stack + (m_ptr++), sizeof(int32_t));
+	m_status = STACK_OPERATE;
 }

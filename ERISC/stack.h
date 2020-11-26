@@ -10,11 +10,15 @@ class Stack {
 
 private:
 
-	int32_t m_stack[STACK_SIZE]{ 0 }; // 栈存储的内容
+	int32_t* m_stack; // 栈存储的内容
 	Status m_status{ NO_OPERATE }; // 栈的访问
 	int m_ptr{ STACK_SIZE }; // 栈顶指针
 
 public:
+
+	Stack() :m_stack(new int32_t[STACK_SIZE]()) {}
+
+	~Stack() { delete[] m_stack; }
 
 	/**
 	* @brief 重置状态
