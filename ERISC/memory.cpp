@@ -63,7 +63,7 @@ std::ostream& operator<<(std::ostream& out, const Memory& memory) {
 		if (i != 0 && i % 64 == 0) {
 			out << std::endl;
 		}
-		out << std::hex << std::setw(2) << std::setfill('0') << memory.m_memory[i] << " ";
+		out << std::hex << std::setw(2) << std::setfill('0') << (int32_t)memory.m_memory[i] << " ";
 	}
 	return out;
 }
