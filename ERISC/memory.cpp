@@ -30,12 +30,14 @@ Status Memory::getStatus(int i) const {
 * @param rs: 源寄存器地址，寄存器中存储的是内存的地址
 */
 void Memory::load(int32_t* rd, int32_t* rs) {
-	if (*rs < 0 || *rs >= MEMORY_SIZE - 4) {
+	if (*rs < 0 || *rs > MEMORY_SIZE - 4) {
 		std::cerr << "内存访问越界！" << std::endl;
 		exit(-1);
 	}
 	std::memcpy(rd, m_memory + *rs, sizeof(int32_t));
-	m_status[*rs >> 18] = VISITED;
+	for (int i = 0; i < 4; i++) {
+		m_status[(*rs + i) >> 18] = VISITED;
+	}
 }
 
 /**
@@ -44,12 +46,14 @@ void Memory::load(int32_t* rd, int32_t* rs) {
 * @param rd: 目标寄存器地址，寄存器中存储的是内存的地址
 */
 void Memory::store(int32_t* rs, int32_t* rd) {
-	if (*rd < 0 || *rs >= MEMORY_SIZE - 4) {
+	if (*rd < 0 || *rd > MEMORY_SIZE - 4) {
 		std::cerr << "内存访问越界！" << std::endl;
 		exit(-1);
 	}
 	std::memcpy(m_memory + *rd, rs, sizeof(int32_t));
-	m_status[*rd >> 18] = VISITED;
+	for (int i = 0; i < 4; i++) {
+		m_status[(*rd + i) >> 18] = VISITED;
+	}
 }
 
 /**
