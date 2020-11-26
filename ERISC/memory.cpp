@@ -1,10 +1,14 @@
 #include "memory.h"
+#include <iostream>
+#include <iomanip>
 
 /**
 * @brief 重置状态
 */
 void Memory::reset() {
-
+	for (auto& status : m_status) {
+		status = NO_OPERATE;
+	}
 }
 
 /**
@@ -13,7 +17,7 @@ void Memory::reset() {
 * @return 内存的状态
 */
 Status Memory::getStatus(int i) const {
-
+	return m_status[i];
 }
 
 /**
@@ -22,7 +26,12 @@ Status Memory::getStatus(int i) const {
 * @param rs: 源寄存器地址，寄存器中存储的是内存的地址
 */
 void Memory::load(int32_t* rd, int32_t* rs) {
-
+	if (*rs < 0 || *rs >= MEMORY_SIZE - 4) {
+		std::cerr << "内存访问越界！" << std::endl;
+		exit(-1);
+	}
+	std::memcpy(rd, m_memory + *rs, sizeof(int32_t));
+	m_status[*rs >> 18] = VISITED;
 }
 
 /**
@@ -31,7 +40,12 @@ void Memory::load(int32_t* rd, int32_t* rs) {
 * @param rd: 目标寄存器地址，寄存器中存储的是内存的地址
 */
 void Memory::store(int32_t* rs, int32_t* rd) {
-
+	if (*rd < 0 || *rs >= MEMORY_SIZE - 4) {
+		std::cerr << "内存访问越界！" << std::endl;
+		exit(-1);
+	}
+	std::memcpy(m_memory + *rd, rs, sizeof(int32_t));
+	m_status[*rd >> 18] = VISITED;
 }
 
 /**
@@ -41,5 +55,11 @@ void Memory::store(int32_t* rs, int32_t* rd) {
 * @return 输出流对象
 */
 std::ostream& operator<<(std::ostream& out, const Memory& memory) {
-
+	for (int i = 0; i < MEMORY_SIZE; i++) {
+		if (i != 0 && i % 64 == 0) {
+			out << std::endl;
+		}
+		out << std::hex << std::setw(2) << std::setfill('0') << memory.m_memory[i] << " ";
+	}
+	return out;
 }
