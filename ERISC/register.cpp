@@ -1,5 +1,8 @@
 #include "register.h"
 #include <iostream>
+#include <sstream>
+#include <cctype>
+#include <iomanip>
 
 // 寄存器的名字
 static const std::string names[64]{
@@ -38,6 +41,42 @@ static const std::string names[64]{
 };
 
 /**
+* @brift 判断一个字符串是否是立即数
+* @param str: 输入字符串
+* @return 是否是立即数
+*/
+static bool isImm(const std::string& str) {
+	if (str.empty()) {
+		std::cerr << "空字符串错误！" << std::endl;
+		std::exit(-1);
+	}
+	return std::isdigit(str[0]);
+}
+
+/**
+* @brief 把字符串根据十六进制或十进制转化为数字
+* @param str: 字符串
+* @return 转化成的数字
+*/
+static int32_t str2num(const std::string& str) {
+	int32_t result{ 0 };
+	std::istringstream is(str);
+	if (str.size() >= 2 && str[0] == '0' && str[1] == 'x') {
+		if (!(is >> std::hex >> result)) {
+			std::cerr << "十六进制数字输入错误！" << std::endl;
+			std::exit(-1);
+		}
+	}
+	else {
+		if (!(is >> result)) {
+			std::cerr << "十进制数字输入错误！" << std::endl;
+			std::exit(-1);
+		}
+	}
+	return result;
+}
+
+/**
 * @brief 根据名字获取寄存器的索引
 * @param 寄存器的名字
 * @return 寄存器的索引
@@ -49,7 +88,7 @@ int Register::lookup(const std::string& name) {
 		}
 	}
 	std::cerr << "寄存器名字错误！" << std::endl;
-	exit(-1);
+	std::exit(-1);
 }
 
 /**
