@@ -262,7 +262,7 @@ bool Register::beq(const std::string& rs1, const std::string& rs2) const {
 * @return 判断结果
 */
 bool Register::bne(const std::string& rs1, const std::string& rs2) const {
-
+	return m_register[lookup(rs1)] != m_register[lookup(rs2)];
 }
 
 /**
@@ -272,7 +272,7 @@ bool Register::bne(const std::string& rs1, const std::string& rs2) const {
 * @return 判断结果
 */
 bool Register::blt(const std::string& rs1, const std::string& rs2) const {
-
+	return m_register[lookup(rs1)] < m_register[lookup(rs2)];
 }
 
 /**
@@ -282,7 +282,7 @@ bool Register::blt(const std::string& rs1, const std::string& rs2) const {
 * @return 判断结果
 */
 bool Register::bge(const std::string& rs1, const std::string& rs2) const {
-
+	return m_register[lookup(rs1)] >= m_register[lookup(rs2)];
 }
 
 /**
