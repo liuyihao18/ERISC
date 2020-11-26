@@ -17,6 +17,10 @@ void Memory::reset() {
 * @return 内存的状态
 */
 Status Memory::getStatus(int i) const {
+	if (i < 0 || i >= MEMORY_STATUS_SIZE) {
+		std::cerr << "内存状态越界访问！" << std::endl;
+		exit(-1);
+	}
 	return m_status[i];
 }
 
