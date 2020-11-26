@@ -156,7 +156,13 @@ void Register::add(const std::string& rd, const std::string& rs1, const std::str
 * @param rs2_or_imm: 源寄存器2的名字或者立即数
 */
 void Register::sub(const std::string& rd, const std::string& rs1, const std::string& rs2_or_imm) {
-
+	if (isImm(rs2_or_imm)) {
+		int32_t imm = str2num(rs2_or_imm);
+		m_register[lookup(rd)] = m_register[lookup(rs1)] - imm;
+	}
+	else {
+		m_register[lookup(rd)] = m_register[lookup(rs1)] - m_register[lookup(rs2_or_imm)];
+	}
 }
 
 /**
@@ -166,7 +172,13 @@ void Register::sub(const std::string& rd, const std::string& rs1, const std::str
 * @param rs2_or_imm: 源寄存器2的名字或者立即数
 */
 void Register::mul(const std::string& rd, const std::string& rs1, const std::string& rs2_or_imm) {
-
+	if (isImm(rs2_or_imm)) {
+		int32_t imm = str2num(rs2_or_imm);
+		m_register[lookup(rd)] = m_register[lookup(rs1)] * imm;
+	}
+	else {
+		m_register[lookup(rd)] = m_register[lookup(rs1)] * m_register[lookup(rs2_or_imm)];
+	}
 }
 
 /**
@@ -176,7 +188,13 @@ void Register::mul(const std::string& rd, const std::string& rs1, const std::str
 * @param rs2_or_imm: 源寄存器2的名字或者立即数
 */
 void Register::div(const std::string& rd, const std::string& rs1, const std::string& rs2_or_imm) {
-
+	if (isImm(rs2_or_imm)) {
+		int32_t imm = str2num(rs2_or_imm);
+		m_register[lookup(rd)] = m_register[lookup(rs1)] / imm;
+	}
+	else {
+		m_register[lookup(rd)] = m_register[lookup(rs1)] / m_register[lookup(rs2_or_imm)];
+	}
 }
 
 /**
@@ -186,7 +204,13 @@ void Register::div(const std::string& rd, const std::string& rs1, const std::str
 * @param rs2_or_imm: 源寄存器2的名字或者立即数
 */
 void Register::rem(const std::string& rd, const std::string& rs1, const std::string& rs2_or_imm) {
-
+	if (isImm(rs2_or_imm)) {
+		int32_t imm = str2num(rs2_or_imm);
+		m_register[lookup(rd)] = m_register[lookup(rs1)] % imm;
+	}
+	else {
+		m_register[lookup(rd)] = m_register[lookup(rs1)] % m_register[lookup(rs2_or_imm)];
+	}
 }
 
 /**
@@ -196,7 +220,13 @@ void Register::rem(const std::string& rd, const std::string& rs1, const std::str
 * @param rs2_or_imm: 源寄存器2的名字或者立即数
 */
 void Register::AND(const std::string& rd, const std::string& rs1, const std::string& rs2_or_imm) {
-
+	if (isImm(rs2_or_imm)) {
+		int32_t imm = str2num(rs2_or_imm);
+		m_register[lookup(rd)] = m_register[lookup(rs1)] & imm;
+	}
+	else {
+		m_register[lookup(rd)] = m_register[lookup(rs1)] & m_register[lookup(rs2_or_imm)];
+	}
 }
 
 /**
@@ -206,7 +236,13 @@ void Register::AND(const std::string& rd, const std::string& rs1, const std::str
 * @param rs2_or_imm: 源寄存器2的名字或者立即数
 */
 void Register::OR(const std::string& rd, const std::string& rs1, const std::string& rs2_or_imm) {
-
+	if (isImm(rs2_or_imm)) {
+		int32_t imm = str2num(rs2_or_imm);
+		m_register[lookup(rd)] = m_register[lookup(rs1)] | imm;
+	}
+	else {
+		m_register[lookup(rd)] = m_register[lookup(rs1)] | m_register[lookup(rs2_or_imm)];
+	}
 }
 
 /**
