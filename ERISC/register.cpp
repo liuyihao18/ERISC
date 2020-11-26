@@ -124,7 +124,13 @@ Status Register::getStatus(int i) const {
 * @param rs_or_imm: 源寄存器的名字或者立即数
 */
 void Register::mov(const std::string& rd, const std::string& rs_or_imm) {
-
+	if (isImm(rs_or_imm)) {
+		int32_t imm = str2num(rs_or_imm);
+		m_register[lookup(rd)] = imm;
+	}
+	else {
+		m_register[lookup(rd)] = m_register[lookup(rs_or_imm)];
+	}
 }
 
 /**
