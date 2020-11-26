@@ -156,6 +156,10 @@ int32_t* Register::operator[](const std::string& name) {
 * @return ¼Ä´æÆ÷µÄ×´Ì¬
 */
 Status Register::getStatus(int i) const {
+	if (i < 0 || i >= REGISTER_SIZE) {
+		std::cerr << "¼Ä´æÆ÷×´Ì¬Ô½½ç·ÃÎÊ£¡" << std::endl;
+		exit(-1);
+	}
 	return m_status[i];
 }
 
