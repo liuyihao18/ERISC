@@ -4,6 +4,7 @@
 #include <string>
 #include <vector>
 
+// 行种类
 enum Type {
 	NONE = 0,
 	LOAD,
@@ -31,6 +32,7 @@ enum Type {
 	TYPE_SIZE
 };
 
+// 行
 struct Line
 {
 	Type type{ NONE };
@@ -39,9 +41,16 @@ struct Line
 	std::string op3{};
 };
 
+// 行标识
 struct LineLable {
 	std::string label{ 0 }; // 行标识
 	int index{ 0 };  // 行标识所在行的下一行
+};
+
+// 函数标识
+struct Function {
+	std::string name{}; // 函数名
+	int index{ 0 }; // ret所在行的下一行
 };
 
 class Input {
