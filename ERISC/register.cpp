@@ -140,7 +140,13 @@ void Register::mov(const std::string& rd, const std::string& rs_or_imm) {
 * @param rs2_or_imm: 源寄存器2的名字或者立即数
 */
 void Register::add(const std::string& rd, const std::string& rs1, const std::string& rs2_or_imm) {
-
+	if (isImm(rs2_or_imm)) {
+		int32_t imm = str2num(rs2_or_imm);
+		m_register[lookup(rd)] = m_register[lookup(rs1)] + imm;
+	}
+	else {
+		m_register[lookup(rd)] = m_register[lookup(rs1)] + m_register[lookup(rs2_or_imm)];
+	}
 }
 
 /**
