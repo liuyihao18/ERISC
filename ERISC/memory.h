@@ -12,11 +12,15 @@ class Memory {
 
 private:
 
-	int8_t m_memory[MEMORY_SIZE]{ 0 }; // 内存存储的内容
+	int8_t* m_memory; // 内存存储的内容
 	Status m_status[MEMORY_STATUS_SIZE]{ NO_OPERATE }; // 内存的访问
 
 public:
 	
+	Memory() :m_memory(new int8_t[MEMORY_SIZE]()) {}
+
+	~Memory() { delete[] m_memory; }
+
 	/**
 	* @brief 重置状态
 	*/
