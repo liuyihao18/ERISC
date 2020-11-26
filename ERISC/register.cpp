@@ -293,7 +293,7 @@ bool Register::bge(const std::string& rs1, const std::string& rs2) const {
 */
 std::ostream& operator<<(std::ostream& out, const Register& reg) {
 	for (const auto& a_reg : reg.m_register) {
-		out << std::hex << a_reg << " ";
+		out << std::hex << std::setw(8) << std::setfill('0') << a_reg << " ";
 	}
 	return out;
 }
