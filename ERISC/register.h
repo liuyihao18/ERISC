@@ -119,7 +119,7 @@ public:
 	* @param rs2: 源寄存器2的名字
 	* @return 判断结果
 	*/
-	bool beq(const std::string& rs1, const std::string& rs2) const;
+	bool beq(const std::string& rs1, const std::string& rs2);
 
 	/**
 	* @brief 判断寄存器rs1和寄存器rs2中值是否不等
@@ -127,7 +127,7 @@ public:
 	* @param rs2: 源寄存器2的名字
 	* @return 判断结果
 */
-	bool bne(const std::string& rs1, const std::string& rs2) const;
+	bool bne(const std::string& rs1, const std::string& rs2);
 
 	/**
 	* @brief 判断寄存器rs1的值是否小于寄存器rs2中值
@@ -135,7 +135,7 @@ public:
 	* @param rs2: 源寄存器2的名字
 	* @return 判断结果
 	*/
-	bool blt(const std::string& rs1, const std::string& rs2) const;
+	bool blt(const std::string& rs1, const std::string& rs2);
 
 	/**
 	* @brief 判断寄存器rs1的值是否大于等于寄存器rs2中值
@@ -143,7 +143,7 @@ public:
 	* @param rs2: 源寄存器2的名字
 	* @return 判断结果
 	*/
-	bool bge(const std::string& rs1, const std::string& rs2) const;
+	bool bge(const std::string& rs1, const std::string& rs2);
 
 	/**
 	* @brief 输出寄存器的内容
