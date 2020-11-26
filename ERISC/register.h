@@ -30,6 +30,13 @@ public:
 	void reset();
 
 	/**
+	* @brief 设置状态，针对在Register类外调用operator[]时
+	* param name: 寄存器的名字
+	* param status: 状态
+	*/
+	void setStatus(const std::string& name, Status status);
+
+	/**
 	* @brief 根据名字返回相应寄存器的地址
 	* @param name: 寄存器的名字
 	* @return 寄存器的地址
