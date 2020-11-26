@@ -1,8 +1,8 @@
 #include "memory.h"
 
 /**
-	* @brief ÖØÖÃ×´Ì¬
-	*/
+* @brief ÖØÖÃ×´Ì¬
+*/
 void Memory::reset() {
 
 }

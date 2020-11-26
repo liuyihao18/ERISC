@@ -6,9 +6,9 @@
 
 // ¼Ä´æÆ÷µÄÃû×Ö
 static const std::string names[64]{
-	"x0", "zero",
-	"x1", "ra",
-	"x2", "sp",
+"x0", "zero",
+"x1", "ra",
+"x2", "sp",
 "x3", "gp",
 "x4", "tp",
 "x5", "t0",
