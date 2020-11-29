@@ -137,6 +137,8 @@ void Computer::main() {
 			input.jumpLine(*temp);
 			delete temp;
 		case DRAW:
+			draw();
+			break;
 		case END:
 		case TYPE_SIZE:
 		default:
