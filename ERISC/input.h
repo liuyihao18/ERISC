@@ -59,7 +59,7 @@ private:
 
 	std::vector<Line> m_lines{}; // 存储的所有行
 	std::vector<LineLable> m_linelabels{}; // 存储的所有行标识
-	std::vector<Function> m_functions{};//存储所有的函数标识
+	std::vector<Function> m_functions{}; // 存储所有的函数标识
 	int m_current_indx{ 0 }; // 当前行号
 
 public:

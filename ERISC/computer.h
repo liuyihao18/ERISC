@@ -15,7 +15,8 @@ private:
 	Stack m_stack;
 	Register m_register;
 	Input input;
-	int draw_times=0;
+	int draw_times = 0;
+
 public:
 
 	Computer(std::string filename) 
