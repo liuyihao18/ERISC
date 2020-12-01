@@ -4,7 +4,7 @@
 #include <cmath>
 #include <memory.h>
 #include <stdlib.h>
-
+#include <fstream>
 #pragma pack(2)
 typedef unsigned char  BYTE;
 typedef unsigned short WORD;
@@ -168,7 +168,7 @@ void Computer::draw() {
 	const int height = 300;
 	const int width = 1040;
 	const int size = height * width * 3;
-	double x, y;
+	int x, y;
 	int index;
 
 	// Part.1 Create Bitmap File Header
@@ -254,10 +254,10 @@ void Computer::draw() {
 	}
 	//寄存器绘制
 	for (int i = 0; i < 32; i++) {
-		double x_start, y_start;
+		int x_start, y_start;
 		x_start = 75 * (i % 8) + 1;
 		y_start = 200 - 50 * (i / 8) - 1;
-		double x_end, y_end;
+		int x_end, y_end;
 		x_end = x_start + 73;
 		y_end = y_start - 48;
 		switch (m_register.getStatus(i)) {
@@ -299,10 +299,10 @@ void Computer::draw() {
 
 	//内存空间绘制
 	for (int i = 0; i < 16; i++) {
-		double x_start, y_start;
+		int x_start, y_start;
 		x_start = 600 + (i % 4) * 50 + 1;
 		y_start = 200 - 50 * (i / 4) - 1;
-		double x_end, y_end;
+		int x_end, y_end;
 		x_end = x_start + 48;
 		y_end = y_start - 48;
 		switch (m_memory.getStatus(i)) {
@@ -323,10 +323,10 @@ void Computer::draw() {
 	//内存绘制完成
 	//栈空间绘制
 	{
-		double x_start, y_start;
+		int x_start, y_start;
 		x_start = 800 + 1;
 		y_start = 200 - 1;
-		double x_end, y_end;
+		int x_end, y_end;
 		x_end = width - 2;
 		y_end = 1;
 		if (m_stack.getStatus() == STACK_OPERATE) {
@@ -347,6 +347,11 @@ void Computer::draw() {
 	strcat(num_str, ".bmp");
 	FILE* output = fopen(num_str, "wb");
 
+	std::ofstream file(num_str);
+	if (!file.is_open()) {
+		std::cerr << "绘制bmp图像到文件时错误";
+		exit(-1);
+	}
 	if (output == NULL)
 	{
 		printf("Cannot open file!\n");
@@ -368,5 +373,12 @@ void Computer::draw() {
 * @brief 把寄存器、内存中的值写到文件result.txt中
 */
 void Computer::write() {
-
+	std::ofstream file("result.txt");
+	if (!file.is_open()) {
+		std::cerr << "end 命令打开文件时出现错误";
+		exit(-1);
+	}
+	file << m_register<<std::endl;
+	file << m_memory;
+	file.close();
 }
