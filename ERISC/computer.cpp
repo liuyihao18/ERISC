@@ -148,7 +148,8 @@ void Computer::main() {
 			input.nextLine();
 			break;
 		case END:
-			break;
+			write();
+			return;
 		default:
 			std::cerr << "未知行种类！" << std::endl;
 			exit(-1);
