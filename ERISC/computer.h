@@ -32,6 +32,11 @@ public:
 	*/
 	void draw();
 
+	/**
+	* @brief 把寄存器、内存中的值写到文件result.txt中
+	*/
+	void write();
+
 };
 
 #endif // !__COMPUTER_H__

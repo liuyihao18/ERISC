@@ -362,3 +362,10 @@ void Computer::draw() {
 	m_stack.reset();
 	m_register.reset();
 }
+
+/**
+* @brief 把寄存器、内存中的值写到文件result.txt中
+*/
+void Computer::write() {
+
+}
