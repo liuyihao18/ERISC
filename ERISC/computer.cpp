@@ -1,10 +1,10 @@
 #include "computer.h"
-#include<cstdio>
-#include<iostream>
-#include<stdio.h>
+#include <cstdio>
+#include <iostream>
 #include <cmath>
-#include<memory.h>
+#include <memory.h>
 #include <stdlib.h>
+
 #pragma pack(2)
 typedef unsigned char  BYTE;
 typedef unsigned short WORD;
@@ -31,15 +31,23 @@ typedef struct {
 	DWORD      biClrUsed;
 	DWORD      biClrImportant;
 } BITMAPINFOHEADER;
+
 /**
 * @brief 程序运行主函数
 */
 void Computer::main() {
-	Line current_line;
+	// 主循环
 	while (input.hasMoreInput()) {
-		current_line = input.getCurrentLine();
+		Line current_line = input.getCurrentLine();
+		int temp{ 0 };
 		switch (current_line.type)
 		{
+		case LOAD:
+			m_memory.load(m_register[current_line.op1], m_register[current_line.op2]);
+			m_register.setStatus(current_line.op1, WRITE);
+			m_register.setStatus(current_line.op2, READ);
+			input.nextLine();
+			break;
 		case STORE:
 			m_memory.store(m_register[current_line.op1], m_register[current_line.op2]);
 			m_register.setStatus(current_line.op1, READ);
@@ -49,60 +57,47 @@ void Computer::main() {
 		case PUSH:
 			m_stack.push(m_register[current_line.op1]);
 			m_register.setStatus(current_line.op1, READ);
+			input.nextLine();
 			break;
 		case POP:
 			m_stack.pop(m_register[current_line.op1]);
-			m_register.setStatus(current_line.op1,READ);
+			m_register.setStatus(current_line.op1, WRITE);
+			input.nextLine();
 			break;
 		case MOV:
 			m_register.mov(current_line.op1, current_line.op2);
-			if(current_line.op2[0]!='0'){
-				m_register.setStatus(current_line.op2, READ);
-			}
+			input.nextLine();
 			break;
 		case ADD:
-			m_register.add(current_line.op1, current_line.op2,current_line.op3);
-			if (current_line.op3[0] != '0') {
-				m_register.setStatus(current_line.op3, READ);
-			}
+			m_register.add(current_line.op1, current_line.op2, current_line.op3);
+			input.nextLine();
 			break;
 		case SUB:
-			m_register.sub(current_line.op1, current_line.op2,current_line.op3);
-			if (current_line.op3[0] != '0') {
-				m_register.setStatus(current_line.op3, READ);
-			}
+			m_register.sub(current_line.op1, current_line.op2, current_line.op3);
+			input.nextLine();
 			break;
 		case MUL:
 			m_register.mul(current_line.op1, current_line.op2, current_line.op3);
-			if (current_line.op3[0] != '0') {
-				m_register.setStatus(current_line.op3, READ);
-			}
+			input.nextLine();
 			break;
 		case DIV:
 			m_register.div(current_line.op1, current_line.op2, current_line.op3);
-			if (current_line.op3[0] != '0') {
-				m_register.setStatus(current_line.op3, READ);
-			}
+			input.nextLine();
 			break;
 		case REM:
 			m_register.rem(current_line.op1, current_line.op2, current_line.op3);
-			if (current_line.op3[0] != '0') {
-				m_register.setStatus(current_line.op3, READ);
-			}
+			input.nextLine();
 			break;
 		case AND:
 			m_register.AND(current_line.op1, current_line.op2, current_line.op3);
-			if (current_line.op3[0] != '0') {
-				m_register.setStatus(current_line.op3, READ);
-			}
+			input.nextLine();
 			break;
 		case OR:
 			m_register.OR(current_line.op1, current_line.op2, current_line.op3);
-			if (current_line.op3[0] != '0') {
-				m_register.setStatus(current_line.op3, READ);
-			}
+			input.nextLine();
 			break;
 		case LINE_LABLE:
+			input.nextLine();
 			break;
 		case JAL:
 			input.jumpLine(current_line.op1);
@@ -111,37 +106,52 @@ void Computer::main() {
 			if (m_register.beq(current_line.op1, current_line.op2)) {
 				input.jumpLine(current_line.op3);
 			}
+			else {
+				input.nextLine();
+			}
 			break;
 		case BNE:
 			if (m_register.bne(current_line.op1, current_line.op2)) {
 				input.jumpLine(current_line.op3);
+			}
+			else {
+				input.nextLine();
 			}
 			break;
 		case BLT:
 			if (m_register.blt(current_line.op1, current_line.op2)) {
 				input.jumpLine(current_line.op3);
 			}
+			else {
+				input.nextLine();
+			}
 			break;
 		case BGE:
 			if (m_register.bge(current_line.op1, current_line.op2)) {
 				input.jumpLine(current_line.op3);
 			}
+			else {
+				input.nextLine();
+			}
 			break;
 		case CALL:
-			m_stack.push(input.getCurrentIndex+1);
+			temp = input.getCurrentIndex() + 1;
+			m_stack.push(&temp);
 			input.jumpLine(current_line.op1);
 			break;
 		case RET:
-			int* temp=new int();
-			m_stack.pop(temp);
-			input.jumpLine(*temp);
-			delete temp;
+			m_stack.pop(&temp);
+			input.jumpLine(temp);
+			break;
 		case DRAW:
 			draw();
+			input.nextLine();
 			break;
 		case END:
-		case TYPE_SIZE:
+			break;
 		default:
+			std::cerr << "未知行种类！" << std::endl;
+			exit(-1);
 			break;
 		}
 	}
@@ -244,8 +254,8 @@ void Computer::draw() {
 	//寄存器绘制
 	for (int i = 0; i < 32; i++) {
 		double x_start, y_start;
-		x_start = 75 * (i % 8)+1;
-		y_start = 200 - 50 * (i / 8)-1;
+		x_start = 75 * (i % 8) + 1;
+		y_start = 200 - 50 * (i / 8) - 1;
 		double x_end, y_end;
 		x_end = x_start + 73;
 		y_end = y_start - 48;
