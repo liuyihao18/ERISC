@@ -5,6 +5,7 @@
 #include <memory.h>
 #include <stdlib.h>
 #include <fstream>
+
 #pragma pack(2)
 typedef unsigned char  BYTE;
 typedef unsigned short WORD;
@@ -378,7 +379,7 @@ void Computer::write() {
 		std::cerr << "end 命令打开文件时出现错误";
 		exit(-1);
 	}
-	file << m_register<<std::endl;
+	file << m_register << std::endl;
 	file << m_memory;
 	file.close();
 }
