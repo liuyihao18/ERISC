@@ -6,20 +6,21 @@
 #include <stdlib.h>
 #include <fstream>
 
+using BYTE = unsigned char;
+using WORD = unsigned short;
+using DWORD = unsigned long;
+using LONG = long;
+
 #pragma pack(2)
-typedef unsigned char  BYTE;
-typedef unsigned short WORD;
-typedef unsigned long  DWORD;
-typedef long    LONG;
-typedef struct {
+struct BITMAPFILEHEADER {
 	WORD    bfType;
 	DWORD   bfSize;
 	WORD    bfReserved1;
 	WORD    bfReserved2;
 	DWORD   bfOffBits;
-} BITMAPFILEHEADER;
+};
 
-typedef struct {
+struct BITMAPINFOHEADER {
 	DWORD      biSize;
 	LONG       biWidth;
 	LONG       biHeight;
@@ -31,7 +32,7 @@ typedef struct {
 	LONG       biYPelsPerMeter;
 	DWORD      biClrUsed;
 	DWORD      biClrImportant;
-} BITMAPINFOHEADER;
+};
 
 /**
 * @brief 程序运行主函数
