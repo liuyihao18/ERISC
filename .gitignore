@@ -4,3 +4,5 @@ Release/
 ERISC/Debug/
 .DS_Store
 UpgradeLog.htm
+ERISC/*.bmp
+ERISC/result.txt
