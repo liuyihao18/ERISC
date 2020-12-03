@@ -7,7 +7,7 @@
 */
 void Memory::reset() {
 	for (auto& status : m_status) {
-		status = NO_OPERATE;
+		status = Status::NO_OPERATE;
 	}
 }
 
@@ -36,7 +36,7 @@ void Memory::load(int32_t* rd, int32_t* rs) {
 	}
 	std::memcpy(rd, m_memory + *rs, sizeof(int32_t));
 	for (int i = 0; i < 4; i++) {
-		m_status[(*rs + i) >> 18] = VISITED;
+		m_status[(*rs + i) >> 18] = Status::VISITED;
 	}
 }
 
@@ -52,7 +52,7 @@ void Memory::store(int32_t* rs, int32_t* rd) {
 	}
 	std::memcpy(m_memory + *rd, rs, sizeof(int32_t));
 	for (int i = 0; i < 4; i++) {
-		m_status[(*rd + i) >> 18] = VISITED;
+		m_status[(*rd + i) >> 18] = Status::VISITED;
 	}
 }
 

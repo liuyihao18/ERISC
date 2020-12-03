@@ -11,7 +11,7 @@ class Stack {
 private:
 
 	int32_t* m_stack; // 栈存储的内容
-	Status m_status{ NO_OPERATE }; // 栈的访问
+	Status m_status{ Status::NO_OPERATE }; // 栈的访问
 	int m_ptr{ STACK_SIZE }; // 栈顶指针
 
 public:

@@ -13,7 +13,7 @@ class Memory {
 private:
 
 	int8_t* m_memory; // 内存存储的内容
-	Status m_status[MEMORY_STATUS_SIZE]{ NO_OPERATE }; // 内存的访问
+	Status m_status[MEMORY_STATUS_SIZE]{ Status::NO_OPERATE }; // 内存的访问
 
 public:
 	

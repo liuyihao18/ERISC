@@ -2,7 +2,7 @@
 #ifndef __STATUS_H__
 #define __STATUS_H__
 
-enum Status
+enum class Status
 {
 	NO_OPERATE = 0, // 没有操作，白色
 	WRITE, // 写入，红

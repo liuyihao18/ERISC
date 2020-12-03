@@ -96,7 +96,7 @@ int Register::lookup(const std::string& name) const {
 */
 void Register::reset() {
 	for (auto& status : m_status) {
-		status = NO_OPERATE;
+		status = Status::NO_OPERATE;
 	}
 }
 
@@ -108,32 +108,32 @@ void Register::reset() {
 void Register::setStatus(const std::string& name, Status status) {
 	int index = lookup(name);
 	switch (status) {
-	case WRITE:
+	case Status::WRITE:
 		switch (m_status[index]) {
-		case NO_OPERATE:
-			m_status[index] = WRITE;
+		case Status::NO_OPERATE:
+			m_status[index] = Status::WRITE;
 			break;
-		case READ:
-			m_status[index] = READ_WRITE;
+		case Status::READ:
+			m_status[index] = Status::READ_WRITE;
 			break;
 		default:
 			break;
 		}
 		break;
-	case READ:
+	case Status::READ:
 		switch (m_status[index]) {
-		case NO_OPERATE:
-			m_status[index] = READ;
+		case Status::NO_OPERATE:
+			m_status[index] = Status::READ;
 			break;
-		case WRITE:
-			m_status[index] = READ_WRITE;
+		case Status::WRITE:
+			m_status[index] = Status::READ_WRITE;
 			break;
 		default:
 			break;
 		}
 		break;
-	case READ_WRITE:
-		m_status[index] = READ_WRITE;
+	case Status::READ_WRITE:
+		m_status[index] = Status::READ_WRITE;
 		break;
 	default:
 		std::cerr << "¼Ä´æÆ÷×´Ì¬ÉèÖÃ´íÎó£¡" << std::endl;
@@ -175,9 +175,9 @@ void Register::mov(const std::string& rd, const std::string& rs_or_imm) {
 	}
 	else {
 		m_register[lookup(rd)] = m_register[lookup(rs_or_imm)];
-		setStatus(rs_or_imm, READ);
+		setStatus(rs_or_imm, Status::READ);
 	}
-	setStatus(rd, WRITE);
+	setStatus(rd, Status::WRITE);
 }
 
 /**
@@ -193,10 +193,10 @@ void Register::add(const std::string& rd, const std::string& rs1, const std::str
 	}
 	else {
 		m_register[lookup(rd)] = m_register[lookup(rs1)] + m_register[lookup(rs2_or_imm)];
-		setStatus(rs2_or_imm, READ);
+		setStatus(rs2_or_imm, Status::READ);
 	}
-	setStatus(rd, WRITE);
-	setStatus(rs1, READ);
+	setStatus(rd, Status::WRITE);
+	setStatus(rs1, Status::READ);
 }
 
 /**
@@ -212,10 +212,10 @@ void Register::sub(const std::string& rd, const std::string& rs1, const std::str
 	}
 	else {
 		m_register[lookup(rd)] = m_register[lookup(rs1)] - m_register[lookup(rs2_or_imm)];
-		setStatus(rs2_or_imm, READ);
+		setStatus(rs2_or_imm, Status::READ);
 	}
-	setStatus(rd, WRITE);
-	setStatus(rs1, READ);
+	setStatus(rd, Status::WRITE);
+	setStatus(rs1, Status::READ);
 }
 
 /**
@@ -231,10 +231,10 @@ void Register::mul(const std::string& rd, const std::string& rs1, const std::str
 	}
 	else {
 		m_register[lookup(rd)] = m_register[lookup(rs1)] * m_register[lookup(rs2_or_imm)];
-		setStatus(rs2_or_imm, READ);
+		setStatus(rs2_or_imm, Status::READ);
 	}
-	setStatus(rd, WRITE);
-	setStatus(rs1, READ);
+	setStatus(rd, Status::WRITE);
+	setStatus(rs1, Status::READ);
 }
 
 /**
@@ -250,10 +250,10 @@ void Register::div(const std::string& rd, const std::string& rs1, const std::str
 	}
 	else {
 		m_register[lookup(rd)] = m_register[lookup(rs1)] / m_register[lookup(rs2_or_imm)];
-		setStatus(rs2_or_imm, READ);
+		setStatus(rs2_or_imm, Status::READ);
 	}
-	setStatus(rd, WRITE);
-	setStatus(rs1, READ);
+	setStatus(rd, Status::WRITE);
+	setStatus(rs1, Status::READ);
 }
 
 /**
@@ -269,10 +269,10 @@ void Register::rem(const std::string& rd, const std::string& rs1, const std::str
 	}
 	else {
 		m_register[lookup(rd)] = m_register[lookup(rs1)] % m_register[lookup(rs2_or_imm)];
-		setStatus(rs2_or_imm, READ);
+		setStatus(rs2_or_imm, Status::READ);
 	}
-	setStatus(rd, WRITE);
-	setStatus(rs1, READ);
+	setStatus(rd, Status::WRITE);
+	setStatus(rs1, Status::READ);
 }
 
 /**
@@ -288,10 +288,10 @@ void Register::AND(const std::string& rd, const std::string& rs1, const std::str
 	}
 	else {
 		m_register[lookup(rd)] = m_register[lookup(rs1)] & m_register[lookup(rs2_or_imm)];
-		setStatus(rs2_or_imm, READ);
+		setStatus(rs2_or_imm, Status::READ);
 	}
-	setStatus(rd, WRITE);
-	setStatus(rs1, READ);
+	setStatus(rd, Status::WRITE);
+	setStatus(rs1, Status::READ);
 }
 
 /**
@@ -307,10 +307,10 @@ void Register::OR(const std::string& rd, const std::string& rs1, const std::stri
 	}
 	else {
 		m_register[lookup(rd)] = m_register[lookup(rs1)] | m_register[lookup(rs2_or_imm)];
-		setStatus(rs2_or_imm, READ);
+		setStatus(rs2_or_imm, Status::READ);
 	}
-	setStatus(rd, WRITE);
-	setStatus(rs1, READ);
+	setStatus(rd, Status::WRITE);
+	setStatus(rs1, Status::READ);
 }
 
 /**
@@ -320,8 +320,8 @@ void Register::OR(const std::string& rd, const std::string& rs1, const std::stri
 * @return ÅÐ¶Ï½á¹û
 */
 bool Register::beq(const std::string& rs1, const std::string& rs2) {
-	setStatus(rs1, READ);
-	setStatus(rs2, READ);
+	setStatus(rs1, Status::READ);
+	setStatus(rs2, Status::READ);
 	return m_register[lookup(rs1)] == m_register[lookup(rs2)];
 }
 
@@ -332,8 +332,8 @@ bool Register::beq(const std::string& rs1, const std::string& rs2) {
 * @return ÅÐ¶Ï½á¹û
 */
 bool Register::bne(const std::string& rs1, const std::string& rs2) {
-	setStatus(rs1, READ);
-	setStatus(rs2, READ);
+	setStatus(rs1, Status::READ);
+	setStatus(rs2, Status::READ);
 	return m_register[lookup(rs1)] != m_register[lookup(rs2)];
 }
 
@@ -344,8 +344,8 @@ bool Register::bne(const std::string& rs1, const std::string& rs2) {
 * @return ÅÐ¶Ï½á¹û
 */
 bool Register::blt(const std::string& rs1, const std::string& rs2) {
-	setStatus(rs1, READ);
-	setStatus(rs2, READ);
+	setStatus(rs1, Status::READ);
+	setStatus(rs2, Status::READ);
 	return m_register[lookup(rs1)] < m_register[lookup(rs2)];
 }
 
@@ -356,8 +356,8 @@ bool Register::blt(const std::string& rs1, const std::string& rs2) {
 * @return ÅÐ¶Ï½á¹û
 */
 bool Register::bge(const std::string& rs1, const std::string& rs2) {
-	setStatus(rs1, READ);
-	setStatus(rs2, READ);
+	setStatus(rs1, Status::READ);
+	setStatus(rs2, Status::READ);
 	return m_register[lookup(rs1)] >= m_register[lookup(rs2)];
 }
 

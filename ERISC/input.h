@@ -5,7 +5,7 @@
 #include <vector>
 
 // 行种类
-enum Type {
+enum class Type {
 	NONE = 0,
 	LOAD,
 	STORE,
@@ -35,7 +35,7 @@ enum Type {
 // 行
 struct Line
 {
-	Type type{ NONE };
+	Type type{ Type::NONE };
 	std::string op1{};
 	std::string op2{};
 	std::string op3{};
@@ -44,13 +44,13 @@ struct Line
 // 行标识
 struct LineLable {
 	std::string label{ 0 }; // 行标识
-	int index{ 0 };  // 行标识所在行的下一行
+	std::vector<Line>::size_type index{ 0 };  // 行标识所在行的下一行
 };
 
 // 函数标识
 struct Function {
 	std::string name{}; // 函数名
-	int index{ 0 }; // ret所在行的下一行
+	std::vector<Line>::size_type index{ 0 }; // ret所在行的下一行
 };
 
 class Input {
@@ -60,7 +60,7 @@ private:
 	std::vector<Line> m_lines{}; // 存储的所有行
 	std::vector<LineLable> m_linelabels{}; // 存储的所有行标识
 	std::vector<Function> m_functions{}; // 存储所有的函数标识
-	int m_current_index{ 0 }; // 当前行号
+	decltype(m_lines.size()) m_current_index{ 0 }; // 当前行号
 
 public:
 	

@@ -45,67 +45,67 @@ void Computer::main() {
 		int temp{ 0 };
 		switch (current_line.type)
 		{
-		case LOAD:
+		case Type::LOAD:
 			m_memory.load(m_register[current_line.op1], m_register[current_line.op2]);
-			m_register.setStatus(current_line.op1, WRITE);
-			m_register.setStatus(current_line.op2, READ);
+			m_register.setStatus(current_line.op1, Status::WRITE);
+			m_register.setStatus(current_line.op2, Status::READ);
 			input.nextLine();
 			break;
-		case STORE:
+		case Type::STORE:
 			m_memory.store(m_register[current_line.op1], m_register[current_line.op2]);
-			m_register.setStatus(current_line.op1, READ);
-			m_register.setStatus(current_line.op2, READ);
+			m_register.setStatus(current_line.op1, Status::READ);
+			m_register.setStatus(current_line.op2, Status::READ);
 			input.nextLine();
 			break;
-		case PUSH:
+		case Type::PUSH:
 			m_stack.push(m_register[current_line.op1]);
-			m_register.setStatus(current_line.op1, READ);
+			m_register.setStatus(current_line.op1, Status::READ);
 			input.nextLine();
 			break;
-		case POP:
+		case Type::POP:
 			m_stack.pop(m_register[current_line.op1]);
-			m_register.setStatus(current_line.op1, WRITE);
+			m_register.setStatus(current_line.op1, Status::WRITE);
 			input.nextLine();
 			break;
-		case MOV:
+		case Type::MOV:
 			m_register.mov(current_line.op1, current_line.op2);
 			input.nextLine();
 			break;
-		case ADD:
+		case Type::ADD:
 			m_register.add(current_line.op1, current_line.op2, current_line.op3);
 			input.nextLine();
 			break;
-		case SUB:
+		case Type::SUB:
 			m_register.sub(current_line.op1, current_line.op2, current_line.op3);
 			input.nextLine();
 			break;
-		case MUL:
+		case Type::MUL:
 			m_register.mul(current_line.op1, current_line.op2, current_line.op3);
 			input.nextLine();
 			break;
-		case DIV:
+		case Type::DIV:
 			m_register.div(current_line.op1, current_line.op2, current_line.op3);
 			input.nextLine();
 			break;
-		case REM:
+		case Type::REM:
 			m_register.rem(current_line.op1, current_line.op2, current_line.op3);
 			input.nextLine();
 			break;
-		case AND:
+		case Type::AND:
 			m_register.AND(current_line.op1, current_line.op2, current_line.op3);
 			input.nextLine();
 			break;
-		case OR:
+		case Type::OR:
 			m_register.OR(current_line.op1, current_line.op2, current_line.op3);
 			input.nextLine();
 			break;
-		case LINE_LABLE:
+		case Type::LINE_LABLE:
 			input.nextLine();
 			break;
-		case JAL:
+		case Type::JAL:
 			input.jumpLine(current_line.op1);
 			break;
-		case BEQ:
+		case Type::BEQ:
 			if (m_register.beq(current_line.op1, current_line.op2)) {
 				input.jumpLine(current_line.op3);
 			}
@@ -113,7 +113,7 @@ void Computer::main() {
 				input.nextLine();
 			}
 			break;
-		case BNE:
+		case Type::BNE:
 			if (m_register.bne(current_line.op1, current_line.op2)) {
 				input.jumpLine(current_line.op3);
 			}
@@ -121,7 +121,7 @@ void Computer::main() {
 				input.nextLine();
 			}
 			break;
-		case BLT:
+		case Type::BLT:
 			if (m_register.blt(current_line.op1, current_line.op2)) {
 				input.jumpLine(current_line.op3);
 			}
@@ -129,7 +129,7 @@ void Computer::main() {
 				input.nextLine();
 			}
 			break;
-		case BGE:
+		case Type::BGE:
 			if (m_register.bge(current_line.op1, current_line.op2)) {
 				input.jumpLine(current_line.op3);
 			}
@@ -137,20 +137,20 @@ void Computer::main() {
 				input.nextLine();
 			}
 			break;
-		case CALL:
+		case Type::CALL:
 			temp = input.getCurrentIndex() + 1;
 			m_stack.push(&temp);
 			input.jumpLine(current_line.op1);
 			break;
-		case RET:
+		case Type::RET:
 			m_stack.pop(&temp);
 			input.jumpLine(temp);
 			break;
-		case DRAW:
+		case Type::DRAW:
 			draw();
 			input.nextLine();
 			break;
-		case END:
+		case Type::END:
 			write();
 			return;
 		default:
@@ -264,9 +264,9 @@ void Computer::draw() {
 		x_end = x_start + 73;
 		y_end = y_start - 48;
 		switch (m_register.getStatus(i)) {
-		case NO_OPERATE:
+		case Status::NO_OPERATE:
 			break;
-		case WRITE:
+		case Status::WRITE:
 			for (x = x_start; x <= x_end; x++) {
 				for (y = y_start; y >= y_end; y--) {
 					index = y * width * 3 + x * 3;
@@ -276,7 +276,7 @@ void Computer::draw() {
 				}
 			}
 			break;
-		case READ:
+		case Status::READ:
 			for (x = x_start; x <= x_end; x++) {
 				for (y = y_start; y >= y_end; y--) {
 					index = y * width * 3 + x * 3;
@@ -286,7 +286,7 @@ void Computer::draw() {
 				}
 			}
 			break;
-		case READ_WRITE:
+		case Status::READ_WRITE:
 			for (x = x_start; x <= x_end; x++) {
 				for (y = y_start; y >= y_end; y--) {
 					index = y * width * 3 + x * 3;
@@ -309,9 +309,9 @@ void Computer::draw() {
 		x_end = x_start + 48;
 		y_end = y_start - 48;
 		switch (m_memory.getStatus(i)) {
-		case NO_OPERATE:
+		case Status::NO_OPERATE:
 			break;
-		case VISITED:
+		case Status::VISITED:
 			for (x = x_start; x <= x_end; x++) {
 				for (y = y_start; y >= y_end; y--) {
 					index = y * width * 3 + x * 3;
@@ -332,7 +332,7 @@ void Computer::draw() {
 		int x_end, y_end;
 		x_end = width - 2;
 		y_end = 1;
-		if (m_stack.getStatus() == STACK_OPERATE) {
+		if (m_stack.getStatus() == Status::STACK_OPERATE) {
 			for (x = x_start; x <= x_end; x++) {
 				for (y = y_start; y >= y_end; y--) {
 					index = y * width * 3 + x * 3;

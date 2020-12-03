@@ -70,10 +70,10 @@ Input::Input(std::string filename) {
 		if (!line.empty()) {
 			if (line[line.size() - 1] == ':') { //结尾为:,行标识符或者函数
 				std::string s{};
-				for (int i = 0; i <= line.size() - 2; i++) {
+				for (decltype(line.size()) i = 0; i <= line.size() - 2; i++) {
 					s += line[i];
 				}
-				line_struct.type = LINE_LABLE;
+				line_struct.type = Type::LINE_LABLE;
 				line_struct.op1 = s;
 				m_lines.push_back(line_struct);
 				LineLable line_label { s, m_current_index + 1 };
@@ -86,7 +86,7 @@ Input::Input(std::string filename) {
 				if (a1 == "LOAD") {
 					std::string a2 = split_result[1];
 					std::string a3 = split_result[2];
-					line_struct.type = LOAD;
+					line_struct.type = Type::LOAD;
 					line_struct.op1 = a2;
 					line_struct.op2 = a3;
 					m_lines.push_back(line_struct);
@@ -94,27 +94,27 @@ Input::Input(std::string filename) {
 				else if (a1 == "STORE") {
 					std::string a2 = split_result[1];
 					std::string a3 = split_result[2];
-					line_struct.type = STORE;
+					line_struct.type = Type::STORE;
 					line_struct.op1 = a2;
 					line_struct.op2 = a3;
 					m_lines.push_back(line_struct);
 				}
 				else if (a1 == "PUSH") {
 					std::string a2 = split_result[1];
-					line_struct.type = PUSH;
+					line_struct.type = Type::PUSH;
 					line_struct.op1 = a2;
 					m_lines.push_back(line_struct);
 				}
 				else if (a1 == "POP") {
 					std::string a2 = split_result[1];
-					line_struct.type = POP;
+					line_struct.type = Type::POP;
 					line_struct.op1 = a2;
 					m_lines.push_back(line_struct);
 				}
 				else if (a1 == "MOV") {
 					std::string a2 = split_result[1];
 					std::string a3 = split_result[2];
-					line_struct.type = MOV;
+					line_struct.type = Type::MOV;
 					line_struct.op1 = a2;
 					line_struct.op2 = a3;
 					m_lines.push_back(line_struct);
@@ -123,7 +123,7 @@ Input::Input(std::string filename) {
 					std::string a2 = split_result[1];
 					std::string a3 = split_result[2];
 					std::string a4 = split_result[3];
-					line_struct.type = ADD;
+					line_struct.type = Type::ADD;
 					line_struct.op1 = a2;
 					line_struct.op2 = a3;
 					line_struct.op3 = a4;
@@ -133,7 +133,7 @@ Input::Input(std::string filename) {
 					std::string a2 = split_result[1];
 					std::string a3 = split_result[2];
 					std::string a4 = split_result[3];
-					line_struct.type = SUB;
+					line_struct.type = Type::SUB;
 					line_struct.op1 = a2;
 					line_struct.op2 = a3;
 					line_struct.op3 = a4;
@@ -143,7 +143,7 @@ Input::Input(std::string filename) {
 					std::string a2 = split_result[1];
 					std::string a3 = split_result[2];
 					std::string a4 = split_result[3];
-					line_struct.type = MUL;
+					line_struct.type = Type::MUL;
 					line_struct.op1 = a2;
 					line_struct.op2 = a3;
 					line_struct.op3 = a4;
@@ -153,7 +153,7 @@ Input::Input(std::string filename) {
 					std::string a2 = split_result[1];
 					std::string a3 = split_result[2];
 					std::string a4 = split_result[3];
-					line_struct.type = DIV;
+					line_struct.type = Type::DIV;
 					line_struct.op1 = a2;
 					line_struct.op2 = a3;
 					line_struct.op3 = a4;
@@ -163,7 +163,7 @@ Input::Input(std::string filename) {
 					std::string a2 = split_result[1];
 					std::string a3 = split_result[2];
 					std::string a4 = split_result[3];
-					line_struct.type = REM;
+					line_struct.type = Type::REM;
 					line_struct.op1 = a2;
 					line_struct.op2 = a3;
 					line_struct.op3 = a4;
@@ -173,7 +173,7 @@ Input::Input(std::string filename) {
 					std::string a2 = split_result[1];
 					std::string a3 = split_result[2];
 					std::string a4 = split_result[3];
-					line_struct.type = AND;
+					line_struct.type = Type::AND;
 					line_struct.op1 = a2;
 					line_struct.op2 = a3;
 					line_struct.op3 = a4;
@@ -183,7 +183,7 @@ Input::Input(std::string filename) {
 					std::string a2 = split_result[1];
 					std::string a3 = split_result[2];
 					std::string a4 = split_result[3];
-					line_struct.type = OR;
+					line_struct.type = Type::OR;
 					line_struct.op1 = a2;
 					line_struct.op2 = a3;
 					line_struct.op3 = a4;
@@ -191,7 +191,7 @@ Input::Input(std::string filename) {
 				}
 				else if (a1 == "JAL") {
 					std::string a2 = split_result[1];
-					line_struct.type = JAL;
+					line_struct.type = Type::JAL;
 					line_struct.op1 = a2;
 					m_lines.push_back(line_struct);
 				}
@@ -199,7 +199,7 @@ Input::Input(std::string filename) {
 					std::string a2 = split_result[1];
 					std::string a3 = split_result[2];
 					std::string a4 = split_result[3];
-					line_struct.type = BEQ;
+					line_struct.type = Type::BEQ;
 					line_struct.op1 = a2;
 					line_struct.op2 = a3;
 					line_struct.op3 = a4;
@@ -209,7 +209,7 @@ Input::Input(std::string filename) {
 					std::string a2 = split_result[1];
 					std::string a3 = split_result[2];
 					std::string a4 = split_result[3];
-					line_struct.type = BNE;
+					line_struct.type = Type::BNE;
 					line_struct.op1 = a2;
 					line_struct.op2 = a3;
 					line_struct.op3 = a4;
@@ -219,7 +219,7 @@ Input::Input(std::string filename) {
 					std::string a2 = split_result[1];
 					std::string a3 = split_result[2];
 					std::string a4 = split_result[3];
-					line_struct.type = BLT;
+					line_struct.type = Type::BLT;
 					line_struct.op1 = a2;
 					line_struct.op2 = a3;
 					line_struct.op3 = a4;
@@ -229,7 +229,7 @@ Input::Input(std::string filename) {
 					std::string a2 = split_result[1];
 					std::string a3 = split_result[2];
 					std::string a4 = split_result[3];
-					line_struct.type = BGE;
+					line_struct.type = Type::BGE;
 					line_struct.op1 = a2;
 					line_struct.op2 = a3;
 					line_struct.op3 = a4;
@@ -237,12 +237,12 @@ Input::Input(std::string filename) {
 				}
 				else if (a1 == "CALL") {
 					std::string a2 = split_result[1];
-					line_struct.type = CALL;
+					line_struct.type = Type::CALL;
 					line_struct.op1 = a2;
 					m_lines.push_back(line_struct);
 				}
 				else if (a1 == "RET") {
-					line_struct.type = RET;
+					line_struct.type = Type::RET;
 					LineLable line_label = m_linelabels[m_linelabels.size() - 1];
 					Function function{};
 					function.name = line_label.label;
@@ -251,11 +251,11 @@ Input::Input(std::string filename) {
 					m_functions.push_back(function);
 				}
 				else if (a1 == "DRAW") {
-					line_struct.type = DRAW;
+					line_struct.type = Type::DRAW;
 					m_lines.push_back(line_struct);
 				}
 				else if (a1 == "END") {
-					line_struct.type = END;
+					line_struct.type = Type::END;
 					m_lines.push_back(line_struct);
 				}
 				else {
@@ -291,7 +291,7 @@ Line Input::getCurrentLine() {
 */
 void Input::nextLine() {
 	m_current_index++;
-	if (m_lines[m_current_index].type == LINE_LABLE) {
+	if (m_lines[m_current_index].type == Type::LINE_LABLE) {
 		for (auto iter = m_functions.begin(); iter != m_functions.end(); ++iter) {
 			if (iter->name == m_lines[m_current_index].op1) {
 				m_current_index = iter->index; // ret之后的下一行

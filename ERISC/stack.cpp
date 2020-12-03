@@ -5,7 +5,7 @@
 * @brief ÷ÿ÷√◊¥Ã¨
 */
 void Stack::reset() {
-	m_status = NO_OPERATE;
+	m_status = Status::NO_OPERATE;
 }
 
 /**
@@ -26,7 +26,7 @@ void Stack::push(int32_t* rs) {
 		exit(-1);
 	}
 	std::memcpy(m_stack + (--m_ptr), rs, sizeof(int32_t));
-	m_status = STACK_OPERATE;
+	m_status = Status::STACK_OPERATE;
 }
 
 /**
@@ -39,5 +39,5 @@ void Stack::pop(int32_t* rd) {
 		exit(-1);
 	}
 	std::memcpy(rd, m_stack + (m_ptr++), sizeof(int32_t));
-	m_status = STACK_OPERATE;
+	m_status = Status::STACK_OPERATE;
 }

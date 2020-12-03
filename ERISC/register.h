@@ -13,7 +13,7 @@ class Register {
 private:
 
 	int32_t m_register[REGISTER_SIZE]{ 0 }; // 寄存器存储的内容
-	Status m_status[REGISTER_SIZE]{ NO_OPERATE }; // 寄存器的访问
+	Status m_status[REGISTER_SIZE]{ Status::NO_OPERATE }; // 寄存器的访问
 
 	/**
 	* @brief 根据名字获取寄存器的索引
