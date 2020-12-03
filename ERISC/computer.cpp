@@ -376,7 +376,7 @@ void Computer::draw() {
 void Computer::write() {
 	std::ofstream file("result.txt");
 	if (!file.is_open()) {
-		std::cerr << "end 命令打开文件时出现错误";
+		std::cerr << "end命令输出文件时出现错误" << std::endl;
 		exit(-1);
 	}
 	file << m_register << std::endl;
