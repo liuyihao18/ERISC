@@ -346,18 +346,18 @@ void Computer::draw() {
 	//栈空间绘制完成
 	// Write to file
 	char num_str[50];
-	sprintf(num_str, "%x", draw_times);
+	sprintf(num_str, "%d", draw_times);
 	strcat(num_str, ".bmp");
 	FILE* output = fopen(num_str, "wb");
 
 	std::ofstream file(num_str);
 	if (!file.is_open()) {
-		std::cerr << "绘制bmp图像到文件时错误";
+		std::cerr << "绘制bmp图像到文件时错误" << std::endl;
 		exit(-1);
 	}
 	if (output == NULL)
 	{
-		std::cerr<<"Cannot open file!\n";
+		std::cerr << "Cannot open file!" << std::endl;
 		exit(-1);
 	}
 	else
