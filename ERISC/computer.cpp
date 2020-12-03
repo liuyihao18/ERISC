@@ -357,7 +357,8 @@ void Computer::draw() {
 	}
 	if (output == NULL)
 	{
-		printf("Cannot open file!\n");
+		std::cerr<<"Cannot open file!\n";
+		exit(-1);
 	}
 	else
 	{
