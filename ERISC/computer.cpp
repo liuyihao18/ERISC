@@ -42,7 +42,7 @@ void Computer::main() {
 	// Ö÷Ñ­»·
 	while (input.hasMoreInput()) {
 		Line current_line = input.getCurrentLine();
-		int temp{ 0 };
+		int32_t temp{ 0 };
 		switch (current_line.type)
 		{
 		case Type::LOAD:
