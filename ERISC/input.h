@@ -74,7 +74,7 @@ public:
 	* @brief 获取当前的行号
 	* @return 当前的行号
 	*/
-	int getCurrentIndex();
+	int32_t getCurrentIndex();
 
 	/**
 	* @brief 获取当前的行

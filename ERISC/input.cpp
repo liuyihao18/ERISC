@@ -274,7 +274,7 @@ Input::Input(std::string filename) {
 * @brief 获取当前的行号
 * @return 当前的行号
 */
-int Input::getCurrentIndex() {
+int32_t Input::getCurrentIndex() {
 	return m_current_index;
 }
 
