@@ -3,8 +3,8 @@
 #include <fstream>
 
 /**
-* @brief 去除字符串的首尾空格
-* @param str: 需要去除首尾空格的字符串
+* @brief 去除字符串的首尾空格与注释
+* @param str: 需要去除首尾空格与注释的字符串
 */
 static void trim(std::string& str) {
 	if (str.empty()) {
@@ -16,6 +16,14 @@ static void trim(std::string& str) {
 	while (!str.empty() && *(str.end() - 1) == ' ') {
 		str.erase(str.end() - 1);
 	}
+	auto iter = str.begin();
+	while (iter != str.end() && *iter != '/' && *iter != '#') ++iter;
+	if (iter != str.end() && *iter == '/') {
+		if ((iter + 1) == str.end() || *(iter + 1) != '/') {
+			throw std::string("注释错误！");
+		}
+	}
+	while (iter != str.end()) iter = str.erase(iter);
 }
 
 /**
@@ -35,7 +43,9 @@ static std::vector<std::string> split(const std::string& str) {
 		s.insert(s.end(), *iter);
 		++iter;
 	}
-	ss.push_back(s);
+	if (!s.empty()) {
+		ss.push_back(s);
+	}
 	s.clear();
 	// 读取接下来逗号分割的字符串并去除首尾空格
 	for (; iter != str.cend(); ++iter) {
@@ -48,17 +58,6 @@ static std::vector<std::string> split(const std::string& str) {
 				ss.push_back(s);
 			}
 			s.clear();
-			if (*iter == '/') {
-				if (*(iter + 1) == '/') {
-					break;
-				}
-				else {
-					std::cerr << "注释错误！" << std::endl;
-				}
-			}
-			if (*iter == '#') {
-				break;
-			}
 		}
 	}
 	trim(s);
@@ -92,33 +91,34 @@ Input::Input(std::string filename) {
 		std::string line{};
 		Line line_struct{};
 		std::getline(in, line);
-		trim(line);
-		if (!line.empty()) {
-			if (line[line.size() - 1] == ':') { //结尾为:，则行标识符或者函数
-				std::string s{};
-				for (decltype(line.size()) i = 0; i <= line.size() - 2; i++) {
-					s += line[i];
+		try {
+			trim(line);
+			if (!line.empty()) {
+				if (line[line.size() - 1] == ':') { //结尾为:，则行标识符或者函数
+					std::string s{};
+					for (decltype(line.size()) i = 0; i <= line.size() - 2; i++) {
+						s += line[i];
+					}
+					trim(s);
+					line_struct.type = Type::LINE_LABLE;
+					line_struct.op1 = s;
+					m_lines.push_back(line_struct);
+					LineLable line_label{ s, m_current_index + 1 };
+					m_linelabels.push_back(line_label);
 				}
-				line_struct.type = Type::LINE_LABLE;
-				line_struct.op1 = s;
-				m_lines.push_back(line_struct);
-				LineLable line_label { s, m_current_index + 1 };
-				m_linelabels.push_back(line_label);
-			}
-			else {
-				auto split_result = split(line);
-				std::string a1 = split_result[0];
-				if (split_result.size() >= 2) {
-					line_struct.op1 = split_result[1];
-				}
-				if (split_result.size() >= 3) {
-					line_struct.op2 = split_result[2];
-				}
-				if (split_result.size() >= 4) {
-					line_struct.op3 = split_result[3];
-				}
-				toUpper(a1); // 把a1转化为大写
-				try {
+				else {
+					auto split_result = split(line);
+					std::string a1 = split_result[0];
+					if (split_result.size() >= 2) {
+						line_struct.op1 = split_result[1];
+					}
+					if (split_result.size() >= 3) {
+						line_struct.op2 = split_result[2];
+					}
+					if (split_result.size() >= 4) {
+						line_struct.op3 = split_result[3];
+					}
+					toUpper(a1); // 把a1转化为大写
 					if (a1 == "LOAD") {
 						if (split_result.size() != 3) throw a1;
 						line_struct.type = Type::LOAD;
@@ -232,14 +232,21 @@ Input::Input(std::string filename) {
 					else {
 						throw std::string();
 					}
-				}
-				catch (std::string e) {
-					std::cerr << "Line " << m_current_index + 1 << "：" << (e.empty() ? "未知" : e) << "指令错误！" << std::endl;
-					exit(-1);
+
 				}
 			}
+			m_current_index++;
 		}
-		m_current_index++;
+		catch (const std::string& s) {
+			std::cerr << "Line " << m_current_index + 1 << ": " << line << " -- ";
+			if (s == "注释错误！") {
+				std::cerr << s << std::endl;
+			}
+			else {
+				std::cerr << (s.empty() ? "未知" : s) << "指令错误！" << std::endl;
+			}
+			std::exit(-1);
+		}
 	}
 	in.close();
 	m_current_index = 0;

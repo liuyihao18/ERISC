@@ -47,8 +47,7 @@ static const std::string names[64]{
 */
 static bool isImm(const std::string& str) {
 	if (str.empty()) {
-		std::cerr << "¿Õ×Ö·û´®´íÎó£¡" << std::endl;
-		std::exit(-1);
+		throw std::string("¿Õ×Ö·û´®´íÎó£¡");
 	}
 	return std::isdigit(str[0]);
 }
@@ -61,16 +60,25 @@ static bool isImm(const std::string& str) {
 static int32_t str2num(const std::string& str) {
 	int32_t result{ 0 };
 	std::istringstream is(str);
-	if (str.size() >= 2 && str[0] == '0' && str[1] == 'x') {
+	std::ostringstream os;
+	if (str.size() >= 2 && str[0] == '0' && (str[1] == 'x' || str[1] == 'X')) {
 		if (!(is >> std::hex >> result)) {
-			std::cerr << "Ê®Áù½øÖÆÊý×ÖÊäÈë´íÎó£¡" << std::endl;
-			std::exit(-1);
+			throw std::string(str + " -- Á¢¼´ÊýÊäÈë´íÎó£¡");
+		}
+		// È·ÈÏÊý¾ÝÖÐ¼äÃ»ÓÐ³ö´í
+		os << str[0] << str[1] << std::hex << result;
+		if (os.str() != str) {
+			throw std::string(str + " -- Á¢¼´ÊýÊäÈë´íÎó£¡");
 		}
 	}
 	else {
 		if (!(is >> result)) {
-			std::cerr << "Ê®½øÖÆÊý×ÖÊäÈë´íÎó£¡" << std::endl;
-			std::exit(-1);
+			throw std::string(str + " -- Á¢¼´ÊýÊäÈë´íÎó£¡");
+		}
+		// È·ÈÏÊý¾ÝÖÐ¼äÃ»ÓÐ³ö´í
+		os << result;
+		if (os.str() != str) {
+			throw std::string(str + " -- Á¢¼´ÊýÊäÈë´íÎó£¡");
 		}
 	}
 	return result;
@@ -87,8 +95,7 @@ int Register::lookup(const std::string& name) const {
 			return i >> 1;
 		}
 	}
-	std::cerr << "¼Ä´æÆ÷Ãû×Ö´íÎó£¡" << std::endl;
-	std::exit(-1);
+	throw std::string(name + " -- ¼Ä´æÆ÷Ãû×Ö´íÎó£¡");
 }
 
 /**
@@ -136,8 +143,7 @@ void Register::setStatus(const std::string& name, Status status) {
 		m_status[index] = Status::READ_WRITE;
 		break;
 	default:
-		std::cerr << "¼Ä´æÆ÷×´Ì¬ÉèÖÃ´íÎó£¡" << std::endl;
-		exit(-1);
+		throw std::string("¼Ä´æÆ÷×´Ì¬ÉèÖÃ´íÎó");
 	}
 }
 
@@ -157,8 +163,7 @@ int32_t* Register::operator[](const std::string& name) {
 */
 Status Register::getStatus(int i) const {
 	if (i < 0 || i >= REGISTER_SIZE) {
-		std::cerr << "¼Ä´æÆ÷×´Ì¬Ô½½ç·ÃÎÊ£¡" << std::endl;
-		exit(-1);
+		throw std::string("¼Ä´æÆ÷×´Ì¬Ô½½ç·ÃÎÊ£¡");
 	}
 	return m_status[i];
 }

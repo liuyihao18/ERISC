@@ -22,8 +22,7 @@ Status Stack::getStatus() const {
 */
 void Stack::push(int32_t* rs) {
 	if (m_ptr <= 0) {
-		std::cerr << "Stack Overflow!" << std::endl;
-		exit(-1);
+		throw std::string("Stack Overflow!");
 	}
 	std::memcpy(m_stack + (--m_ptr), rs, sizeof(int32_t));
 	m_status = Status::STACK_OPERATE;
@@ -35,8 +34,7 @@ void Stack::push(int32_t* rs) {
 */
 void Stack::pop(int32_t* rd) {
 	if (m_ptr >= STACK_SIZE) {
-		std::cerr << "¿ÕÕ»³öÕ»£¡" << std::endl;
-		exit(-1);
+		throw std::string("Stack Underflow!");
 	}
 	std::memcpy(rd, m_stack + (m_ptr++), sizeof(int32_t));
 	m_status = Status::STACK_OPERATE;

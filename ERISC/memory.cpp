@@ -18,8 +18,7 @@ void Memory::reset() {
 */
 Status Memory::getStatus(int i) const {
 	if (i < 0 || i >= MEMORY_STATUS_SIZE) {
-		std::cerr << "内存状态越界访问！" << std::endl;
-		exit(-1);
+		throw std::string("内存状态越界访问！");
 	}
 	return m_status[i];
 }
@@ -31,8 +30,7 @@ Status Memory::getStatus(int i) const {
 */
 void Memory::load(int32_t* rd, int32_t* rs) {
 	if (*rs < 0 || *rs > MEMORY_SIZE - 4) {
-		std::cerr << "内存访问越界！" << std::endl;
-		exit(-1);
+		throw std::string("内存访问越界！");
 	}
 	std::memcpy(rd, m_memory + *rs, sizeof(int32_t));
 	for (int i = 0; i < 4; i++) {
@@ -47,8 +45,7 @@ void Memory::load(int32_t* rd, int32_t* rs) {
 */
 void Memory::store(int32_t* rs, int32_t* rd) {
 	if (*rd < 0 || *rd > MEMORY_SIZE - 4) {
-		std::cerr << "内存访问越界！" << std::endl;
-		exit(-1);
+		throw std::string("内存访问越界！");
 	}
 	std::memcpy(m_memory + *rd, rs, sizeof(int32_t));
 	for (int i = 0; i < 4; i++) {
