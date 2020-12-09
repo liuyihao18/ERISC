@@ -1,10 +1,7 @@
-#define _CRT_SECURE_NO_WARNINGS
 #include "computer.h"
-#include <cstdio>
-#include <iostream>
 #include <cmath>
-#include <memory.h>
-#include <stdlib.h>
+#include <iostream>
+#include <sstream>
 #include <fstream>
 
 using BYTE = unsigned char;
@@ -195,7 +192,7 @@ void Computer::draw() {
 	bitmapHeader.biCompression = 0; //BI_RGB
 
 	// Part.3 Create Data
-	BYTE* bits = (BYTE*)malloc(size);
+	BYTE* bits = new BYTE[size];
 
 	// Clear
 	memset(bits, 0xFF, size);
@@ -212,6 +209,7 @@ void Computer::draw() {
 			bits[index + 2] = 0;   // Red
 		}
 	}
+
 	//中间三条边框线
 	for (x = 0; x < width - 240; x += 1)
 	{
@@ -223,6 +221,7 @@ void Computer::draw() {
 			bits[index + 2] = 0;   // Red
 		}
 	}
+
 	//寄存器部分竖线
 	for (y = 0; y < height - 100; y += 1)
 	{
@@ -234,6 +233,7 @@ void Computer::draw() {
 			bits[index + 2] = 0;   // Red
 		}
 	}
+
 	//栈空间部分竖线
 	for (y = 0; y < height - 100; y += 1)
 	{
@@ -245,6 +245,7 @@ void Computer::draw() {
 			bits[index + 2] = 0;   // Red
 		}
 	}
+
 	//最右端竖线
 	for (y = 0; y < height - 100; y += 1)
 	{
@@ -255,6 +256,7 @@ void Computer::draw() {
 		bits[index + 1] = 0;   // Green
 		bits[index + 2] = 0;   // Red
 	}
+
 	//寄存器绘制
 	for (int i = 0; i < 32; i++) {
 		int x_start, y_start;
@@ -324,6 +326,7 @@ void Computer::draw() {
 		}
 	}
 	//内存绘制完成
+
 	//栈空间绘制
 	{
 		int x_start, y_start;
@@ -344,33 +347,32 @@ void Computer::draw() {
 		}
 	}
 	//栈空间绘制完成
-	// Write to file
-	char num_str[50];
-	sprintf(num_str, "%d", draw_times);
-	strcat(num_str, ".bmp");
-	FILE* output = fopen(num_str, "wb");
 
-	std::ofstream file(num_str);
+	// Write to file
+	std::ostringstream filename;
+	filename << draw_times;
+	filename << ".bmp";
+
+	std::ofstream file(filename.str(), std::ios::binary);
 	if (!file.is_open()) {
-		std::cerr << "绘制bmp图像到文件时错误" << std::endl;
-		exit(-1);
-	}
-	if (output == NULL)
-	{
-		std::cerr << "Cannot open file!" << std::endl;
+		std::cerr << "绘制bmp图像到文件时发生错误！" << std::endl;
 		exit(-1);
 	}
 	else
 	{
-		fwrite(&fileHeader, sizeof(BITMAPFILEHEADER), 1, output);
-		fwrite(&bitmapHeader, sizeof(BITMAPINFOHEADER), 1, output);
-		fwrite(bits, size, 1, output);
-		fclose(output);
+		file.write((char*)&fileHeader, sizeof(BITMAPFILEHEADER));
+		file.write((char*)&bitmapHeader, sizeof(BITMAPINFOHEADER));
+		file.write((char*)bits, size);
+		file.close();
 	}
+
 	//重置状态
 	m_memory.reset();
 	m_stack.reset();
 	m_register.reset();
+
+	// 释放空间
+	delete[] bits;
 }
 
 /**
