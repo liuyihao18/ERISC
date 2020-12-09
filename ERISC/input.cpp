@@ -1,6 +1,6 @@
 #include "input.h"
-#include <fstream>
 #include <iostream>
+#include <fstream>
 
 /**
 * @brief 去除字符串的首尾空格
@@ -29,16 +29,42 @@ static std::vector<std::string> split(const std::string& str) {
 	}
 	std::string s{};
 	std::vector<std::string> ss{};
-	for (auto iter = str.cbegin(); iter != str.cend(); ++iter) {
-		if (*iter != ' ' && *iter != ',') {
+	auto iter = str.cbegin();
+	// 读取第一个空格之前的字符串
+	while (iter != str.cend() && *iter != ' ') {
+		s.insert(s.end(), *iter);
+		++iter;
+	}
+	ss.push_back(s);
+	s.clear();
+	// 读取接下来逗号分割的字符串并去除首尾空格
+	for (; iter != str.cend(); ++iter) {
+		if (*iter != ',' && *iter != '/' && *iter != '#') {
 			s.insert(s.end(), *iter);
 		}
 		else {
-			ss.push_back(s);
+			trim(s);
+			if (!s.empty()) {
+				ss.push_back(s);
+			}
 			s.clear();
+			if (*iter == '/') {
+				if (*(iter + 1) == '/') {
+					break;
+				}
+				else {
+					std::cerr << "注释错误！" << std::endl;
+				}
+			}
+			if (*iter == '#') {
+				break;
+			}
 		}
 	}
-	ss.push_back(s);
+	trim(s);
+	if (!s.empty()) {
+		ss.push_back(s);
+	}
 	return ss;
 }
 
@@ -59,7 +85,7 @@ static void toUpper(std::string& str) {
 Input::Input(std::string filename) {
 	std::ifstream in(filename);
 	if (!in.is_open()) {
-		std::cerr << "Failed to open file!" << std::endl;
+		std::cerr << "无法打开输入文件!" << std::endl;
 		exit(-1);
 	}
 	while (in) {
@@ -68,7 +94,7 @@ Input::Input(std::string filename) {
 		std::getline(in, line);
 		trim(line);
 		if (!line.empty()) {
-			if (line[line.size() - 1] == ':') { //结尾为:,行标识符或者函数
+			if (line[line.size() - 1] == ':') { //结尾为:，则行标识符或者函数
 				std::string s{};
 				for (decltype(line.size()) i = 0; i <= line.size() - 2; i++) {
 					s += line[i];
@@ -82,184 +108,133 @@ Input::Input(std::string filename) {
 			else {
 				auto split_result = split(line);
 				std::string a1 = split_result[0];
+				if (split_result.size() >= 2) {
+					line_struct.op1 = split_result[1];
+				}
+				if (split_result.size() >= 3) {
+					line_struct.op2 = split_result[2];
+				}
+				if (split_result.size() >= 4) {
+					line_struct.op3 = split_result[3];
+				}
 				toUpper(a1); // 把a1转化为大写
-				if (a1 == "LOAD") {
-					std::string a2 = split_result[1];
-					std::string a3 = split_result[2];
-					line_struct.type = Type::LOAD;
-					line_struct.op1 = a2;
-					line_struct.op2 = a3;
-					m_lines.push_back(line_struct);
+				try {
+					if (a1 == "LOAD") {
+						if (split_result.size() != 3) throw a1;
+						line_struct.type = Type::LOAD;
+						m_lines.push_back(line_struct);
+					}
+					else if (a1 == "STORE") {
+						if (split_result.size() != 3) throw a1;
+						line_struct.type = Type::STORE;
+						m_lines.push_back(line_struct);
+					}
+					else if (a1 == "PUSH") {
+						if (split_result.size() != 2) throw a1;
+						line_struct.type = Type::PUSH;
+						m_lines.push_back(line_struct);
+					}
+					else if (a1 == "POP") {
+						if (split_result.size() != 2) throw a1;
+						line_struct.type = Type::POP;
+						m_lines.push_back(line_struct);
+					}
+					else if (a1 == "MOV") {
+						if (split_result.size() != 3) throw a1;
+						line_struct.type = Type::MOV;
+						m_lines.push_back(line_struct);
+					}
+					else if (a1 == "ADD") {
+						if (split_result.size() != 4) throw a1;
+						line_struct.type = Type::ADD;
+						m_lines.push_back(line_struct);
+					}
+					else if (a1 == "SUB") {
+						if (split_result.size() != 4) throw a1;
+						line_struct.type = Type::SUB;
+						m_lines.push_back(line_struct);
+					}
+					else if (a1 == "MUL") {
+						if (split_result.size() != 4) throw a1;
+						line_struct.type = Type::MUL;
+						m_lines.push_back(line_struct);
+					}
+					else if (a1 == "DIV") {
+						if (split_result.size() != 4) throw a1;
+						line_struct.type = Type::DIV;
+						m_lines.push_back(line_struct);
+					}
+					else if (a1 == "REM") {
+						if (split_result.size() != 4) throw a1;
+						line_struct.type = Type::REM;
+						m_lines.push_back(line_struct);
+					}
+					else if (a1 == "AND") {
+						if (split_result.size() != 4) throw a1;
+						line_struct.type = Type::AND;
+						m_lines.push_back(line_struct);
+					}
+					else if (a1 == "OR") {
+						if (split_result.size() != 4) throw a1;
+						line_struct.type = Type::OR;
+						m_lines.push_back(line_struct);
+					}
+					else if (a1 == "JAL") {
+						if (split_result.size() != 2) throw a1;
+						line_struct.type = Type::JAL;
+						m_lines.push_back(line_struct);
+					}
+					else if (a1 == "BEQ") {
+						if (split_result.size() != 4) throw a1;
+						line_struct.type = Type::BEQ;
+						m_lines.push_back(line_struct);
+					}
+					else if (a1 == "BNE") {
+						if (split_result.size() != 4) throw a1;
+						line_struct.type = Type::BNE;
+						m_lines.push_back(line_struct);
+					}
+					else if (a1 == "BLT") {
+						if (split_result.size() != 4) throw a1;
+						line_struct.type = Type::BLT;
+						m_lines.push_back(line_struct);
+					}
+					else if (a1 == "BGE") {
+						if (split_result.size() != 4) throw a1;
+						line_struct.type = Type::BGE;
+						m_lines.push_back(line_struct);
+					}
+					else if (a1 == "CALL") {
+						if (split_result.size() != 2) throw a1;
+						line_struct.type = Type::CALL;
+						m_lines.push_back(line_struct);
+					}
+					else if (a1 == "RET") {
+						if (split_result.size() != 1) throw a1;
+						line_struct.type = Type::RET;
+						LineLable line_label = m_linelabels[m_linelabels.size() - 1];
+						Function function{};
+						function.name = line_label.label;
+						function.index = m_current_index + 1;
+						m_lines.push_back(line_struct);
+						m_functions.push_back(function);
+					}
+					else if (a1 == "DRAW") {
+						if (split_result.size() != 1) throw a1;
+						line_struct.type = Type::DRAW;
+						m_lines.push_back(line_struct);
+					}
+					else if (a1 == "END") {
+						if (split_result.size() != 1) throw a1;
+						line_struct.type = Type::END;
+						m_lines.push_back(line_struct);
+					}
+					else {
+						throw std::string();
+					}
 				}
-				else if (a1 == "STORE") {
-					std::string a2 = split_result[1];
-					std::string a3 = split_result[2];
-					line_struct.type = Type::STORE;
-					line_struct.op1 = a2;
-					line_struct.op2 = a3;
-					m_lines.push_back(line_struct);
-				}
-				else if (a1 == "PUSH") {
-					std::string a2 = split_result[1];
-					line_struct.type = Type::PUSH;
-					line_struct.op1 = a2;
-					m_lines.push_back(line_struct);
-				}
-				else if (a1 == "POP") {
-					std::string a2 = split_result[1];
-					line_struct.type = Type::POP;
-					line_struct.op1 = a2;
-					m_lines.push_back(line_struct);
-				}
-				else if (a1 == "MOV") {
-					std::string a2 = split_result[1];
-					std::string a3 = split_result[2];
-					line_struct.type = Type::MOV;
-					line_struct.op1 = a2;
-					line_struct.op2 = a3;
-					m_lines.push_back(line_struct);
-				}
-				else if (a1 == "ADD") {
-					std::string a2 = split_result[1];
-					std::string a3 = split_result[2];
-					std::string a4 = split_result[3];
-					line_struct.type = Type::ADD;
-					line_struct.op1 = a2;
-					line_struct.op2 = a3;
-					line_struct.op3 = a4;
-					m_lines.push_back(line_struct);
-				}
-				else if (a1 == "SUB") {
-					std::string a2 = split_result[1];
-					std::string a3 = split_result[2];
-					std::string a4 = split_result[3];
-					line_struct.type = Type::SUB;
-					line_struct.op1 = a2;
-					line_struct.op2 = a3;
-					line_struct.op3 = a4;
-					m_lines.push_back(line_struct);
-				}
-				else if (a1 == "MUL") {
-					std::string a2 = split_result[1];
-					std::string a3 = split_result[2];
-					std::string a4 = split_result[3];
-					line_struct.type = Type::MUL;
-					line_struct.op1 = a2;
-					line_struct.op2 = a3;
-					line_struct.op3 = a4;
-					m_lines.push_back(line_struct);
-				}
-				else if (a1 == "DIV") {
-					std::string a2 = split_result[1];
-					std::string a3 = split_result[2];
-					std::string a4 = split_result[3];
-					line_struct.type = Type::DIV;
-					line_struct.op1 = a2;
-					line_struct.op2 = a3;
-					line_struct.op3 = a4;
-					m_lines.push_back(line_struct);
-				}
-				else if (a1 == "REM") {
-					std::string a2 = split_result[1];
-					std::string a3 = split_result[2];
-					std::string a4 = split_result[3];
-					line_struct.type = Type::REM;
-					line_struct.op1 = a2;
-					line_struct.op2 = a3;
-					line_struct.op3 = a4;
-					m_lines.push_back(line_struct);
-				}
-				else if (a1 == "AND") {
-					std::string a2 = split_result[1];
-					std::string a3 = split_result[2];
-					std::string a4 = split_result[3];
-					line_struct.type = Type::AND;
-					line_struct.op1 = a2;
-					line_struct.op2 = a3;
-					line_struct.op3 = a4;
-					m_lines.push_back(line_struct);
-				}
-				else if (a1 == "OR") {
-					std::string a2 = split_result[1];
-					std::string a3 = split_result[2];
-					std::string a4 = split_result[3];
-					line_struct.type = Type::OR;
-					line_struct.op1 = a2;
-					line_struct.op2 = a3;
-					line_struct.op3 = a4;
-					m_lines.push_back(line_struct);
-				}
-				else if (a1 == "JAL") {
-					std::string a2 = split_result[1];
-					line_struct.type = Type::JAL;
-					line_struct.op1 = a2;
-					m_lines.push_back(line_struct);
-				}
-				else if (a1 == "BEQ") {
-					std::string a2 = split_result[1];
-					std::string a3 = split_result[2];
-					std::string a4 = split_result[3];
-					line_struct.type = Type::BEQ;
-					line_struct.op1 = a2;
-					line_struct.op2 = a3;
-					line_struct.op3 = a4;
-					m_lines.push_back(line_struct);
-				}
-				else if (a1 == "BNE") {
-					std::string a2 = split_result[1];
-					std::string a3 = split_result[2];
-					std::string a4 = split_result[3];
-					line_struct.type = Type::BNE;
-					line_struct.op1 = a2;
-					line_struct.op2 = a3;
-					line_struct.op3 = a4;
-					m_lines.push_back(line_struct);
-				}
-				else if (a1 == "BLT") {
-					std::string a2 = split_result[1];
-					std::string a3 = split_result[2];
-					std::string a4 = split_result[3];
-					line_struct.type = Type::BLT;
-					line_struct.op1 = a2;
-					line_struct.op2 = a3;
-					line_struct.op3 = a4;
-					m_lines.push_back(line_struct);
-				}
-				else if (a1 == "BGE") {
-					std::string a2 = split_result[1];
-					std::string a3 = split_result[2];
-					std::string a4 = split_result[3];
-					line_struct.type = Type::BGE;
-					line_struct.op1 = a2;
-					line_struct.op2 = a3;
-					line_struct.op3 = a4;
-					m_lines.push_back(line_struct);
-				}
-				else if (a1 == "CALL") {
-					std::string a2 = split_result[1];
-					line_struct.type = Type::CALL;
-					line_struct.op1 = a2;
-					m_lines.push_back(line_struct);
-				}
-				else if (a1 == "RET") {
-					line_struct.type = Type::RET;
-					LineLable line_label = m_linelabels[m_linelabels.size() - 1];
-					Function function{};
-					function.name = line_label.label;
-					function.index = m_current_index + 1;
-					m_lines.push_back(line_struct);
-					m_functions.push_back(function);
-				}
-				else if (a1 == "DRAW") {
-					line_struct.type = Type::DRAW;
-					m_lines.push_back(line_struct);
-				}
-				else if (a1 == "END") {
-					line_struct.type = Type::END;
-					m_lines.push_back(line_struct);
-				}
-				else {
-					std::cerr << "输入文件错误！" << std::endl;
+				catch (std::string e) {
+					std::cerr << "Line " << m_current_index + 1 << "：" << (e.empty() ? "未知" : e) << "指令错误！" << std::endl;
 					exit(-1);
 				}
 			}
