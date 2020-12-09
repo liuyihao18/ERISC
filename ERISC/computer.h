@@ -15,12 +15,12 @@ private:
 	Stack m_stack;
 	Register m_register;
 	Input input;
-	int draw_times = 0;
+	int draw_times;
 
 public:
 
 	Computer(std::string filename) 
-		:m_memory(), m_stack(), m_register(), input(filename) {}
+		:m_memory(), m_stack(), m_register(), input(filename), draw_times(0) {}
 
 	/**
 	* @brief 程序运行主函数
