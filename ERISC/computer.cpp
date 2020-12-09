@@ -361,8 +361,7 @@ void Computer::draw() {
 
 	std::ofstream file(filename.str(), std::ios::binary);
 	if (!file.is_open()) {
-		std::cerr << "绘制bmp图像到文件时发生错误！" << std::endl;
-		exit(-1);
+		throw std::string("绘制bmp图像文件发生错误！");
 	}
 	else
 	{
@@ -387,8 +386,7 @@ void Computer::draw() {
 void Computer::write() {
 	std::ofstream file("result.txt");
 	if (!file.is_open()) {
-		std::cerr << "end命令输出文件时出现错误" << std::endl;
-		exit(-1);
+		throw std::string("输出文本文件发生错误！");
 	}
 	file << m_register << std::endl;
 	file << m_memory;
