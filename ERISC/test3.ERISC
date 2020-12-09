@@ -1,10 +1,10 @@
-mov x0,51
+mov t2,51
 mov a0,0
-mov t2,1
+mov t1,1
 jal loop
 loop:
-add a0,a0,t2
-add t2,t2,1
-bne t2,x0,loop
+add a0,a0,t1
+add t1,t1,1
+bne t1,t2,loop
 draw
 end
