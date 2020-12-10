@@ -323,6 +323,42 @@ void Register::OR(const std::string& rd, const std::string& rs1, const std::stri
 }
 
 /**
+* @brief 将寄存器rs1的值与寄存器rs2的值或立即数imm异或后赋给寄存器rd
+* @param rd: 目标寄存器的名字
+* @param rs1: 源寄存器1的名字
+* @param rs2_or_imm: 源寄存器2的名字或者立即数
+*/
+void Register::XOR(const std::string& rd, const std::string& rs1, const std::string& rs2_or_imm) {
+	if (isImm(rs2_or_imm)) {
+		int32_t imm = str2num(rs2_or_imm);
+		m_register[lookup(rd)] = m_register[lookup(rs1)] ^ imm;
+	}
+	else {
+		m_register[lookup(rd)] = m_register[lookup(rs1)] ^ m_register[lookup(rs2_or_imm)];
+		setStatus(rs2_or_imm, Status::READ);
+	}
+	setStatus(rd, Status::WRITE);
+	setStatus(rs1, Status::READ);
+}
+
+/**
+* @brief 将寄存器rs1的值或立即数imm取反后赋给寄存器rd
+* @param rd: 目标寄存器的名字
+* @param rs1_or_imm: 源寄存器1的名字或者立即数
+*/
+void Register::NOT(const std::string& rd, const std::string& rs1_or_imm) {
+	if (isImm(rs1_or_imm)) {
+		int32_t imm = str2num(rs1_or_imm);
+		m_register[lookup(rd)] = ~imm;
+	}
+	else {
+		m_register[lookup(rd)] = ~m_register[lookup(rs1_or_imm)];
+		setStatus(rs1_or_imm, Status::READ);
+	}
+	setStatus(rd, Status::WRITE);
+}
+
+/**
 * @brief 判断寄存器rs1和寄存器rs2中值是否相等
 * @param rs1: 源寄存器1的名字
 * @param rs2: 源寄存器2的名字

@@ -114,6 +114,21 @@ public:
 	void OR(const std::string& rd, const std::string& rs1, const std::string& rs2_or_imm);
 
 	/**
+	* @brief 将寄存器rs1的值与寄存器rs2的值或立即数imm异或后赋给寄存器rd
+	* @param rd: 目标寄存器的名字
+	* @param rs1: 源寄存器1的名字
+	* @param rs2_or_imm: 源寄存器2的名字或者立即数
+	*/
+	void XOR(const std::string& rd, const std::string& rs1, const std::string& rs2_or_imm);
+
+	/**
+	* @brief 将寄存器rs1的值或立即数imm取反后赋给寄存器rd
+	* @param rd: 目标寄存器的名字
+	* @param rs1_or_imm: 源寄存器1的名字或者立即数
+	*/
+	void NOT(const std::string& rd, const std::string& rs1_or_imm);
+
+	/**
 	* @brief 判断寄存器rs1和寄存器rs2中值是否相等
 	* @param rs1: 源寄存器1的名字
 	* @param rs2: 源寄存器2的名字
