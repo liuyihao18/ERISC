@@ -37,116 +37,119 @@ struct BITMAPINFOHEADER {
 */
 void Computer::main() {
 	// Ö÷Ñ­»·
-	while (input.hasMoreInput()) {
-		Line current_line = input.getCurrentLine();
+	while (m_input.hasMoreInput()) {
+		Line current_line = m_input.getCurrentLine();
 		int32_t temp{ 0 };
 		try {
 			switch (current_line.type)
 			{
+			case Type::NONE:
+				m_input.nextLine();
+				break;
 			case Type::LOAD:
 				m_memory.load(m_register[current_line.op1], m_register[current_line.op2]);
 				m_register.setStatus(current_line.op1, Status::WRITE);
 				m_register.setStatus(current_line.op2, Status::READ);
-				input.nextLine();
+				m_input.nextLine();
 				break;
 			case Type::STORE:
 				m_memory.store(m_register[current_line.op1], m_register[current_line.op2]);
 				m_register.setStatus(current_line.op1, Status::READ);
 				m_register.setStatus(current_line.op2, Status::READ);
-				input.nextLine();
+				m_input.nextLine();
 				break;
 			case Type::PUSH:
 				m_stack.push(m_register[current_line.op1]);
 				m_register.setStatus(current_line.op1, Status::READ);
-				input.nextLine();
+				m_input.nextLine();
 				break;
 			case Type::POP:
 				m_stack.pop(m_register[current_line.op1]);
 				m_register.setStatus(current_line.op1, Status::WRITE);
-				input.nextLine();
+				m_input.nextLine();
 				break;
 			case Type::MOV:
 				m_register.mov(current_line.op1, current_line.op2);
-				input.nextLine();
+				m_input.nextLine();
 				break;
 			case Type::ADD:
 				m_register.add(current_line.op1, current_line.op2, current_line.op3);
-				input.nextLine();
+				m_input.nextLine();
 				break;
 			case Type::SUB:
 				m_register.sub(current_line.op1, current_line.op2, current_line.op3);
-				input.nextLine();
+				m_input.nextLine();
 				break;
 			case Type::MUL:
 				m_register.mul(current_line.op1, current_line.op2, current_line.op3);
-				input.nextLine();
+				m_input.nextLine();
 				break;
 			case Type::DIV:
 				m_register.div(current_line.op1, current_line.op2, current_line.op3);
-				input.nextLine();
+				m_input.nextLine();
 				break;
 			case Type::REM:
 				m_register.rem(current_line.op1, current_line.op2, current_line.op3);
-				input.nextLine();
+				m_input.nextLine();
 				break;
 			case Type::AND:
 				m_register.AND(current_line.op1, current_line.op2, current_line.op3);
-				input.nextLine();
+				m_input.nextLine();
 				break;
 			case Type::OR:
 				m_register.OR(current_line.op1, current_line.op2, current_line.op3);
-				input.nextLine();
+				m_input.nextLine();
 				break;
 			case Type::LINE_LABLE:
-				input.nextLine();
+				m_input.nextLine();
 				break;
 			case Type::JAL:
-				input.jumpLine(current_line.op1);
+				m_input.jumpLine(current_line.op1);
 				break;
 			case Type::BEQ:
 				if (m_register.beq(current_line.op1, current_line.op2)) {
-					input.jumpLine(current_line.op3);
+					m_input.jumpLine(current_line.op3);
 				}
 				else {
-					input.nextLine();
+					m_input.nextLine();
 				}
 				break;
 			case Type::BNE:
 				if (m_register.bne(current_line.op1, current_line.op2)) {
-					input.jumpLine(current_line.op3);
+					m_input.jumpLine(current_line.op3);
 				}
 				else {
-					input.nextLine();
+					m_input.nextLine();
 				}
 				break;
 			case Type::BLT:
 				if (m_register.blt(current_line.op1, current_line.op2)) {
-					input.jumpLine(current_line.op3);
+					m_input.jumpLine(current_line.op3);
 				}
 				else {
-					input.nextLine();
+					m_input.nextLine();
 				}
 				break;
 			case Type::BGE:
 				if (m_register.bge(current_line.op1, current_line.op2)) {
-					input.jumpLine(current_line.op3);
+					m_input.jumpLine(current_line.op3);
 				}
 				else {
-					input.nextLine();
+					m_input.nextLine();
 				}
 				break;
 			case Type::CALL:
-				temp = input.getCurrentIndex() + 1;
+				temp = m_input.getCurrentIndex() + 1;
 				m_stack.push(&temp);
-				input.jumpLine(current_line.op1);
+				m_input.jumpLine(current_line.op1);
 				break;
 			case Type::RET:
 				m_stack.pop(&temp);
-				input.jumpLine(temp);
+				m_input.jumpLine(temp);
 				break;
 			case Type::DRAW:
 				draw();
-				input.nextLine();
+				m_input.nextLine();
 				break;
 			case Type::END:
 				write();
@@ -157,7 +160,7 @@ void Computer::main() {
 			}
 		}
 		catch (const std::string& s) {
-			std::cerr << "Line " << input.getCurrentIndex() + 1 << ": ";
+			std::cerr << "Line " << m_input.getCurrentIndex() + 1 << ": ";
 			std::cerr << s << std::endl;
 			exit(-1);
 		}

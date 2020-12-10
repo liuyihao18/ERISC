@@ -3,8 +3,8 @@
 #include <fstream>
 
 /**
-* @brief 去除字符串的首尾空格与注释
-* @param str: 需要去除首尾空格与注释的字符串
+* @brief 去除字符串的首尾空格
+* @param str: 需要去除首尾空格的字符串
 */
 static void trim(std::string& str) {
 	if (str.empty()) {
@@ -16,6 +16,13 @@ static void trim(std::string& str) {
 	while (!str.empty() && *(str.end() - 1) == ' ') {
 		str.erase(str.end() - 1);
 	}
+}
+
+/**
+* @brief 去除字符串中的注释
+* @param str: 需要去除注释的字符串
+*/
+static void removeComment(std::string& str) {
 	auto iter = str.begin();
 	while (iter != str.end() && *iter != '/' && *iter != '#') ++iter;
 	if (iter != str.end() && *iter == '/') {
@@ -93,6 +100,7 @@ Input::Input(std::string filename) {
 		std::getline(in, line);
 		try {
 			trim(line);
+			removeComment(line);
 			if (!line.empty()) {
 				if (line[line.size() - 1] == ':') { //结尾为:，则行标识符或者函数
 					std::string s{};
@@ -102,7 +110,6 @@ Input::Input(std::string filename) {
 					trim(s);
 					line_struct.type = Type::LINE_LABLE;
 					line_struct.op1 = s;
-					m_lines.push_back(line_struct);
 					LineLable line_label{ s, m_current_index + 1 };
 					m_linelabels.push_back(line_label);
 				}
@@ -122,92 +129,74 @@ Input::Input(std::string filename) {
 					if (a1 == "LOAD") {
 						if (split_result.size() != 3) throw a1;
 						line_struct.type = Type::LOAD;
-						m_lines.push_back(line_struct);
 					}
 					else if (a1 == "STORE") {
 						if (split_result.size() != 3) throw a1;
 						line_struct.type = Type::STORE;
-						m_lines.push_back(line_struct);
 					}
 					else if (a1 == "PUSH") {
 						if (split_result.size() != 2) throw a1;
 						line_struct.type = Type::PUSH;
-						m_lines.push_back(line_struct);
 					}
 					else if (a1 == "POP") {
 						if (split_result.size() != 2) throw a1;
 						line_struct.type = Type::POP;
-						m_lines.push_back(line_struct);
 					}
 					else if (a1 == "MOV") {
 						if (split_result.size() != 3) throw a1;
 						line_struct.type = Type::MOV;
-						m_lines.push_back(line_struct);
 					}
 					else if (a1 == "ADD") {
 						if (split_result.size() != 4) throw a1;
 						line_struct.type = Type::ADD;
-						m_lines.push_back(line_struct);
 					}
 					else if (a1 == "SUB") {
 						if (split_result.size() != 4) throw a1;
 						line_struct.type = Type::SUB;
-						m_lines.push_back(line_struct);
 					}
 					else if (a1 == "MUL") {
 						if (split_result.size() != 4) throw a1;
 						line_struct.type = Type::MUL;
-						m_lines.push_back(line_struct);
 					}
 					else if (a1 == "DIV") {
 						if (split_result.size() != 4) throw a1;
 						line_struct.type = Type::DIV;
-						m_lines.push_back(line_struct);
 					}
 					else if (a1 == "REM") {
 						if (split_result.size() != 4) throw a1;
 						line_struct.type = Type::REM;
-						m_lines.push_back(line_struct);
 					}
 					else if (a1 == "AND") {
 						if (split_result.size() != 4) throw a1;
 						line_struct.type = Type::AND;
-						m_lines.push_back(line_struct);
 					}
 					else if (a1 == "OR") {
 						if (split_result.size() != 4) throw a1;
 						line_struct.type = Type::OR;
-						m_lines.push_back(line_struct);
 					}
 					else if (a1 == "JAL") {
 						if (split_result.size() != 2) throw a1;
 						line_struct.type = Type::JAL;
-						m_lines.push_back(line_struct);
 					}
 					else if (a1 == "BEQ") {
 						if (split_result.size() != 4) throw a1;
 						line_struct.type = Type::BEQ;
-						m_lines.push_back(line_struct);
 					}
 					else if (a1 == "BNE") {
 						if (split_result.size() != 4) throw a1;
 						line_struct.type = Type::BNE;
-						m_lines.push_back(line_struct);
 					}
 					else if (a1 == "BLT") {
 						if (split_result.size() != 4) throw a1;
 						line_struct.type = Type::BLT;
-						m_lines.push_back(line_struct);
 					}
 					else if (a1 == "BGE") {
 						if (split_result.size() != 4) throw a1;
 						line_struct.type = Type::BGE;
-						m_lines.push_back(line_struct);
 					}
 					else if (a1 == "CALL") {
 						if (split_result.size() != 2) throw a1;
 						line_struct.type = Type::CALL;
-						m_lines.push_back(line_struct);
 					}
 					else if (a1 == "RET") {
 						if (split_result.size() != 1) throw a1;
@@ -216,25 +205,22 @@ Input::Input(std::string filename) {
 						Function function{};
 						function.name = line_label.label;
 						function.index = m_current_index + 1;
-						m_lines.push_back(line_struct);
 						m_functions.push_back(function);
 					}
 					else if (a1 == "DRAW") {
 						if (split_result.size() != 1) throw a1;
 						line_struct.type = Type::DRAW;
-						m_lines.push_back(line_struct);
 					}
 					else if (a1 == "END") {
 						if (split_result.size() != 1) throw a1;
 						line_struct.type = Type::END;
-						m_lines.push_back(line_struct);
 					}
 					else {
 						throw std::string();
 					}
-
 				}
-			}
+			}	
+			m_lines.push_back(line_struct);
 			m_current_index++;
 		}
 		catch (const std::string& s) {
