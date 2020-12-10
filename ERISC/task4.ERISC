@@ -1,21 +1,20 @@
 mov x1,2
-mov x2,1000001 // 上限
+mov x2,1000001
 mov x3,0x00000001
 mov x4,0x11111100
-makePrime: // 把所有内存先置1
-load x5,x1
+makePrime:
 or x5,x5,x3
 store x5,x1
 add x1,x1,1
 blt x1,x2,makePrime
 mov x1,2
-outer: // 外循环
+outer:
 load x5,x1
 and x5,x5,x3
 mul x7,x1,x1
 bne x5,zero,inner
 beq x5,zero,continue
-inner: // 内循环
+inner:
 load x8,x7
 and x8,x8,x4
 store x8,x7

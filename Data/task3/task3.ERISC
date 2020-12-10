@@ -1,0 +1,10 @@
+mov t2,51
+mov a0,0
+mov t1,1
+jal loop
+loop:
+add a0,a0,t1
+add t1,t1,1
+bne t1,t2,loop
+draw
+end

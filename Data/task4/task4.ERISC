@@ -1,0 +1,28 @@
+mov x1,2
+mov x2,1000001
+mov x3,0x00000001
+mov x4,0x11111100
+makePrime:
+or x5,x5,x3
+store x5,x1
+add x1,x1,1
+blt x1,x2,makePrime
+mov x1,2
+outer:
+load x5,x1
+and x5,x5,x3
+mul x7,x1,x1
+bne x5,zero,inner
+beq x5,zero,continue
+inner:
+load x8,x7
+and x8,x8,x4
+store x8,x7
+add x7,x7,x1
+blt x7,x2,inner
+continue:
+add x1,x1,1
+mul x6,x1,x1
+blt x6,x2,outer
+draw
+end
