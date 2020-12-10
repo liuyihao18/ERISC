@@ -60,24 +60,28 @@ static bool isImm(const std::string& str) {
 static int32_t str2num(const std::string& str) {
 	int32_t result{ 0 };
 	std::istringstream is(str);
-	std::ostringstream os;
-	if (str.size() >= 2 && str[0] == '0' && (str[1] == 'x' || str[1] == 'X')) {
+	if (str.size() >= 3 && str[0] == '0' && (str[1] == 'x' || str[1] == 'X')) {
+		// 确认数据中间没有出错
+		for (decltype(str.size()) i = 2; i < str.size(); i++) {
+			if (!std::isdigit(str[i]) && str[i] != 'a' && str[i] != 'b' && str[i] != 'c'
+				&& str[i] != 'd' && str[i] != 'e' && str[i] != 'f') {
+				throw std::string(str + " -- 立即数输入错误！");
+			}
+		}
+		// 输入数据
 		if (!(is >> std::hex >> result)) {
 			throw std::string(str + " -- 立即数输入错误！");
-		}
-		// 确认数据中间没有出错
-		os << str[0] << str[1] << std::hex << result;
-		if (os.str() != str) {
-			throw std::string(str + " -- 立即数输入错误！");
-		}
+		}		
 	}
 	else {
-		if (!(is >> result)) {
-			throw std::string(str + " -- 立即数输入错误！");
-		}
 		// 确认数据中间没有出错
-		os << result;
-		if (os.str() != str) {
+		for (decltype(str.size()) i = 0; i < str.size(); i++) {
+			if (!std::isdigit(str[i])) {
+				throw std::string(str + " -- 立即数输入错误！");
+			}
+		}
+		// 输入数据
+		if (!(is >> result)) {
 			throw std::string(str + " -- 立即数输入错误！");
 		}
 	}

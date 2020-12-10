@@ -99,8 +99,8 @@ Input::Input(std::string filename) {
 		Line line_struct{};
 		std::getline(in, line);
 		try {
-			trim(line);
 			removeComment(line);
+			trim(line);
 			if (!line.empty()) {
 				if (line[line.size() - 1] == ':') { //结尾为:，则行标识符或者函数
 					std::string s{};
