@@ -1,0 +1,10 @@
+mov x1,2
+mov x2,1000001
+makePrime: // 把所有内存先置1
+load x4,x1
+or x4,x4,0x00000001
+store x4,x1
+add x1,x1,1
+blt x1,x2,makePrime
+draw
+end
