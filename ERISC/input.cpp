@@ -116,15 +116,9 @@ Input::Input(std::string filename) {
 				else {
 					auto split_result = split(line);
 					std::string a1 = split_result[0];
-					if (split_result.size() >= 2) {
-						line_struct.op1 = split_result[1];
-					}
-					if (split_result.size() >= 3) {
-						line_struct.op2 = split_result[2];
-					}
-					if (split_result.size() >= 4) {
-						line_struct.op3 = split_result[3];
-					}
+					if (split_result.size() >= 2) line_struct.op1 = split_result[1];
+					if (split_result.size() >= 3) line_struct.op2 = split_result[2];
+					if (split_result.size() >= 4) line_struct.op3 = split_result[3];
 					toUpper(a1); // 把a1转化为大写
 					if (a1 == "LOAD") {
 						if (split_result.size() != 3) throw a1;
