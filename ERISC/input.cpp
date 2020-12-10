@@ -253,6 +253,10 @@ Line Input::getCurrentLine() {
 */
 void Input::nextLine() {
 	m_current_index++;
+	if (!hasMoreInput()) {
+		std::cerr << "警告：文件中没有END指令！" << std::endl;
+		return;
+	}
 	if (m_lines[m_current_index].type == Type::LINE_LABLE) {
 		for (auto iter = m_functions.begin(); iter != m_functions.end(); ++iter) {
 			if (iter->name == m_lines[m_current_index].op1) {
