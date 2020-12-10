@@ -172,7 +172,7 @@ void Computer::main() {
 * @brief »æÍ¼
 */
 void Computer::draw() {
-	++draw_times;
+	++m_draw_times;
 	// Define BMP Size
 	const int height = 300;
 	const int width = 1040;
@@ -359,7 +359,7 @@ void Computer::draw() {
 
 	// Write to file
 	std::ostringstream filename;
-	filename << draw_times;
+	filename << m_draw_times;
 	filename << ".bmp";
 
 	std::ofstream file(filename.str(), std::ios::binary);
