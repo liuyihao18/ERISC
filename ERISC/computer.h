@@ -19,6 +19,10 @@ private:
 
 public:
 
+	/**
+	* @brief 构造函数
+	* @param filename: 输入的ERISC文件名
+	*/
 	Computer(std::string filename) 
 		:m_memory(), m_stack(), m_register(), m_input(filename), m_draw_times(0) {}
 
