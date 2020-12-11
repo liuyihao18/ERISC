@@ -211,7 +211,7 @@ void Computer::draw() {
 	BYTE* bits = new BYTE[size];
 
 	// Clear
-	memset(bits, 0xFF, size);
+	std::memset(bits, 0xFF, size);
 
 	// 上下两条边框线
 	for (x = 0; x < width; x += 1)
