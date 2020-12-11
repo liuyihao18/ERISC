@@ -43,7 +43,7 @@ struct Line
 
 // 行标识
 struct LineLable {
-	std::string label{ 0 }; // 行标识
+	std::string label{}; // 行标识
 	std::vector<Line>::size_type index{ 0 };  // 行标识所在行的下一行
 };
 
