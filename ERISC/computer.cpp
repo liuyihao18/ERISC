@@ -3,7 +3,7 @@
 #include <iostream>
 #include <sstream>
 #include <fstream>
-#include <ctime>
+#include <cstring>
 
 using BYTE = unsigned char;
 using WORD = unsigned short;
@@ -38,11 +38,7 @@ struct BITMAPINFOHEADER {
 */
 void Computer::main() {
 	// 主循环
-	// int count = 0;
-	// int n = 1000000;
-	// decltype(clock()) begin;
 	while (m_input.hasMoreInput()) {
-		// if (count % n == 0) begin = clock();
 		Line current_line = m_input.getCurrentLine();
 		int32_t temp{ 0 };
 		try {
@@ -169,8 +165,6 @@ void Computer::main() {
 			std::cerr << s << std::endl;
 			exit(-1);
 		}
-		// if ((count % n) == (n - 1))	std::cerr << clock() - begin << "ms" << std::endl;
-		// count++;
 	}
 }
 
@@ -188,7 +182,7 @@ void Computer::draw() {
 	int index;
 
 	// Part.1 Create Bitmap File Header
-	BITMAPFILEHEADER fileHeader;
+	BITMAPFILEHEADER fileHeader{};
 
 	fileHeader.bfType = 0x4D42;
 	fileHeader.bfReserved1 = 0;
@@ -197,7 +191,7 @@ void Computer::draw() {
 	fileHeader.bfOffBits = sizeof(BITMAPFILEHEADER) + sizeof(BITMAPINFOHEADER);
 
 	// Part.2 Create Bitmap Info Header
-	BITMAPINFOHEADER bitmapHeader = { 0 };
+	BITMAPINFOHEADER bitmapHeader{};
 
 	bitmapHeader.biSize = sizeof(BITMAPINFOHEADER);
 	bitmapHeader.biHeight = height;
@@ -208,10 +202,10 @@ void Computer::draw() {
 	bitmapHeader.biCompression = 0; //BI_RGB
 
 	// Part.3 Create Data
-	BYTE* bits = new BYTE[size];
+	BYTE* bits = new BYTE[size]();
 
 	// Clear
-	memset(bits, 0xFF, size);
+	std::memset(bits, 0xFF, size);
 
 	// 上下两条边框线
 	for (x = 0; x < width; x += 1)

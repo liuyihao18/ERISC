@@ -110,7 +110,9 @@ Input::Input(std::string filename) {
 					trim(s);
 					line_struct.type = Type::LINE_LABLE;
 					line_struct.op1 = s;
-					LineLable line_label{ s, m_current_index + 1 };
+					LineLable line_label{};
+					line_label.label = s;
+					line_label.index = m_current_index + 1;
 					m_linelabels.push_back(line_label);
 				}
 				else {
