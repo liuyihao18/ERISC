@@ -1,6 +1,7 @@
 #include "memory.h"
 #include <iostream>
 #include <iomanip>
+#include <cstring>
 
 /**
 * @brief ÖØÖÃ×´Ì¬

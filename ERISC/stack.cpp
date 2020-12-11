@@ -1,5 +1,6 @@
 #include "stack.h"
 #include <iostream>
+#include <cstring>
 
 /**
 * @brief ÖØÖÃ×´Ì¬

@@ -4,6 +4,7 @@
 #include <sstream>
 #include <fstream>
 #include <ctime>
+#include <cstring>
 
 using BYTE = unsigned char;
 using WORD = unsigned short;
