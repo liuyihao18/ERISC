@@ -3,7 +3,6 @@
 #include <iostream>
 #include <sstream>
 #include <fstream>
-#include <ctime>
 #include <cstring>
 
 using BYTE = unsigned char;
@@ -39,11 +38,7 @@ struct BITMAPINFOHEADER {
 */
 void Computer::main() {
 	// Ö÷Ñ­»·
-	// int count = 0;
-	// int n = 1000000;
-	// decltype(clock()) begin;
 	while (m_input.hasMoreInput()) {
-		// if (count % n == 0) begin = clock();
 		Line current_line = m_input.getCurrentLine();
 		int32_t temp{ 0 };
 		try {
@@ -170,8 +165,6 @@ void Computer::main() {
 			std::cerr << s << std::endl;
 			exit(-1);
 		}
-		// if ((count % n) == (n - 1))	std::cerr << clock() - begin << "ms" << std::endl;
-		// count++;
 	}
 }
 
