@@ -189,7 +189,7 @@ void Computer::draw() {
 	int index;
 
 	// Part.1 Create Bitmap File Header
-	BITMAPFILEHEADER fileHeader;
+	BITMAPFILEHEADER fileHeader{};
 
 	fileHeader.bfType = 0x4D42;
 	fileHeader.bfReserved1 = 0;
@@ -198,7 +198,7 @@ void Computer::draw() {
 	fileHeader.bfOffBits = sizeof(BITMAPFILEHEADER) + sizeof(BITMAPINFOHEADER);
 
 	// Part.2 Create Bitmap Info Header
-	BITMAPINFOHEADER bitmapHeader = { 0 };
+	BITMAPINFOHEADER bitmapHeader{};
 
 	bitmapHeader.biSize = sizeof(BITMAPINFOHEADER);
 	bitmapHeader.biHeight = height;
@@ -209,7 +209,7 @@ void Computer::draw() {
 	bitmapHeader.biCompression = 0; //BI_RGB
 
 	// Part.3 Create Data
-	BYTE* bits = new BYTE[size];
+	BYTE* bits = new BYTE[size]();
 
 	// Clear
 	std::memset(bits, 0xFF, size);
