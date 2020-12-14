@@ -38,6 +38,8 @@ public:
 			_access("output", 0) != 0
 #elif defined LINUX || defined UNIX
 			access("output", 0) != 0
+#else 
+			false
 #endif
 			) {
 			if (
@@ -45,6 +47,8 @@ public:
 				_mkdir("output") != 0
 #elif defined LINUX || defined UNIX
 				mkdir("output", S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH) != 0
+#else
+				false
 #endif
 				) {
 				std::cerr << "创建输出文件夹失败！" << std::endl;

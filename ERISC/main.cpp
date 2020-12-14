@@ -4,6 +4,10 @@
 using namespace std;
 
 int main() {
+#if not defined WINDOWS && not defined LINUX && not defined UNIX
+	cerr << "请定义宏变量WINDOWS或LINUX！" << endl;
+	exit(-1);
+#endif
 	ios::sync_with_stdio(false);
 	cout << "请输入你要运行的ERISC文件：";
 	string filename;
