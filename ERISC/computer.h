@@ -5,6 +5,7 @@
 #include "stack.h"
 #include "register.h"
 #include "input.h"
+#include <cstring>
 #include <string>
 #include <iostream>
 #if defined WINDOWS
@@ -13,6 +14,7 @@
 #elif defined LINUX || defined UNIX
 #include <unistd.h>
 #include <sys/stat.h>
+#include <dirent.h>
 #endif
 
 class Computer {
@@ -56,10 +58,11 @@ public:
 			}
 		}
 		else {
+#if defined WINDOWS
 			_finddata_t file{};
 			auto handle = _findfirst("output/*", &file);
 			while (handle != 0 && _findnext(handle, &file) == 0) {
-				if (std::strcmp(file.name, "..") != 0) {
+				if (std::strcmp(file.name, "..") != 0 && std::strcmp(file.name, ".") != 0) {
 					std::string filename{ "output/" };
 					filename += file.name;
 					if (remove(filename.c_str()) != 0) {
@@ -68,6 +71,33 @@ public:
 					}
 				}
 			}
+#elif defined LINUX || defined UNIX
+			struct dirent* entry{ nullptr };
+			struct stat statbuf{};
+			DIR* dir = opendir("output");
+			if (!dir) {
+				std::cerr << "打开输出文件夹失败！" << std::endl;
+				exit(-1);
+			}
+			while (entry = readdir(dir)) {
+				if (stat(entry->d_name, &statbuf) == -1) {
+					continue;
+				}
+				else
+				{
+					if (std::strcmp(entry->d_name, ".") == 0 || std::strcmp(entry->d_name, "..") == 0)
+					{
+						continue;
+					}
+					std::string filename{ "output/" };
+					filename += entry->d_name;
+					if (remove(filename.c_str()) != 0) {
+						std::cerr << "删除旧文件失败！" << std::endl;
+						std::exit(-1);
+					}
+				}
+			}
+#endif
 		}
 	}
 
