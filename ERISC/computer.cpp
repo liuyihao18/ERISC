@@ -21,7 +21,7 @@ struct BITMAPFILEHEADER {
 	DWORD   bfOffBits;
 }
 #if defined LINUX || defined UNIX
-attribute((packed))
+__attribute__((packed))
 #endif
 ;
 
@@ -42,7 +42,7 @@ struct BITMAPINFOHEADER {
 	DWORD      biClrImportant;
 }
 #if defined LINUX || defined UNIX
-attribute((packed))
+__attribute__((packed))
 #endif
 ;
 
