@@ -5,10 +5,10 @@
 #include <fstream>
 #include <cstring>
 
-using BYTE = unsigned char;
-using WORD = unsigned short;
-using DWORD = unsigned long;
-using LONG = long;
+using BYTE = uint8_t;
+using WORD = uint16_t;
+using DWORD = uint32_t;
+using LONG = int32_t;
 
 #if defined WINDOWS
 #pragma pack(2)
