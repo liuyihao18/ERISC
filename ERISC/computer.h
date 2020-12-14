@@ -9,10 +9,11 @@
 #include <iostream>
 #if defined WINDOWS
 #include <io.h>
+#include <direct.h>
 #elif defined LINUX || defined UNIX
 #include <unistd.h>
+#include <sys/stat.h>
 #endif
-#include <direct.h>
 
 class Computer {
 
@@ -32,8 +33,20 @@ public:
 	*/
 	Computer(std::string filename) 
 		:m_memory(), m_stack(), m_register(), m_input(filename), m_draw_times(0) {
-		if (_access("output", 0) != 0) {
-			if (_mkdir("output") != 0) {
+		if (
+#if defined WINDOWS
+			_access("output", 0) != 0
+#elif defined LINUX || defined UNIX
+			access("output", 0) != 0
+#endif
+			) {
+			if (
+#if defined WINDOWS
+				_mkdir("output") != 0
+#elif defined LINUX || defined UNIX
+				mkdir("output", S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH) != 0
+#endif
+				) {
 				std::cerr << "创建输出文件夹失败！" << std::endl;
 			}
 		}
