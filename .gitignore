@@ -6,3 +6,5 @@ ERISC/Debug/
 .DS_Store
 UpgradeLog.htm
 ERISC/output
+ERISC/*.bmp
+ERISC/*.txt
