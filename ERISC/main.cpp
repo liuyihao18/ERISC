@@ -5,7 +5,7 @@ using namespace std;
 
 int main() {
 #if not defined WINDOWS && not defined LINUX && not defined UNIX
-	cerr << "请定义宏变量WINDOWS或LINUX！" << endl;
+	cerr << "请在编译时定义宏变量WINDOWS或LINUX！" << endl;
 	exit(-1);
 #endif
 	ios::sync_with_stdio(false);
