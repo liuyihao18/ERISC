@@ -12,26 +12,26 @@ using LONG = int32_t;
 
 #pragma pack(1)
 struct BITMAPFILEHEADER {
-	WORD    bfType;
-	DWORD   bfSize;
-	WORD    bfReserved1;
-	WORD    bfReserved2;
-	DWORD   bfOffBits;
+	WORD    bfType{ 0 };
+	DWORD   bfSize{ 0 };
+	WORD    bfReserved1{ 0 };
+	WORD    bfReserved2{ 0 };
+	DWORD   bfOffBits{ 0 };
 };
 
 #pragma pack(1)
 struct BITMAPINFOHEADER {
-	DWORD      biSize;
-	LONG       biWidth;
-	LONG       biHeight;
-	WORD       biPlanes;
-	WORD       biBitCount;
-	DWORD      biCompression;
-	DWORD      biSizeImage;
-	LONG       biXPelsPerMeter;
-	LONG       biYPelsPerMeter;
-	DWORD      biClrUsed;
-	DWORD      biClrImportant;
+	DWORD      biSize{ 0 };
+	LONG       biWidth{ 0 };
+	LONG       biHeight{ 0 };
+	WORD       biPlanes{ 0 };
+	WORD       biBitCount{ 0 };
+	DWORD      biCompression{ 0 };
+	DWORD      biSizeImage{ 0 };
+	LONG       biXPelsPerMeter{ 0 };
+	LONG       biYPelsPerMeter{ 0 };
+	DWORD      biClrUsed{ 0 };
+	DWORD      biClrImportant{ 0 };
 };
 
 /**
