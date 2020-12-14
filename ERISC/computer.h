@@ -72,29 +72,22 @@ public:
 				}
 			}
 #elif defined LINUX || defined UNIX
-			struct dirent* entry{ nullptr };
-			struct stat statbuf{};
+			dirent* entry{ nullptr };
 			DIR* dir = opendir("output");
 			if (!dir) {
 				std::cerr << "打开输出文件夹失败！" << std::endl;
 				exit(-1);
 			}
 			while (entry = readdir(dir)) {
-				if (stat(entry->d_name, &statbuf) == -1) {
+				if (std::strcmp(entry->d_name, ".") == 0 || std::strcmp(entry->d_name, "..") == 0)
+				{
 					continue;
 				}
-				else
-				{
-					if (std::strcmp(entry->d_name, ".") == 0 || std::strcmp(entry->d_name, "..") == 0)
-					{
-						continue;
-					}
-					std::string filename{ "output/" };
-					filename += entry->d_name;
-					if (remove(filename.c_str()) != 0) {
-						std::cerr << "删除旧文件失败！" << std::endl;
-						std::exit(-1);
-					}
+				std::string filename{ "output/" };
+				filename += entry->d_name;
+				if (remove(filename.c_str()) != 0) {
+					std::cerr << "删除旧文件失败！" << std::endl;
+					std::exit(-1);
 				}
 			}
 #endif
