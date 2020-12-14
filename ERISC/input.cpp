@@ -42,6 +42,9 @@ static std::vector<std::string> split(const std::string& str) {
 	if (str.empty()) {
 		return std::vector<std::string>();
 	}
+	if (str[str.size() - 1] == ',') {
+		throw std::string("Unexcepted ','！");
+	}
 	std::string s{};
 	std::vector<std::string> ss{};
 	auto iter = str.cbegin();
@@ -56,7 +59,7 @@ static std::vector<std::string> split(const std::string& str) {
 	s.clear();
 	// 读取接下来逗号分割的字符串并去除首尾空格
 	for (; iter != str.cend(); ++iter) {
-		if (*iter != ',' && *iter != '/' && *iter != '#') {
+		if (*iter != ',') {
 			s.insert(s.end(), *iter);
 		}
 		else {
@@ -224,8 +227,11 @@ Input::Input(std::string filename) {
 			if (s == "注释错误！") {
 				std::cerr << s << std::endl;
 			}
+			else if (s == "Unexcepted ','！") {
+				std::cerr << s << std::endl;
+			}
 			else {
-				std::cerr << (s.empty() ? "未知" : s) << "指令错误！" << std::endl;
+				std::cerr << (s.empty() ? "未知指令！" : s + "指令语法错误！") << std::endl;
 			}
 			std::exit(-1);
 		}
