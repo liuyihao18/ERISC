@@ -1,4 +1,4 @@
-#include "computer.h"
+﻿#include "computer.h"
 #include <ctime>
 #include <iostream>
 using namespace std;

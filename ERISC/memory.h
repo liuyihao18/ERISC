@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #ifndef __MEMORY_H__
 #define __MEMORY_H__
 #include "status.h"

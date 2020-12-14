@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #ifndef __COMPUTER_H__
 #define __COMPUTER_H__
 #include "memory.h"

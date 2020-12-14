@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #ifndef __STACK_H__
 #define __STACK_H__
 #include "status.h"
