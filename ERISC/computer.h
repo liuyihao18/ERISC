@@ -59,7 +59,7 @@ public:
 		}
 		else {
 #if defined WINDOWS
-			_finddata_t file{};
+			_finddata_t file;
 			auto handle = _findfirst("output/*", &file);
 			while (handle != 0 && _findnext(handle, &file) == 0) {
 				if (std::strcmp(file.name, "..") != 0 && std::strcmp(file.name, ".") != 0) {
