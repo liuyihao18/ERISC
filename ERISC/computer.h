@@ -13,8 +13,8 @@
 #include <direct.h>
 #elif defined LINUX || defined UNIX
 #include <unistd.h>
-#include <sys/stat.h>
 #include <dirent.h>
+#include <sys/stat.h>
 #endif
 
 class Computer {
