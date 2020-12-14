@@ -52,6 +52,7 @@ public:
 #endif
 				) {
 				std::cerr << "创建输出文件夹失败！" << std::endl;
+				std::exit(-1);
 			}
 		}
 	}
