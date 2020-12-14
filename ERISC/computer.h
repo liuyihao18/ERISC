@@ -8,10 +8,10 @@
 #include <cstring>
 #include <string>
 #include <iostream>
-#if defined WINDOWS
+#if defined(WINDOWS)
 #include <io.h>
 #include <direct.h>
-#elif defined LINUX
+#elif defined(LINUX)
 #include <unistd.h>
 #include <dirent.h>
 #include <sys/stat.h>
@@ -36,18 +36,18 @@ public:
 	Computer(std::string filename) 
 		:m_memory(), m_stack(), m_register(), m_input(filename), m_draw_times(0) {
 		if ( // 判断输出文件夹是否存在
-#if defined WINDOWS
+#if defined(WINDOWS)
 			_access("output", 0) != 0
-#elif defined LINUX
+#elif defined(LINUX)
 			access("output", 0) != 0
 #else 
 			false
 #endif
 			) {
 			if ( // 如果不存在则创建
-#if defined WINDOWS
+#if defined(WINDOWS)
 				_mkdir("output") != 0
-#elif defined LINUX
+#elif defined(LINUX)
 				mkdir("output", S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH) != 0
 #else
 				false
@@ -58,7 +58,7 @@ public:
 			}
 		}
 		else { // 如果存在则删除原先的输出文件
-#if defined WINDOWS
+#if defined(WINDOWS)
 			_finddata_t file;
 			auto handle = _findfirst("output/*", &file);
 			while (handle != 0 && _findnext(handle, &file) == 0) {
@@ -71,7 +71,7 @@ public:
 					}
 				}
 			}
-#elif defined LINUX
+#elif defined(LINUX)
 			dirent* entry{ nullptr };
 			DIR* dir = opendir("output");
 			if (!dir) {

@@ -4,7 +4,7 @@
 using namespace std;
 
 int main() {
-#if not defined WINDOWS && not defined LINUX
+#if !defined(WINDOWS) && !defined(LINUX)
 	cerr << "请在编译时定义宏变量WINDOWS或LINUX！" << endl;
 	exit(-1);
 #endif
@@ -16,9 +16,9 @@ int main() {
 	auto begin = clock();
 	computer.main();
 	auto end = clock();
-#if defined WINDOWS
+#if defined(WINDOWS)
 	cout << "程序运行时间：" << end - begin << "ms" << endl;
-#elif defined LINUX
+#elif defined(LINUX)
 	cout << "程序运行时间：" << (end - begin) / 1000 << "ms" << endl;
 #endif
 	return 0;
