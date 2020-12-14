@@ -5,15 +5,15 @@
 #include <cstdint>
 #include <ostream>
 
-constexpr int MEMORY_SIZE = 4 * 1024 * 1024; // ÄÚ´æ´óĞ¡
-constexpr int MEMORY_STATUS_SIZE = 16; // ÄÚ´æ×´Ì¬´óĞ¡
+constexpr int MEMORY_SIZE = 4 * 1024 * 1024; // å†…å­˜å¤§å°
+constexpr int MEMORY_STATUS_SIZE = 16; // å†…å­˜çŠ¶æ€å¤§å°
 
 class Memory {
 
 private:
 
-	int8_t* m_memory; // ÄÚ´æ´æ´¢µÄÄÚÈİ
-	Status m_status[MEMORY_STATUS_SIZE]{ Status::NO_OPERATE }; // ÄÚ´æµÄ·ÃÎÊ
+	int8_t* m_memory; // å†…å­˜å­˜å‚¨çš„å†…å®¹
+	Status m_status[MEMORY_STATUS_SIZE]{ Status::NO_OPERATE }; // å†…å­˜çš„è®¿é—®
 
 public:
 	
@@ -22,36 +22,36 @@ public:
 	~Memory() { delete[] m_memory; }
 
 	/**
-	* @brief ÖØÖÃ×´Ì¬
+	* @brief é‡ç½®çŠ¶æ€
 	*/
 	void reset();
 
 	/**
-	* @brief ¸ù¾İË÷Òı·µ»ØÏàÓ¦×´Ì¬
-	* @param i: Ë÷Òı
-	* @return ÄÚ´æµÄ×´Ì¬
+	* @brief æ ¹æ®ç´¢å¼•è¿”å›ç›¸åº”çŠ¶æ€
+	* @param i: ç´¢å¼•
+	* @return å†…å­˜çš„çŠ¶æ€
 	*/
 	Status getStatus(int i) const;
 
 	/**
-	* @brief °Ñrs¼Ä´æÆ÷Ö¸ÏòµÄÄÚ´æÖĞµÄÖµ¿½±´µ½¼Ä´æÆ÷rdÖĞ
-	* @param rd: Ä¿±ê¼Ä´æÆ÷µØÖ·£¬¼Ä´æÆ÷ÖĞ´æ´¢µÄÊÇÒ»¸öÖµ
-	* @param rs: Ô´¼Ä´æÆ÷µØÖ·£¬¼Ä´æÆ÷ÖĞ´æ´¢µÄÊÇÄÚ´æµÄµØÖ·
+	* @brief æŠŠrså¯„å­˜å™¨æŒ‡å‘çš„å†…å­˜ä¸­çš„å€¼æ‹·è´åˆ°å¯„å­˜å™¨rdä¸­
+	* @param rd: ç›®æ ‡å¯„å­˜å™¨åœ°å€ï¼Œå¯„å­˜å™¨ä¸­å­˜å‚¨çš„æ˜¯ä¸€ä¸ªå€¼
+	* @param rs: æºå¯„å­˜å™¨åœ°å€ï¼Œå¯„å­˜å™¨ä¸­å­˜å‚¨çš„æ˜¯å†…å­˜çš„åœ°å€
 	*/
 	void load(int32_t* rd, int32_t* rs);
 
 	/**
-	* @brief °Ñ¼Ä´æÆ÷rsÖĞµÄÖµ¿½±´µ½rd¼Ä´æÆ÷Ö¸ÏòµÄÄÚ´æÖĞ
-	* @param rs: Ô´¼Ä´æÆ÷µØÖ·£¬¼Ä´æÆ÷ÖĞ´æ´¢µÄÊÇÒ»¸öÖµ
-	* @param rd: Ä¿±ê¼Ä´æÆ÷µØÖ·£¬¼Ä´æÆ÷ÖĞ´æ´¢µÄÊÇÄÚ´æµÄµØÖ·
+	* @brief æŠŠå¯„å­˜å™¨rsä¸­çš„å€¼æ‹·è´åˆ°rdå¯„å­˜å™¨æŒ‡å‘çš„å†…å­˜ä¸­
+	* @param rs: æºå¯„å­˜å™¨åœ°å€ï¼Œå¯„å­˜å™¨ä¸­å­˜å‚¨çš„æ˜¯ä¸€ä¸ªå€¼
+	* @param rd: ç›®æ ‡å¯„å­˜å™¨åœ°å€ï¼Œå¯„å­˜å™¨ä¸­å­˜å‚¨çš„æ˜¯å†…å­˜çš„åœ°å€
 	*/
 	void store(int32_t* rs, int32_t* rd);
 
 	/**
-	* @brief Êä³öÄÚ´æµÄÄÚÈİ
-	* @param out: Êä³öÁ÷¶ÔÏó
-	* @param reg: Êä³öµÄMemory¶ÔÏó
-	* @return Êä³öÁ÷¶ÔÏó
+	* @brief è¾“å‡ºå†…å­˜çš„å†…å®¹
+	* @param out: è¾“å‡ºæµå¯¹è±¡
+	* @param reg: è¾“å‡ºçš„Memoryå¯¹è±¡
+	* @return è¾“å‡ºæµå¯¹è±¡
 	*/
 	friend std::ostream& operator<<(std::ostream& out, const Memory& memory);
 };

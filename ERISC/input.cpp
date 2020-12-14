@@ -3,8 +3,8 @@
 #include <fstream>
 
 /**
-* @brief È¥³ı×Ö·û´®µÄÊ×Î²¿Õ¸ñ
-* @param str: ĞèÒªÈ¥³ıÊ×Î²¿Õ¸ñµÄ×Ö·û´®
+* @brief å»é™¤å­—ç¬¦ä¸²çš„é¦–å°¾ç©ºæ ¼
+* @param str: éœ€è¦å»é™¤é¦–å°¾ç©ºæ ¼çš„å­—ç¬¦ä¸²
 */
 static void trim(std::string& str) {
 	if (str.empty()) {
@@ -19,24 +19,24 @@ static void trim(std::string& str) {
 }
 
 /**
-* @brief È¥³ı×Ö·û´®ÖĞµÄ×¢ÊÍ
-* @param str: ĞèÒªÈ¥³ı×¢ÊÍµÄ×Ö·û´®
+* @brief å»é™¤å­—ç¬¦ä¸²ä¸­çš„æ³¨é‡Š
+* @param str: éœ€è¦å»é™¤æ³¨é‡Šçš„å­—ç¬¦ä¸²
 */
 static void removeComment(std::string& str) {
 	auto iter = str.begin();
 	while (iter != str.end() && *iter != '/' && *iter != '#') ++iter;
 	if (iter != str.end() && *iter == '/') {
 		if ((iter + 1) == str.end() || *(iter + 1) != '/') {
-			throw std::string("×¢ÊÍ´íÎó£¡");
+			throw std::string("æ³¨é‡Šé”™è¯¯ï¼");
 		}
 	}
 	while (iter != str.end()) iter = str.erase(iter);
 }
 
 /**
-* @brief °Ñ×Ö·û´®ÒÔ¿Õ¸ñ»ò¶ººÅ·Ö¸îÎªÏòÁ¿
-* @param str: ´ı·Ö¸îµÄ×Ö·û´®
-* @return ·Ö¸îµÄ×Ö·û´®ÏòÁ¿
+* @brief æŠŠå­—ç¬¦ä¸²ä»¥ç©ºæ ¼æˆ–é€—å·åˆ†å‰²ä¸ºå‘é‡
+* @param str: å¾…åˆ†å‰²çš„å­—ç¬¦ä¸²
+* @return åˆ†å‰²çš„å­—ç¬¦ä¸²å‘é‡
 */
 static std::vector<std::string> split(const std::string& str) {
 	if (str.empty()) {
@@ -45,7 +45,7 @@ static std::vector<std::string> split(const std::string& str) {
 	std::string s{};
 	std::vector<std::string> ss{};
 	auto iter = str.cbegin();
-	// ¶ÁÈ¡µÚÒ»¸ö¿Õ¸ñÖ®Ç°µÄ×Ö·û´®
+	// è¯»å–ç¬¬ä¸€ä¸ªç©ºæ ¼ä¹‹å‰çš„å­—ç¬¦ä¸²
 	while (iter != str.cend() && *iter != ' ') {
 		s.insert(s.end(), *iter);
 		++iter;
@@ -54,7 +54,7 @@ static std::vector<std::string> split(const std::string& str) {
 		ss.push_back(s);
 	}
 	s.clear();
-	// ¶ÁÈ¡½ÓÏÂÀ´¶ººÅ·Ö¸îµÄ×Ö·û´®²¢È¥³ıÊ×Î²¿Õ¸ñ
+	// è¯»å–æ¥ä¸‹æ¥é€—å·åˆ†å‰²çš„å­—ç¬¦ä¸²å¹¶å»é™¤é¦–å°¾ç©ºæ ¼
 	for (; iter != str.cend(); ++iter) {
 		if (*iter != ',' && *iter != '/' && *iter != '#') {
 			s.insert(s.end(), *iter);
@@ -75,8 +75,8 @@ static std::vector<std::string> split(const std::string& str) {
 }
 
 /**
-* @brief: °Ñstr×ª»¯Îª´óĞ´
-* @param: str: ´ı×ª»¯µÄ×Ö·û´®
+* @brief: æŠŠstrè½¬åŒ–ä¸ºå¤§å†™
+* @param: str: å¾…è½¬åŒ–çš„å­—ç¬¦ä¸²
 */
 static void toUpper(std::string& str) {
 	for (auto iter = str.begin(); iter != str.end(); ++iter) {
@@ -85,13 +85,13 @@ static void toUpper(std::string& str) {
 }
 
 /**
-* @brief ¹¹Ôìº¯Êı£¬¸ù¾İÊäÈëµÄÎÄ¼şÃû¹¹ÔìÕû¸öĞĞ½á¹¹
-* @param filename: ÊäÈëÎÄ¼şÃû
+* @brief æ„é€ å‡½æ•°ï¼Œæ ¹æ®è¾“å…¥çš„æ–‡ä»¶åæ„é€ æ•´ä¸ªè¡Œç»“æ„
+* @param filename: è¾“å…¥æ–‡ä»¶å
 */
 Input::Input(std::string filename) {
 	std::ifstream in(filename);
 	if (!in.is_open()) {
-		std::cerr << "ÎŞ·¨´ò¿ªÊäÈëÎÄ¼ş!" << std::endl;
+		std::cerr << "æ— æ³•æ‰“å¼€è¾“å…¥æ–‡ä»¶!" << std::endl;
 		exit(-1);
 	}
 	while (in) {
@@ -102,7 +102,7 @@ Input::Input(std::string filename) {
 			removeComment(line);
 			trim(line);
 			if (!line.empty()) {
-				if (line[line.size() - 1] == ':') { //½áÎ²Îª:£¬ÔòĞĞ±êÊ¶·û»òÕßº¯Êı
+				if (line[line.size() - 1] == ':') { //ç»“å°¾ä¸º:ï¼Œåˆ™è¡Œæ ‡è¯†ç¬¦æˆ–è€…å‡½æ•°
 					std::string s{};
 					for (decltype(line.size()) i = 0; i <= line.size() - 2; i++) {
 						s += line[i];
@@ -121,7 +121,7 @@ Input::Input(std::string filename) {
 					if (split_result.size() >= 2) line_struct.op1 = split_result[1];
 					if (split_result.size() >= 3) line_struct.op2 = split_result[2];
 					if (split_result.size() >= 4) line_struct.op3 = split_result[3];
-					toUpper(a1); // °Ña1×ª»¯Îª´óĞ´
+					toUpper(a1); // æŠŠa1è½¬åŒ–ä¸ºå¤§å†™
 					if (a1 == "LOAD") {
 						if (split_result.size() != 3) throw a1;
 						line_struct.type = Type::LOAD;
@@ -221,11 +221,11 @@ Input::Input(std::string filename) {
 		}
 		catch (const std::string& s) {
 			std::cerr << "Line " << m_current_index + 1 << ": " << line << " -- ";
-			if (s == "×¢ÊÍ´íÎó£¡") {
+			if (s == "æ³¨é‡Šé”™è¯¯ï¼") {
 				std::cerr << s << std::endl;
 			}
 			else {
-				std::cerr << (s.empty() ? "Î´Öª" : s) << "Ö¸Áî´íÎó£¡" << std::endl;
+				std::cerr << (s.empty() ? "æœªçŸ¥" : s) << "æŒ‡ä»¤é”™è¯¯ï¼" << std::endl;
 			}
 			std::exit(-1);
 		}
@@ -235,66 +235,66 @@ Input::Input(std::string filename) {
 }
 
 /**
-* @brief »ñÈ¡µ±Ç°µÄĞĞºÅ
-* @return µ±Ç°µÄĞĞºÅ
+* @brief è·å–å½“å‰çš„è¡Œå·
+* @return å½“å‰çš„è¡Œå·
 */
 int32_t Input::getCurrentIndex() {
 	return static_cast<int32_t>(m_current_index);
 }
 
 /**
-* @brief »ñÈ¡µ±Ç°µÄĞĞ
-* @return µ±Ç°ĞĞµÄĞÅÏ¢
+* @brief è·å–å½“å‰çš„è¡Œ
+* @return å½“å‰è¡Œçš„ä¿¡æ¯
 */
 Line Input::getCurrentLine() {
 	return m_lines[m_current_index];
 }
 
 /**
-* @brief ×ªµ½ÏÂÒ»ĞĞ
+* @brief è½¬åˆ°ä¸‹ä¸€è¡Œ
 */
 void Input::nextLine() {
 	m_current_index++;
 	if (!hasMoreInput()) {
-		std::cerr << "¾¯¸æ£ºÎÄ¼şÖĞÃ»ÓĞENDÖ¸Áî£¡" << std::endl;
+		std::cerr << "è­¦å‘Šï¼šæ–‡ä»¶ä¸­æ²¡æœ‰ENDæŒ‡ä»¤ï¼" << std::endl;
 		return;
 	}
 	if (m_lines[m_current_index].type == Type::LINE_LABLE) {
 		for (auto iter = m_functions.begin(); iter != m_functions.end(); ++iter) {
 			if (iter->name == m_lines[m_current_index].op1) {
-				m_current_index = iter->index; // retÖ®ºóµÄÏÂÒ»ĞĞ
+				m_current_index = iter->index; // retä¹‹åçš„ä¸‹ä¸€è¡Œ
 				return;
 			}
 		}
-		m_current_index++; // ĞĞ±êÊ¶µÄÏÂÒ»ĞĞ
+		m_current_index++; // è¡Œæ ‡è¯†çš„ä¸‹ä¸€è¡Œ
 	}
 }
 
 /**
-* @brief Ìøµ½ĞĞ±êÊ¶µÄÏÂÒ»ĞĞ
-* @param label: ĞĞ±êÊ¶
+* @brief è·³åˆ°è¡Œæ ‡è¯†çš„ä¸‹ä¸€è¡Œ
+* @param label: è¡Œæ ‡è¯†
 */
 void Input::jumpLine(std::string label) {
 	std::vector<LineLable>::iterator it = m_linelabels.begin();
 	for (it = m_linelabels.begin(); it != m_linelabels.end(); it++) {
 		if (it->label == label) {
-			m_current_index = it->index; // Ìøµ½ĞĞ±êÊ¶µÄÏÂÒ»ĞĞ
+			m_current_index = it->index; // è·³åˆ°è¡Œæ ‡è¯†çš„ä¸‹ä¸€è¡Œ
 			break;
 		}
 	}
 }
 
 /**
-* @brief Ìøµ½Ä³Ò»ĞĞ
-* @param index: ĞĞºÅ
+* @brief è·³åˆ°æŸä¸€è¡Œ
+* @param index: è¡Œå·
 */
 void Input::jumpLine(int index) {
 	m_current_index = index;
 }
 
 /**
-* @brief ÊÇ·ñ»¹ÓĞ¸ü¶àµÄÊäÈë
-* @return ÅĞ¶Ï½á¹û
+* @brief æ˜¯å¦è¿˜æœ‰æ›´å¤šçš„è¾“å…¥
+* @return åˆ¤æ–­ç»“æœ
 */
 bool Input::hasMoreInput() {
 	return m_current_index < m_lines.size();

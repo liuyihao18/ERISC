@@ -4,7 +4,7 @@
 #include <cstring>
 
 /**
-* @brief ÖØÖÃ×´Ì¬
+* @brief é‡ç½®çŠ¶æ€
 */
 void Memory::reset() {
 	for (auto& status : m_status) {
@@ -13,25 +13,25 @@ void Memory::reset() {
 }
 
 /**
-* @brief ¸ù¾İË÷Òı·µ»ØÏàÓ¦×´Ì¬
-* @param i: Ë÷Òı
-* @return ÄÚ´æµÄ×´Ì¬
+* @brief æ ¹æ®ç´¢å¼•è¿”å›ç›¸åº”çŠ¶æ€
+* @param i: ç´¢å¼•
+* @return å†…å­˜çš„çŠ¶æ€
 */
 Status Memory::getStatus(int i) const {
 	if (i < 0 || i >= MEMORY_STATUS_SIZE) {
-		throw std::string("ÄÚ´æ×´Ì¬Ô½½ç·ÃÎÊ£¡");
+		throw std::string("å†…å­˜çŠ¶æ€è¶Šç•Œè®¿é—®ï¼");
 	}
 	return m_status[i];
 }
 
 /**
-* @brief °Ñrs¼Ä´æÆ÷Ö¸ÏòµÄÄÚ´æÖĞµÄÖµ¿½±´µ½¼Ä´æÆ÷rdÖĞ
-* @param rd: Ä¿±ê¼Ä´æÆ÷µØÖ·£¬¼Ä´æÆ÷ÖĞ´æ´¢µÄÊÇÒ»¸öÖµ
-* @param rs: Ô´¼Ä´æÆ÷µØÖ·£¬¼Ä´æÆ÷ÖĞ´æ´¢µÄÊÇÄÚ´æµÄµØÖ·
+* @brief æŠŠrså¯„å­˜å™¨æŒ‡å‘çš„å†…å­˜ä¸­çš„å€¼æ‹·è´åˆ°å¯„å­˜å™¨rdä¸­
+* @param rd: ç›®æ ‡å¯„å­˜å™¨åœ°å€ï¼Œå¯„å­˜å™¨ä¸­å­˜å‚¨çš„æ˜¯ä¸€ä¸ªå€¼
+* @param rs: æºå¯„å­˜å™¨åœ°å€ï¼Œå¯„å­˜å™¨ä¸­å­˜å‚¨çš„æ˜¯å†…å­˜çš„åœ°å€
 */
 void Memory::load(int32_t* rd, int32_t* rs) {
 	if (*rs < 0 || *rs > MEMORY_SIZE - 4) {
-		throw std::string("ÄÚ´æ·ÃÎÊÔ½½ç£¡");
+		throw std::string("å†…å­˜è®¿é—®è¶Šç•Œï¼");
 	}
 	std::memcpy(rd, m_memory + *rs, sizeof(int32_t));
 	for (int i = 0; i < 4; i++) {
@@ -40,13 +40,13 @@ void Memory::load(int32_t* rd, int32_t* rs) {
 }
 
 /**
-* @brief °Ñ¼Ä´æÆ÷rsÖĞµÄÖµ¿½±´µ½rd¼Ä´æÆ÷Ö¸ÏòµÄÄÚ´æÖĞ
-* @param rs: Ô´¼Ä´æÆ÷µØÖ·£¬¼Ä´æÆ÷ÖĞ´æ´¢µÄÊÇÒ»¸öÖµ
-* @param rd: Ä¿±ê¼Ä´æÆ÷µØÖ·£¬¼Ä´æÆ÷ÖĞ´æ´¢µÄÊÇÄÚ´æµÄµØÖ·
+* @brief æŠŠå¯„å­˜å™¨rsä¸­çš„å€¼æ‹·è´åˆ°rdå¯„å­˜å™¨æŒ‡å‘çš„å†…å­˜ä¸­
+* @param rs: æºå¯„å­˜å™¨åœ°å€ï¼Œå¯„å­˜å™¨ä¸­å­˜å‚¨çš„æ˜¯ä¸€ä¸ªå€¼
+* @param rd: ç›®æ ‡å¯„å­˜å™¨åœ°å€ï¼Œå¯„å­˜å™¨ä¸­å­˜å‚¨çš„æ˜¯å†…å­˜çš„åœ°å€
 */
 void Memory::store(int32_t* rs, int32_t* rd) {
 	if (*rd < 0 || *rd > MEMORY_SIZE - 4) {
-		throw std::string("ÄÚ´æ·ÃÎÊÔ½½ç£¡");
+		throw std::string("å†…å­˜è®¿é—®è¶Šç•Œï¼");
 	}
 	std::memcpy(m_memory + *rd, rs, sizeof(int32_t));
 	for (int i = 0; i < 4; i++) {
@@ -55,10 +55,10 @@ void Memory::store(int32_t* rs, int32_t* rd) {
 }
 
 /**
-* @brief Êä³öÄÚ´æµÄÄÚÈİ
-* @param out: Êä³öÁ÷¶ÔÏó
-* @param reg: Êä³öµÄMemory¶ÔÏó
-* @return Êä³öÁ÷¶ÔÏó
+* @brief è¾“å‡ºå†…å­˜çš„å†…å®¹
+* @param out: è¾“å‡ºæµå¯¹è±¡
+* @param reg: è¾“å‡ºçš„Memoryå¯¹è±¡
+* @return è¾“å‡ºæµå¯¹è±¡
 */
 std::ostream& operator<<(std::ostream& out, const Memory& memory) {
 	for (int i = 0; i < MEMORY_SIZE; i++) {

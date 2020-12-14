@@ -4,15 +4,15 @@
 #include "status.h"
 #include <cstdint>
 
-constexpr int STACK_SIZE = 1024 * 1024; // Õ»µÄ´óĞ¡
+constexpr int STACK_SIZE = 1024 * 1024; // æ ˆçš„å¤§å°
 
 class Stack {
 
 private:
 
-	int32_t* m_stack; // Õ»´æ´¢µÄÄÚÈİ
-	Status m_status{ Status::NO_OPERATE }; // Õ»µÄ·ÃÎÊ
-	int m_ptr{ STACK_SIZE }; // Õ»¶¥Ö¸Õë
+	int32_t* m_stack; // æ ˆå­˜å‚¨çš„å†…å®¹
+	Status m_status{ Status::NO_OPERATE }; // æ ˆçš„è®¿é—®
+	int m_ptr{ STACK_SIZE }; // æ ˆé¡¶æŒ‡é’ˆ
 
 public:
 
@@ -21,25 +21,25 @@ public:
 	~Stack() { delete[] m_stack; }
 
 	/**
-	* @brief ÖØÖÃ×´Ì¬
+	* @brief é‡ç½®çŠ¶æ€
 	*/
 	void reset();
 
 	/**
-	* @brief ·µ»ØÕ»µÄ×´Ì¬
-	* @return Õ»µÄ×´Ì¬
+	* @brief è¿”å›æ ˆçš„çŠ¶æ€
+	* @return æ ˆçš„çŠ¶æ€
 	*/
 	Status getStatus() const;
 
 	/**
-	* @brief °Ñrs¼Ä´æÆ÷ÖĞµÄÖµÈëÕ»
-	* @param rs: ¼Ä´æÆ÷µÄµØÖ·
+	* @brief æŠŠrså¯„å­˜å™¨ä¸­çš„å€¼å…¥æ ˆ
+	* @param rs: å¯„å­˜å™¨çš„åœ°å€
 	*/
 	void push(int32_t* rs);
 
 	/**
-	* @brief °ÑÕ»¶¥µÄÖµ´æÈërd¼Ä´æÆ÷ÖĞ
-	* @param rd: ¼Ä´æÆ÷µÄµØÖ·
+	* @brief æŠŠæ ˆé¡¶çš„å€¼å­˜å…¥rdå¯„å­˜å™¨ä¸­
+	* @param rd: å¯„å­˜å™¨çš„åœ°å€
 	*/
 	void pop(int32_t* rd);
 

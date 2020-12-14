@@ -34,10 +34,10 @@ struct BITMAPINFOHEADER {
 };
 
 /**
-* @brief ³ÌĞòÔËĞĞÖ÷º¯Êı
+* @brief ç¨‹åºè¿è¡Œä¸»å‡½æ•°
 */
 void Computer::main() {
-	// Ö÷Ñ­»·
+	// ä¸»å¾ªç¯
 	while (m_input.hasMoreInput()) {
 		Line current_line = m_input.getCurrentLine();
 		int32_t temp{ 0 };
@@ -156,7 +156,7 @@ void Computer::main() {
 				write();
 				return;
 			default:
-				throw std::string("Î´ÖªĞĞÖÖÀà£¡");
+				throw std::string("æœªçŸ¥è¡Œç§ç±»ï¼");
 				break;
 			}
 		}
@@ -170,7 +170,7 @@ void Computer::main() {
 
 
 /**
-* @brief »æÍ¼
+* @brief ç»˜å›¾
 */
 void Computer::draw() {
 	++m_draw_times;
@@ -207,7 +207,7 @@ void Computer::draw() {
 	// Clear
 	std::memset(bits, 0xFF, size);
 
-	// ÉÏÏÂÁ½Ìõ±ß¿òÏß
+	// ä¸Šä¸‹ä¸¤æ¡è¾¹æ¡†çº¿
 	for (x = 0; x < width; x += 1)
 	{
 		for (int i = 0; i <= 1; i++) {
@@ -220,7 +220,7 @@ void Computer::draw() {
 		}
 	}
 
-	//ÖĞ¼äÈıÌõ±ß¿òÏß
+	//ä¸­é—´ä¸‰æ¡è¾¹æ¡†çº¿
 	for (x = 0; x < width - 240; x += 1)
 	{
 		for (int j = 1; j <= 3; j++) {
@@ -232,7 +232,7 @@ void Computer::draw() {
 		}
 	}
 
-	//¼Ä´æÆ÷²¿·ÖÊúÏß
+	//å¯„å­˜å™¨éƒ¨åˆ†ç«–çº¿
 	for (y = 0; y < height - 100; y += 1)
 	{
 		for (x = 0; x <= width - 240 - 200; x += 75) {
@@ -244,7 +244,7 @@ void Computer::draw() {
 		}
 	}
 
-	//Õ»¿Õ¼ä²¿·ÖÊúÏß
+	//æ ˆç©ºé—´éƒ¨åˆ†ç«–çº¿
 	for (y = 0; y < height - 100; y += 1)
 	{
 		for (x = 600; x <= width - 240; x += 50) {
@@ -256,7 +256,7 @@ void Computer::draw() {
 		}
 	}
 
-	//×îÓÒ¶ËÊúÏß
+	//æœ€å³ç«¯ç«–çº¿
 	for (y = 0; y < height - 100; y += 1)
 	{
 		x = width - 1;
@@ -267,7 +267,7 @@ void Computer::draw() {
 		bits[index + 2] = 0;   // Red
 	}
 
-	//¼Ä´æÆ÷»æÖÆ
+	//å¯„å­˜å™¨ç»˜åˆ¶
 	for (int i = 0; i < 32; i++) {
 		int x_start, y_start;
 		x_start = 75 * (i % 8) + 1;
@@ -310,9 +310,9 @@ void Computer::draw() {
 			break;
 		}
 	}
-	//¼Ä´æÆ÷»æÖÆÍê³É
+	//å¯„å­˜å™¨ç»˜åˆ¶å®Œæˆ
 
-	//ÄÚ´æ¿Õ¼ä»æÖÆ
+	//å†…å­˜ç©ºé—´ç»˜åˆ¶
 	for (int i = 0; i < 16; i++) {
 		int x_start, y_start;
 		x_start = 600 + (i % 4) * 50 + 1;
@@ -335,9 +335,9 @@ void Computer::draw() {
 			break;
 		}
 	}
-	//ÄÚ´æ»æÖÆÍê³É
+	//å†…å­˜ç»˜åˆ¶å®Œæˆ
 
-	//Õ»¿Õ¼ä»æÖÆ
+	//æ ˆç©ºé—´ç»˜åˆ¶
 	{
 		int x_start, y_start;
 		x_start = 800 + 1;
@@ -356,7 +356,7 @@ void Computer::draw() {
 			}
 		}
 	}
-	//Õ»¿Õ¼ä»æÖÆÍê³É
+	//æ ˆç©ºé—´ç»˜åˆ¶å®Œæˆ
 
 	// Write to file
 	std::ostringstream filename;
@@ -366,7 +366,7 @@ void Computer::draw() {
 
 	std::ofstream file(filename.str(), std::ios::binary);
 	if (!file.is_open()) {
-		throw std::string("»æÖÆbmpÍ¼ÏñÎÄ¼ş·¢Éú´íÎó£¡");
+		throw std::string("ç»˜åˆ¶bmpå›¾åƒæ–‡ä»¶å‘ç”Ÿé”™è¯¯ï¼");
 	}
 	else
 	{
@@ -376,22 +376,22 @@ void Computer::draw() {
 		file.close();
 	}
 
-	//ÖØÖÃ×´Ì¬
+	//é‡ç½®çŠ¶æ€
 	m_memory.reset();
 	m_stack.reset();
 	m_register.reset();
 
-	// ÊÍ·Å¿Õ¼ä
+	// é‡Šæ”¾ç©ºé—´
 	delete[] bits;
 }
 
 /**
-* @brief °Ñ¼Ä´æÆ÷¡¢ÄÚ´æÖĞµÄÖµĞ´µ½ÎÄ¼şresult.txtÖĞ
+* @brief æŠŠå¯„å­˜å™¨ã€å†…å­˜ä¸­çš„å€¼å†™åˆ°æ–‡ä»¶result.txtä¸­
 */
 void Computer::write() {
 	std::ofstream file("output/result.txt");
 	if (!file.is_open()) {
-		throw std::string("Êä³öÎÄ±¾ÎÄ¼ş·¢Éú´íÎó£¡");
+		throw std::string("è¾“å‡ºæ–‡æœ¬æ–‡ä»¶å‘ç”Ÿé”™è¯¯ï¼");
 	}
 	file << m_register << std::endl;
 	file << m_memory;

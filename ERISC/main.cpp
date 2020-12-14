@@ -5,7 +5,7 @@ using namespace std;
 
 int main() {
 	ios::sync_with_stdio(false);
-	cout << "ÇëÊäÈëÄãÒªÔËÐÐµÄERISCÎÄ¼þ£º";
+	cout << "è¯·è¾“å…¥ä½ è¦è¿è¡Œçš„ERISCæ–‡ä»¶ï¼š";
 	string filename;
 	cin >> filename;
 	Computer computer(filename);
@@ -13,9 +13,9 @@ int main() {
 	computer.main();
 	auto end = clock();
 #if defined WINDOWS
-	cout << "³ÌÐòÔËÐÐÊ±¼ä£º" << (end - begin) / 1000 << "s" << endl;
+	cout << "ç¨‹åºè¿è¡Œæ—¶é—´ï¼š" << (end - begin) / 1000 << "s" << endl;
 #elif defined LINUX || defined UNIX
-	cout << "³ÌÐòÔËÐÐÊ±¼ä£º" << (end - begin) / 1000000 << "s" << endl;
+	cout << "ç¨‹åºè¿è¡Œæ—¶é—´ï¼š" << (end - begin) / 1000000 << "s" << endl;
 #endif
 	return 0;
 }

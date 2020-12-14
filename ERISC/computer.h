@@ -28,8 +28,8 @@ private:
 public:
 
 	/**
-	* @brief ¹¹Ôìº¯Êı
-	* @param filename: ÊäÈëµÄERISCÎÄ¼şÃû
+	* @brief æ„é€ å‡½æ•°
+	* @param filename: è¾“å…¥çš„ERISCæ–‡ä»¶å
 	*/
 	Computer(std::string filename) 
 		:m_memory(), m_stack(), m_register(), m_input(filename), m_draw_times(0) {
@@ -47,23 +47,23 @@ public:
 				mkdir("output", S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH) != 0
 #endif
 				) {
-				std::cerr << "´´½¨Êä³öÎÄ¼ş¼ĞÊ§°Ü£¡" << std::endl;
+				std::cerr << "åˆ›å»ºè¾“å‡ºæ–‡ä»¶å¤¹å¤±è´¥ï¼" << std::endl;
 			}
 		}
 	}
 
 	/**
-	* @brief ³ÌĞòÔËĞĞÖ÷º¯Êı
+	* @brief ç¨‹åºè¿è¡Œä¸»å‡½æ•°
 	*/
 	void main();
 
 	/**
-	* @brief »æÍ¼
+	* @brief ç»˜å›¾
 	*/
 	void draw();
 
 	/**
-	* @brief °Ñ¼Ä´æÆ÷¡¢ÄÚ´æÖĞµÄÖµĞ´µ½ÎÄ¼şresult.txtÖĞ
+	* @brief æŠŠå¯„å­˜å™¨ã€å†…å­˜ä¸­çš„å€¼å†™åˆ°æ–‡ä»¶result.txtä¸­
 	*/
 	void write();
 

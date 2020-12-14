@@ -4,7 +4,7 @@
 #include <cctype>
 #include <iomanip>
 
-// ¼Ä´æÆ÷µÄÃû×Ö
+// å¯„å­˜å™¨çš„åå­—
 static const std::string names[64]{
 "x0", "zero",
 "x1", "ra",
@@ -41,57 +41,57 @@ static const std::string names[64]{
 };
 
 /**
-* @brift ÅĞ¶ÏÒ»¸ö×Ö·û´®ÊÇ·ñÊÇÁ¢¼´Êı
-* @param str: ÊäÈë×Ö·û´®
-* @return ÊÇ·ñÊÇÁ¢¼´Êı
+* @brift åˆ¤æ–­ä¸€ä¸ªå­—ç¬¦ä¸²æ˜¯å¦æ˜¯ç«‹å³æ•°
+* @param str: è¾“å…¥å­—ç¬¦ä¸²
+* @return æ˜¯å¦æ˜¯ç«‹å³æ•°
 */
 static bool isImm(const std::string& str) {
 	if (str.empty()) {
-		throw std::string("¿Õ×Ö·û´®´íÎó£¡");
+		throw std::string("ç©ºå­—ç¬¦ä¸²é”™è¯¯ï¼");
 	}
 	return std::isdigit(str[0]);
 }
 
 /**
-* @brief °Ñ×Ö·û´®¸ù¾İÊ®Áù½øÖÆ»òÊ®½øÖÆ×ª»¯ÎªÊı×Ö
-* @param str: ×Ö·û´®
-* @return ×ª»¯³ÉµÄÊı×Ö
+* @brief æŠŠå­—ç¬¦ä¸²æ ¹æ®åå…­è¿›åˆ¶æˆ–åè¿›åˆ¶è½¬åŒ–ä¸ºæ•°å­—
+* @param str: å­—ç¬¦ä¸²
+* @return è½¬åŒ–æˆçš„æ•°å­—
 */
 static int32_t str2num(const std::string& str) {
 	int32_t result{ 0 };
 	std::istringstream is(str);
 	if (str.size() >= 3 && str[0] == '0' && (str[1] == 'x' || str[1] == 'X')) {
-		// È·ÈÏÊı¾İÖĞ¼äÃ»ÓĞ³ö´í
+		// ç¡®è®¤æ•°æ®ä¸­é—´æ²¡æœ‰å‡ºé”™
 		for (decltype(str.size()) i = 2; i < str.size(); i++) {
 			if (!std::isdigit(str[i]) && str[i] != 'a' && str[i] != 'b' && str[i] != 'c'
 				&& str[i] != 'd' && str[i] != 'e' && str[i] != 'f') {
-				throw std::string(str + " -- Á¢¼´ÊıÊäÈë´íÎó£¡");
+				throw std::string(str + " -- ç«‹å³æ•°è¾“å…¥é”™è¯¯ï¼");
 			}
 		}
-		// ÊäÈëÊı¾İ
+		// è¾“å…¥æ•°æ®
 		if (!(is >> std::hex >> result)) {
-			throw std::string(str + " -- Á¢¼´ÊıÊäÈë´íÎó£¡");
+			throw std::string(str + " -- ç«‹å³æ•°è¾“å…¥é”™è¯¯ï¼");
 		}		
 	}
 	else {
-		// È·ÈÏÊı¾İÖĞ¼äÃ»ÓĞ³ö´í
+		// ç¡®è®¤æ•°æ®ä¸­é—´æ²¡æœ‰å‡ºé”™
 		for (decltype(str.size()) i = 0; i < str.size(); i++) {
 			if (!std::isdigit(str[i])) {
-				throw std::string(str + " -- Á¢¼´ÊıÊäÈë´íÎó£¡");
+				throw std::string(str + " -- ç«‹å³æ•°è¾“å…¥é”™è¯¯ï¼");
 			}
 		}
-		// ÊäÈëÊı¾İ
+		// è¾“å…¥æ•°æ®
 		if (!(is >> result)) {
-			throw std::string(str + " -- Á¢¼´ÊıÊäÈë´íÎó£¡");
+			throw std::string(str + " -- ç«‹å³æ•°è¾“å…¥é”™è¯¯ï¼");
 		}
 	}
 	return result;
 }
 
 /**
-* @brief ¸ù¾İÃû×Ö»ñÈ¡¼Ä´æÆ÷µÄË÷Òı
-* @param ¼Ä´æÆ÷µÄÃû×Ö
-* @return ¼Ä´æÆ÷µÄË÷Òı
+* @brief æ ¹æ®åå­—è·å–å¯„å­˜å™¨çš„ç´¢å¼•
+* @param å¯„å­˜å™¨çš„åå­—
+* @return å¯„å­˜å™¨çš„ç´¢å¼•
 */
 int Register::lookup(const std::string& name) const {
 	for (int i = 0; i < 64; i++) {
@@ -99,11 +99,11 @@ int Register::lookup(const std::string& name) const {
 			return i >> 1;
 		}
 	}
-	throw std::string(name + " -- ¼Ä´æÆ÷Ãû×Ö´íÎó£¡");
+	throw std::string(name + " -- å¯„å­˜å™¨åå­—é”™è¯¯ï¼");
 }
 
 /**
-* @brief ÖØÖÃ×´Ì¬
+* @brief é‡ç½®çŠ¶æ€
 */
 void Register::reset() {
 	for (auto& status : m_status) {
@@ -112,9 +112,9 @@ void Register::reset() {
 }
 
 /**
-* @brief ÉèÖÃ×´Ì¬£¬Õë¶ÔÔÚRegisterÀàÍâµ÷ÓÃoperator[]Ê±
-* param name: ¼Ä´æÆ÷µÄÃû×Ö
-* param status: ×´Ì¬
+* @brief è®¾ç½®çŠ¶æ€ï¼Œé’ˆå¯¹åœ¨Registerç±»å¤–è°ƒç”¨operator[]æ—¶
+* param name: å¯„å­˜å™¨çš„åå­—
+* param status: çŠ¶æ€
 */
 void Register::setStatus(const std::string& name, Status status) {
 	int index = lookup(name);
@@ -147,35 +147,35 @@ void Register::setStatus(const std::string& name, Status status) {
 		m_status[index] = Status::READ_WRITE;
 		break;
 	default:
-		throw std::string("¼Ä´æÆ÷×´Ì¬ÉèÖÃ´íÎó");
+		throw std::string("å¯„å­˜å™¨çŠ¶æ€è®¾ç½®é”™è¯¯");
 	}
 }
 
 /**
-* @brief ¸ù¾İÃû×Ö·µ»ØÏàÓ¦¼Ä´æÆ÷µÄµØÖ·
-* @param name: ¼Ä´æÆ÷µÄÃû×Ö
-* @return ¼Ä´æÆ÷µÄµØÖ·
+* @brief æ ¹æ®åå­—è¿”å›ç›¸åº”å¯„å­˜å™¨çš„åœ°å€
+* @param name: å¯„å­˜å™¨çš„åå­—
+* @return å¯„å­˜å™¨çš„åœ°å€
 */
 int32_t* Register::operator[](const std::string& name) {
 	return m_register + lookup(name);
 }
 
 /**
-* @brief ¸ù¾İË÷Òı·µ»ØÏàÓ¦×´Ì¬
-* @param i: Ë÷Òı
-* @return ¼Ä´æÆ÷µÄ×´Ì¬
+* @brief æ ¹æ®ç´¢å¼•è¿”å›ç›¸åº”çŠ¶æ€
+* @param i: ç´¢å¼•
+* @return å¯„å­˜å™¨çš„çŠ¶æ€
 */
 Status Register::getStatus(int i) const {
 	if (i < 0 || i >= REGISTER_SIZE) {
-		throw std::string("¼Ä´æÆ÷×´Ì¬Ô½½ç·ÃÎÊ£¡");
+		throw std::string("å¯„å­˜å™¨çŠ¶æ€è¶Šç•Œè®¿é—®ï¼");
 	}
 	return m_status[i];
 }
 
 /**
-* @brief ½«¼Ä´æÆ÷rsµÄÖµ»òÁ¢¼´Êıimm¸³¸ø¼Ä´æÆ÷rd
-* @param rd: Ä¿±ê¼Ä´æÆ÷µÄÃû×Ö
-* @param rs_or_imm: Ô´¼Ä´æÆ÷µÄÃû×Ö»òÕßÁ¢¼´Êı
+* @brief å°†å¯„å­˜å™¨rsçš„å€¼æˆ–ç«‹å³æ•°immèµ‹ç»™å¯„å­˜å™¨rd
+* @param rd: ç›®æ ‡å¯„å­˜å™¨çš„åå­—
+* @param rs_or_imm: æºå¯„å­˜å™¨çš„åå­—æˆ–è€…ç«‹å³æ•°
 */
 void Register::mov(const std::string& rd, const std::string& rs_or_imm) {
 	if (isImm(rs_or_imm)) {
@@ -190,10 +190,10 @@ void Register::mov(const std::string& rd, const std::string& rs_or_imm) {
 }
 
 /**
-* @brief ½«¼Ä´æÆ÷rs1µÄÖµ¼ÓÉÏ¼Ä´æÆ÷rs2µÄÖµ»òÁ¢¼´Êıimmºó¸³¸ø¼Ä´æÆ÷rd
-* @param rd: Ä¿±ê¼Ä´æÆ÷µÄÃû×Ö
-* @param rs1: Ô´¼Ä´æÆ÷1µÄÃû×Ö
-* @param rs2_or_imm: Ô´¼Ä´æÆ÷2µÄÃû×Ö»òÕßÁ¢¼´Êı
+* @brief å°†å¯„å­˜å™¨rs1çš„å€¼åŠ ä¸Šå¯„å­˜å™¨rs2çš„å€¼æˆ–ç«‹å³æ•°immåèµ‹ç»™å¯„å­˜å™¨rd
+* @param rd: ç›®æ ‡å¯„å­˜å™¨çš„åå­—
+* @param rs1: æºå¯„å­˜å™¨1çš„åå­—
+* @param rs2_or_imm: æºå¯„å­˜å™¨2çš„åå­—æˆ–è€…ç«‹å³æ•°
 */
 void Register::add(const std::string& rd, const std::string& rs1, const std::string& rs2_or_imm) {
 	if (isImm(rs2_or_imm)) {
@@ -209,10 +209,10 @@ void Register::add(const std::string& rd, const std::string& rs1, const std::str
 }
 
 /**
-* @brief ½«¼Ä´æÆ÷rs1µÄÖµ¼õÈ¥¼Ä´æÆ÷rs2µÄÖµ»òÁ¢¼´Êıimmºó¸³¸ø¼Ä´æÆ÷rd
-* @param rd: Ä¿±ê¼Ä´æÆ÷µÄÃû×Ö
-* @param rs1: Ô´¼Ä´æÆ÷1µÄÃû×Ö
-* @param rs2_or_imm: Ô´¼Ä´æÆ÷2µÄÃû×Ö»òÕßÁ¢¼´Êı
+* @brief å°†å¯„å­˜å™¨rs1çš„å€¼å‡å»å¯„å­˜å™¨rs2çš„å€¼æˆ–ç«‹å³æ•°immåèµ‹ç»™å¯„å­˜å™¨rd
+* @param rd: ç›®æ ‡å¯„å­˜å™¨çš„åå­—
+* @param rs1: æºå¯„å­˜å™¨1çš„åå­—
+* @param rs2_or_imm: æºå¯„å­˜å™¨2çš„åå­—æˆ–è€…ç«‹å³æ•°
 */
 void Register::sub(const std::string& rd, const std::string& rs1, const std::string& rs2_or_imm) {
 	if (isImm(rs2_or_imm)) {
@@ -228,10 +228,10 @@ void Register::sub(const std::string& rd, const std::string& rs1, const std::str
 }
 
 /**
-* @brief ½«¼Ä´æÆ÷rs1µÄÖµ³ËÉÏ¼Ä´æÆ÷rs2µÄÖµ»òÁ¢¼´Êıimmºó¸³¸ø¼Ä´æÆ÷rd
-* @param rd: Ä¿±ê¼Ä´æÆ÷µÄÃû×Ö
-* @param rs1: Ô´¼Ä´æÆ÷1µÄÃû×Ö
-* @param rs2_or_imm: Ô´¼Ä´æÆ÷2µÄÃû×Ö»òÕßÁ¢¼´Êı
+* @brief å°†å¯„å­˜å™¨rs1çš„å€¼ä¹˜ä¸Šå¯„å­˜å™¨rs2çš„å€¼æˆ–ç«‹å³æ•°immåèµ‹ç»™å¯„å­˜å™¨rd
+* @param rd: ç›®æ ‡å¯„å­˜å™¨çš„åå­—
+* @param rs1: æºå¯„å­˜å™¨1çš„åå­—
+* @param rs2_or_imm: æºå¯„å­˜å™¨2çš„åå­—æˆ–è€…ç«‹å³æ•°
 */
 void Register::mul(const std::string& rd, const std::string& rs1, const std::string& rs2_or_imm) {
 	if (isImm(rs2_or_imm)) {
@@ -247,10 +247,10 @@ void Register::mul(const std::string& rd, const std::string& rs1, const std::str
 }
 
 /**
-* @brief ½«¼Ä´æÆ÷rs1µÄÖµ³ıÈ¥¼Ä´æÆ÷rs2µÄÖµ»òÁ¢¼´Êıimmºó¸³¸ø¼Ä´æÆ÷rd
-* @param rd: Ä¿±ê¼Ä´æÆ÷µÄÃû×Ö
-* @param rs1: Ô´¼Ä´æÆ÷1µÄÃû×Ö
-* @param rs2_or_imm: Ô´¼Ä´æÆ÷2µÄÃû×Ö»òÕßÁ¢¼´Êı
+* @brief å°†å¯„å­˜å™¨rs1çš„å€¼é™¤å»å¯„å­˜å™¨rs2çš„å€¼æˆ–ç«‹å³æ•°immåèµ‹ç»™å¯„å­˜å™¨rd
+* @param rd: ç›®æ ‡å¯„å­˜å™¨çš„åå­—
+* @param rs1: æºå¯„å­˜å™¨1çš„åå­—
+* @param rs2_or_imm: æºå¯„å­˜å™¨2çš„åå­—æˆ–è€…ç«‹å³æ•°
 */
 void Register::div(const std::string& rd, const std::string& rs1, const std::string& rs2_or_imm) {
 	if (isImm(rs2_or_imm)) {
@@ -266,10 +266,10 @@ void Register::div(const std::string& rd, const std::string& rs1, const std::str
 }
 
 /**
-* @brief ½«¼Ä´æÆ÷rs1µÄÖµÄ£ÉÏ¼Ä´æÆ÷rs2µÄÖµ»òÁ¢¼´Êıimmºó¸³¸ø¼Ä´æÆ÷rd
-* @param rd: Ä¿±ê¼Ä´æÆ÷µÄÃû×Ö
-* @param rs1: Ô´¼Ä´æÆ÷1µÄÃû×Ö
-* @param rs2_or_imm: Ô´¼Ä´æÆ÷2µÄÃû×Ö»òÕßÁ¢¼´Êı
+* @brief å°†å¯„å­˜å™¨rs1çš„å€¼æ¨¡ä¸Šå¯„å­˜å™¨rs2çš„å€¼æˆ–ç«‹å³æ•°immåèµ‹ç»™å¯„å­˜å™¨rd
+* @param rd: ç›®æ ‡å¯„å­˜å™¨çš„åå­—
+* @param rs1: æºå¯„å­˜å™¨1çš„åå­—
+* @param rs2_or_imm: æºå¯„å­˜å™¨2çš„åå­—æˆ–è€…ç«‹å³æ•°
 */
 void Register::rem(const std::string& rd, const std::string& rs1, const std::string& rs2_or_imm) {
 	if (isImm(rs2_or_imm)) {
@@ -285,10 +285,10 @@ void Register::rem(const std::string& rd, const std::string& rs1, const std::str
 }
 
 /**
-* @brief ½«¼Ä´æÆ÷rs1µÄÖµÓë¼Ä´æÆ÷rs2µÄÖµ»òÁ¢¼´ÊıimmÎ»Óëºó¸³¸ø¼Ä´æÆ÷rd
-* @param rd: Ä¿±ê¼Ä´æÆ÷µÄÃû×Ö
-* @param rs1: Ô´¼Ä´æÆ÷1µÄÃû×Ö
-* @param rs2_or_imm: Ô´¼Ä´æÆ÷2µÄÃû×Ö»òÕßÁ¢¼´Êı
+* @brief å°†å¯„å­˜å™¨rs1çš„å€¼ä¸å¯„å­˜å™¨rs2çš„å€¼æˆ–ç«‹å³æ•°immä½ä¸åèµ‹ç»™å¯„å­˜å™¨rd
+* @param rd: ç›®æ ‡å¯„å­˜å™¨çš„åå­—
+* @param rs1: æºå¯„å­˜å™¨1çš„åå­—
+* @param rs2_or_imm: æºå¯„å­˜å™¨2çš„åå­—æˆ–è€…ç«‹å³æ•°
 */
 void Register::AND(const std::string& rd, const std::string& rs1, const std::string& rs2_or_imm) {
 	if (isImm(rs2_or_imm)) {
@@ -304,10 +304,10 @@ void Register::AND(const std::string& rd, const std::string& rs1, const std::str
 }
 
 /**
-* @brief ½«¼Ä´æÆ÷rs1µÄÖµÓë¼Ä´æÆ÷rs2µÄÖµ»òÁ¢¼´ÊıimmÎ»»òºó¸³¸ø¼Ä´æÆ÷rd
-* @param rd: Ä¿±ê¼Ä´æÆ÷µÄÃû×Ö
-* @param rs1: Ô´¼Ä´æÆ÷1µÄÃû×Ö
-* @param rs2_or_imm: Ô´¼Ä´æÆ÷2µÄÃû×Ö»òÕßÁ¢¼´Êı
+* @brief å°†å¯„å­˜å™¨rs1çš„å€¼ä¸å¯„å­˜å™¨rs2çš„å€¼æˆ–ç«‹å³æ•°immä½æˆ–åèµ‹ç»™å¯„å­˜å™¨rd
+* @param rd: ç›®æ ‡å¯„å­˜å™¨çš„åå­—
+* @param rs1: æºå¯„å­˜å™¨1çš„åå­—
+* @param rs2_or_imm: æºå¯„å­˜å™¨2çš„åå­—æˆ–è€…ç«‹å³æ•°
 */
 void Register::OR(const std::string& rd, const std::string& rs1, const std::string& rs2_or_imm) {
 	if (isImm(rs2_or_imm)) {
@@ -323,10 +323,10 @@ void Register::OR(const std::string& rd, const std::string& rs1, const std::stri
 }
 
 /**
-* @brief ½«¼Ä´æÆ÷rs1µÄÖµÓë¼Ä´æÆ÷rs2µÄÖµ»òÁ¢¼´ÊıimmÒì»òºó¸³¸ø¼Ä´æÆ÷rd
-* @param rd: Ä¿±ê¼Ä´æÆ÷µÄÃû×Ö
-* @param rs1: Ô´¼Ä´æÆ÷1µÄÃû×Ö
-* @param rs2_or_imm: Ô´¼Ä´æÆ÷2µÄÃû×Ö»òÕßÁ¢¼´Êı
+* @brief å°†å¯„å­˜å™¨rs1çš„å€¼ä¸å¯„å­˜å™¨rs2çš„å€¼æˆ–ç«‹å³æ•°immå¼‚æˆ–åèµ‹ç»™å¯„å­˜å™¨rd
+* @param rd: ç›®æ ‡å¯„å­˜å™¨çš„åå­—
+* @param rs1: æºå¯„å­˜å™¨1çš„åå­—
+* @param rs2_or_imm: æºå¯„å­˜å™¨2çš„åå­—æˆ–è€…ç«‹å³æ•°
 */
 void Register::XOR(const std::string& rd, const std::string& rs1, const std::string& rs2_or_imm) {
 	if (isImm(rs2_or_imm)) {
@@ -342,9 +342,9 @@ void Register::XOR(const std::string& rd, const std::string& rs1, const std::str
 }
 
 /**
-* @brief ½«¼Ä´æÆ÷rs1µÄÖµ»òÁ¢¼´ÊıimmÈ¡·´ºó¸³¸ø¼Ä´æÆ÷rd
-* @param rd: Ä¿±ê¼Ä´æÆ÷µÄÃû×Ö
-* @param rs1_or_imm: Ô´¼Ä´æÆ÷1µÄÃû×Ö»òÕßÁ¢¼´Êı
+* @brief å°†å¯„å­˜å™¨rs1çš„å€¼æˆ–ç«‹å³æ•°immå–ååèµ‹ç»™å¯„å­˜å™¨rd
+* @param rd: ç›®æ ‡å¯„å­˜å™¨çš„åå­—
+* @param rs1_or_imm: æºå¯„å­˜å™¨1çš„åå­—æˆ–è€…ç«‹å³æ•°
 */
 void Register::NOT(const std::string& rd, const std::string& rs1_or_imm) {
 	if (isImm(rs1_or_imm)) {
@@ -359,10 +359,10 @@ void Register::NOT(const std::string& rd, const std::string& rs1_or_imm) {
 }
 
 /**
-* @brief ÅĞ¶Ï¼Ä´æÆ÷rs1ºÍ¼Ä´æÆ÷rs2ÖĞÖµÊÇ·ñÏàµÈ
-* @param rs1: Ô´¼Ä´æÆ÷1µÄÃû×Ö
-* @param rs2: Ô´¼Ä´æÆ÷2µÄÃû×Ö
-* @return ÅĞ¶Ï½á¹û
+* @brief åˆ¤æ–­å¯„å­˜å™¨rs1å’Œå¯„å­˜å™¨rs2ä¸­å€¼æ˜¯å¦ç›¸ç­‰
+* @param rs1: æºå¯„å­˜å™¨1çš„åå­—
+* @param rs2: æºå¯„å­˜å™¨2çš„åå­—
+* @return åˆ¤æ–­ç»“æœ
 */
 bool Register::beq(const std::string& rs1, const std::string& rs2) {
 	setStatus(rs1, Status::READ);
@@ -371,10 +371,10 @@ bool Register::beq(const std::string& rs1, const std::string& rs2) {
 }
 
 /**
-* @brief ÅĞ¶Ï¼Ä´æÆ÷rs1ºÍ¼Ä´æÆ÷rs2ÖĞÖµÊÇ·ñ²»µÈ
-* @param rs1: Ô´¼Ä´æÆ÷1µÄÃû×Ö
-* @param rs2: Ô´¼Ä´æÆ÷2µÄÃû×Ö
-* @return ÅĞ¶Ï½á¹û
+* @brief åˆ¤æ–­å¯„å­˜å™¨rs1å’Œå¯„å­˜å™¨rs2ä¸­å€¼æ˜¯å¦ä¸ç­‰
+* @param rs1: æºå¯„å­˜å™¨1çš„åå­—
+* @param rs2: æºå¯„å­˜å™¨2çš„åå­—
+* @return åˆ¤æ–­ç»“æœ
 */
 bool Register::bne(const std::string& rs1, const std::string& rs2) {
 	setStatus(rs1, Status::READ);
@@ -383,10 +383,10 @@ bool Register::bne(const std::string& rs1, const std::string& rs2) {
 }
 
 /**
-* @brief ÅĞ¶Ï¼Ä´æÆ÷rs1µÄÖµÊÇ·ñĞ¡ÓÚ¼Ä´æÆ÷rs2ÖĞÖµ
-* @param rs1: Ô´¼Ä´æÆ÷1µÄÃû×Ö
-* @param rs2: Ô´¼Ä´æÆ÷2µÄÃû×Ö
-* @return ÅĞ¶Ï½á¹û
+* @brief åˆ¤æ–­å¯„å­˜å™¨rs1çš„å€¼æ˜¯å¦å°äºå¯„å­˜å™¨rs2ä¸­å€¼
+* @param rs1: æºå¯„å­˜å™¨1çš„åå­—
+* @param rs2: æºå¯„å­˜å™¨2çš„åå­—
+* @return åˆ¤æ–­ç»“æœ
 */
 bool Register::blt(const std::string& rs1, const std::string& rs2) {
 	setStatus(rs1, Status::READ);
@@ -395,10 +395,10 @@ bool Register::blt(const std::string& rs1, const std::string& rs2) {
 }
 
 /**
-* @brief ÅĞ¶Ï¼Ä´æÆ÷rs1µÄÖµÊÇ·ñ´óÓÚµÈÓÚ¼Ä´æÆ÷rs2ÖĞÖµ
-* @param rs1: Ô´¼Ä´æÆ÷1µÄÃû×Ö
-* @param rs2: Ô´¼Ä´æÆ÷2µÄÃû×Ö
-* @return ÅĞ¶Ï½á¹û
+* @brief åˆ¤æ–­å¯„å­˜å™¨rs1çš„å€¼æ˜¯å¦å¤§äºç­‰äºå¯„å­˜å™¨rs2ä¸­å€¼
+* @param rs1: æºå¯„å­˜å™¨1çš„åå­—
+* @param rs2: æºå¯„å­˜å™¨2çš„åå­—
+* @return åˆ¤æ–­ç»“æœ
 */
 bool Register::bge(const std::string& rs1, const std::string& rs2) {
 	setStatus(rs1, Status::READ);
@@ -407,10 +407,10 @@ bool Register::bge(const std::string& rs1, const std::string& rs2) {
 }
 
 /**
-* @brief Êä³ö¼Ä´æÆ÷µÄÄÚÈİ
-* @param out: Êä³öÁ÷¶ÔÏó
-* @param reg: Êä³öµÄRegister¶ÔÏó
-* @return Êä³öÁ÷¶ÔÏó
+* @brief è¾“å‡ºå¯„å­˜å™¨çš„å†…å®¹
+* @param out: è¾“å‡ºæµå¯¹è±¡
+* @param reg: è¾“å‡ºçš„Registerå¯¹è±¡
+* @return è¾“å‡ºæµå¯¹è±¡
 */
 std::ostream& operator<<(std::ostream& out, const Register& reg) {
 	for (const auto& a_reg : reg.m_register) {

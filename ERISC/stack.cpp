@@ -3,23 +3,23 @@
 #include <cstring>
 
 /**
-* @brief ÖØÖÃ×´Ì¬
+* @brief é‡ç½®çŠ¶æ€
 */
 void Stack::reset() {
 	m_status = Status::NO_OPERATE;
 }
 
 /**
-* @brief ·µ»ØÕ»µÄ×´Ì¬
-* @return Õ»µÄ×´Ì¬
+* @brief è¿”å›æ ˆçš„çŠ¶æ€
+* @return æ ˆçš„çŠ¶æ€
 */
 Status Stack::getStatus() const {
 	return m_status;
 }
 
 /**
-* @brief °Ñrs¼Ä´æÆ÷ÖĞµÄÖµÈëÕ»
-* @param rs: ¼Ä´æÆ÷µÄµØÖ·
+* @brief æŠŠrså¯„å­˜å™¨ä¸­çš„å€¼å…¥æ ˆ
+* @param rs: å¯„å­˜å™¨çš„åœ°å€
 */
 void Stack::push(int32_t* rs) {
 	if (m_ptr <= 0) {
@@ -30,8 +30,8 @@ void Stack::push(int32_t* rs) {
 }
 
 /**
-* @brief °ÑÕ»¶¥µÄÖµ´æÈërd¼Ä´æÆ÷ÖĞ
-* @param rd: ¼Ä´æÆ÷µÄµØÖ·
+* @brief æŠŠæ ˆé¡¶çš„å€¼å­˜å…¥rdå¯„å­˜å™¨ä¸­
+* @param rd: å¯„å­˜å™¨çš„åœ°å€
 */
 void Stack::pop(int32_t* rd) {
 	if (m_ptr >= STACK_SIZE) {

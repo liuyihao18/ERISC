@@ -4,12 +4,12 @@
 
 enum class Status
 {
-	NO_OPERATE = 0, // ц╩сп╡ывВё╛╟ви╚
-	WRITE, // п╢хКё╛╨Л
-	READ, // ╤ах║ё╛ю╤
-	READ_WRITE, // сж╤асжп╢ё╛во
-	VISITED, // дз╢Ф╥цнйё╛бл
-	STACK_OPERATE // у╩╤ап╢ё╛Ёх
+	NO_OPERATE = 0, // Ф╡║Ф°┴Ф⌠█Д╫°О╪▄Г≥╫Х┴╡
+	WRITE, // Е├≥Е┘╔О╪▄Г╨╒
+	READ, // Х╞╩Е▐√О╪▄Х⌠²
+	READ_WRITE, // Е▐┬Х╞╩Е▐┬Е├≥О╪▄Г╢╚
+	VISITED, // Е├┘Е╜≤Х╝©И≈╝О╪▄Г╩©
+	STACK_OPERATE // Ф═┬Х╞╩Е├≥О╪▄Ф╘≥
 };
 
 #endif // !__STATUS_H__

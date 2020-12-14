@@ -4,7 +4,7 @@
 #include <string>
 #include <vector>
 
-// ĞĞÖÖÀà
+// è¡Œç§ç±»
 enum class Type {
 	NONE = 0,
 	LOAD,
@@ -32,7 +32,7 @@ enum class Type {
 	TYPE_SIZE
 };
 
-// ĞĞ
+// è¡Œ
 struct Line
 {
 	Type type{ Type::NONE };
@@ -41,67 +41,67 @@ struct Line
 	std::string op3{};
 };
 
-// ĞĞ±êÊ¶
+// è¡Œæ ‡è¯†
 struct LineLable {
-	std::string label{}; // ĞĞ±êÊ¶
-	std::vector<Line>::size_type index{ 0 };  // ĞĞ±êÊ¶ËùÔÚĞĞµÄÏÂÒ»ĞĞ
+	std::string label{}; // è¡Œæ ‡è¯†
+	std::vector<Line>::size_type index{ 0 };  // è¡Œæ ‡è¯†æ‰€åœ¨è¡Œçš„ä¸‹ä¸€è¡Œ
 };
 
-// º¯Êı±êÊ¶
+// å‡½æ•°æ ‡è¯†
 struct Function {
-	std::string name{}; // º¯ÊıÃû
-	std::vector<Line>::size_type index{ 0 }; // retËùÔÚĞĞµÄÏÂÒ»ĞĞ
+	std::string name{}; // å‡½æ•°å
+	std::vector<Line>::size_type index{ 0 }; // retæ‰€åœ¨è¡Œçš„ä¸‹ä¸€è¡Œ
 };
 
 class Input {
 
 private:
 
-	std::vector<Line> m_lines{}; // ´æ´¢µÄËùÓĞĞĞ
-	std::vector<LineLable> m_linelabels{}; // ´æ´¢µÄËùÓĞĞĞ±êÊ¶
-	std::vector<Function> m_functions{}; // ´æ´¢ËùÓĞµÄº¯Êı±êÊ¶
-	decltype(m_lines.size()) m_current_index{ 0 }; // µ±Ç°ĞĞºÅ
+	std::vector<Line> m_lines{}; // å­˜å‚¨çš„æ‰€æœ‰è¡Œ
+	std::vector<LineLable> m_linelabels{}; // å­˜å‚¨çš„æ‰€æœ‰è¡Œæ ‡è¯†
+	std::vector<Function> m_functions{}; // å­˜å‚¨æ‰€æœ‰çš„å‡½æ•°æ ‡è¯†
+	decltype(m_lines.size()) m_current_index{ 0 }; // å½“å‰è¡Œå·
 
 public:
 	
 	/**
-	* @brief ¹¹Ôìº¯Êı£¬¸ù¾İÊäÈëµÄÎÄ¼şÃû¹¹ÔìÕû¸öĞĞ½á¹¹
-	* @param filename: ÊäÈëÎÄ¼şÃû
+	* @brief æ„é€ å‡½æ•°ï¼Œæ ¹æ®è¾“å…¥çš„æ–‡ä»¶åæ„é€ æ•´ä¸ªè¡Œç»“æ„
+	* @param filename: è¾“å…¥æ–‡ä»¶å
 	*/
 	Input(std::string filename);
 
 	/**
-	* @brief »ñÈ¡µ±Ç°µÄĞĞºÅ
-	* @return µ±Ç°µÄĞĞºÅ
+	* @brief è·å–å½“å‰çš„è¡Œå·
+	* @return å½“å‰çš„è¡Œå·
 	*/
 	int32_t getCurrentIndex();
 
 	/**
-	* @brief »ñÈ¡µ±Ç°µÄĞĞ
-	* @return µ±Ç°ĞĞµÄĞÅÏ¢
+	* @brief è·å–å½“å‰çš„è¡Œ
+	* @return å½“å‰è¡Œçš„ä¿¡æ¯
 	*/
 	Line getCurrentLine();
 
 	/**
-	* @brief ×ªµ½ÏÂÒ»ĞĞ
+	* @brief è½¬åˆ°ä¸‹ä¸€è¡Œ
 	*/
 	void nextLine();
 
 	/**
-	* @brief Ìøµ½ĞĞ±êÊ¶µÄÏÂÒ»ĞĞ
-	* @param label: ĞĞ±êÊ¶
+	* @brief è·³åˆ°è¡Œæ ‡è¯†çš„ä¸‹ä¸€è¡Œ
+	* @param label: è¡Œæ ‡è¯†
 	*/
 	void jumpLine(std::string label);
 
 	/**
-	* @brief Ìøµ½Ä³Ò»ĞĞ
-	* @param index: ĞĞºÅ
+	* @brief è·³åˆ°æŸä¸€è¡Œ
+	* @param index: è¡Œå·
 	*/
 	void jumpLine(int index);
 
 	/**
-	* @brief ÊÇ·ñ»¹ÓĞ¸ü¶àµÄÊäÈë
-	* @return ÅĞ¶Ï½á¹û
+	* @brief æ˜¯å¦è¿˜æœ‰æ›´å¤šçš„è¾“å…¥
+	* @return åˆ¤æ–­ç»“æœ
 	*/
 	bool hasMoreInput();
 };
