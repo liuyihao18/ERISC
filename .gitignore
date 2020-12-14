@@ -5,6 +5,7 @@ x64/
 ERISC/Debug/
 .DS_Store
 UpgradeLog.htm
-ERISC/output
+ERISC/output/
 ERISC/*.bmp
 ERISC/*.txt
+ERISC/ERISC
