@@ -10,24 +10,16 @@ using WORD = uint16_t;
 using DWORD = uint32_t;
 using LONG = int32_t;
 
-#if defined WINDOWS
-#pragma pack(2)
-#endif
+#pragma pack(1)
 struct BITMAPFILEHEADER {
 	WORD    bfType;
 	DWORD   bfSize;
 	WORD    bfReserved1;
 	WORD    bfReserved2;
 	DWORD   bfOffBits;
-}
-#if defined LINUX || defined UNIX
-__attribute__((packed))
-#endif
-;
+};
 
-#if defined WINDOWS
-#pragma pack(2)
-#endif
+#pragma pack(1)
 struct BITMAPINFOHEADER {
 	DWORD      biSize;
 	LONG       biWidth;
@@ -40,11 +32,7 @@ struct BITMAPINFOHEADER {
 	LONG       biYPelsPerMeter;
 	DWORD      biClrUsed;
 	DWORD      biClrImportant;
-}
-#if defined LINUX || defined UNIX
-__attribute__((packed))
-#endif
-;
+};
 
 /**
 * @brief 程序运行主函数
