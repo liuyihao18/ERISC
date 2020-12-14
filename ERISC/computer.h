@@ -35,7 +35,7 @@ public:
 	*/
 	Computer(std::string filename) 
 		:m_memory(), m_stack(), m_register(), m_input(filename), m_draw_times(0) {
-		if (
+		if ( // 判断输出文件夹是否存在
 #if defined WINDOWS
 			_access("output", 0) != 0
 #elif defined LINUX || defined UNIX
@@ -44,7 +44,7 @@ public:
 			false
 #endif
 			) {
-			if (
+			if ( // 如果不存在则创建
 #if defined WINDOWS
 				_mkdir("output") != 0
 #elif defined LINUX || defined UNIX
@@ -57,7 +57,7 @@ public:
 				std::exit(-1);
 			}
 		}
-		else {
+		else { // 如果存在则删除原先的输出文件
 #if defined WINDOWS
 			_finddata_t file;
 			auto handle = _findfirst("output/*", &file);
