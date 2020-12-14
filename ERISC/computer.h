@@ -6,6 +6,13 @@
 #include "register.h"
 #include "input.h"
 #include <string>
+#include <iostream>
+#if defined WINDOWS
+#include <io.h>
+#elif defined LINUX || defined UNIX
+#include <unistd.h>
+#endif
+#include <direct.h>
 
 class Computer {
 
@@ -24,7 +31,13 @@ public:
 	* @param filename: 输入的ERISC文件名
 	*/
 	Computer(std::string filename) 
-		:m_memory(), m_stack(), m_register(), m_input(filename), m_draw_times(0) {}
+		:m_memory(), m_stack(), m_register(), m_input(filename), m_draw_times(0) {
+		if (_access("output", 0) != 0) {
+			if (_mkdir("output") != 0) {
+				std::cerr << "创建输出文件夹失败！" << std::endl;
+			}
+		}
+	}
 
 	/**
 	* @brief 程序运行主函数
