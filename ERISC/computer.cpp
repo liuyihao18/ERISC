@@ -10,15 +10,24 @@ using WORD = unsigned short;
 using DWORD = unsigned long;
 using LONG = long;
 
+#if defined WINDOWS
 #pragma pack(2)
+#endif
 struct BITMAPFILEHEADER {
 	WORD    bfType;
 	DWORD   bfSize;
 	WORD    bfReserved1;
 	WORD    bfReserved2;
 	DWORD   bfOffBits;
-};
+}
+#if defined LINUX || defined UNIX
+attribute((packed))
+#endif
+;
 
+#if defined WINDOWS
+#pragma pack(2)
+#endif
 struct BITMAPINFOHEADER {
 	DWORD      biSize;
 	LONG       biWidth;
@@ -31,7 +40,11 @@ struct BITMAPINFOHEADER {
 	LONG       biYPelsPerMeter;
 	DWORD      biClrUsed;
 	DWORD      biClrImportant;
-};
+}
+#if defined LINUX || defined UNIX
+attribute((packed))
+#endif
+;
 
 /**
 * @brief 程序运行主函数
