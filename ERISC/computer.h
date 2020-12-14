@@ -11,7 +11,7 @@
 #if defined WINDOWS
 #include <io.h>
 #include <direct.h>
-#elif defined LINUX || defined UNIX
+#elif defined LINUX
 #include <unistd.h>
 #include <dirent.h>
 #include <sys/stat.h>
@@ -38,7 +38,7 @@ public:
 		if ( // 判断输出文件夹是否存在
 #if defined WINDOWS
 			_access("output", 0) != 0
-#elif defined LINUX || defined UNIX
+#elif defined LINUX
 			access("output", 0) != 0
 #else 
 			false
@@ -47,7 +47,7 @@ public:
 			if ( // 如果不存在则创建
 #if defined WINDOWS
 				_mkdir("output") != 0
-#elif defined LINUX || defined UNIX
+#elif defined LINUX
 				mkdir("output", S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH) != 0
 #else
 				false
@@ -71,7 +71,7 @@ public:
 					}
 				}
 			}
-#elif defined LINUX || defined UNIX
+#elif defined LINUX
 			dirent* entry{ nullptr };
 			DIR* dir = opendir("output");
 			if (!dir) {
