@@ -19,7 +19,7 @@ int main() {
 #if defined WINDOWS
 	cout << "程序运行时间：" << end - begin << "ms" << endl;
 #elif defined LINUX || defined UNIX
-	cout << "程序运行时间：" << (end - begin) / 1000 << "s" << endl;
+	cout << "程序运行时间：" << (end - begin) / 1000 << "ms" << endl;
 #endif
 	return 0;
 }
