@@ -360,6 +360,7 @@ void Computer::draw() {
 
 	// Write to file
 	std::ostringstream filename;
+	filename << "output/";
 	filename << m_draw_times;
 	filename << ".bmp";
 
@@ -388,7 +389,7 @@ void Computer::draw() {
 * @brief 把寄存器、内存中的值写到文件result.txt中
 */
 void Computer::write() {
-	std::ofstream file("result.txt");
+	std::ofstream file("output/result.txt");
 	if (!file.is_open()) {
 		throw std::string("输出文本文件发生错误！");
 	}
