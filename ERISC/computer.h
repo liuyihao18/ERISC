@@ -55,6 +55,20 @@ public:
 				std::exit(-1);
 			}
 		}
+		else {
+			_finddata_t file{};
+			auto handle = _findfirst("output/*", &file);
+			while (handle != 0 && _findnext(handle, &file) == 0) {
+				if (std::strcmp(file.name, "..") != 0) {
+					std::string filename{ "output/" };
+					filename += file.name;
+					if (remove(filename.c_str()) != 0) {
+						std::cerr << "删除旧文件失败！" << std::endl;
+						std::exit(-1);
+					}
+				}
+			}
+		}
 	}
 
 	/**
